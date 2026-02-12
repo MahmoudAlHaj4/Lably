@@ -23,3 +23,29 @@ The application has three types of users:
 - They moderate content.
 - They manage users.
 
+## Core Features (V1)
+
+### Job Seekers
+- Register and login.
+- Create profile.
+- Add about section.
+- add experience section.
+- upload resume.
+- Edit/delete profile.
+- Search and browse jobs.
+- Apply to jobs.
+
+### Employers
+- Register and login.
+- Post jobs.
+- View applications received.
+- View applicant profiles and resumes.
+- Edit/delete jobs.
+
+### Admin
+- Login.
+- View all users.
+- Delete users.
+- View all jobs.
+- Delete jobs.
+- View all applications.
