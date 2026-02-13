@@ -23,6 +23,34 @@ The application has three types of users:
 - They moderate content.
 - They manage users.
 
+### Why These Three Roles?
+
+I chose a three role system for the following reasons:
+
+1. Clear Separation of Concens
+
+- Job seekers and Employers have completely different goals and workflow.
+- Job seeker looking for work should never see "Post A Job" functionality.
+- An Employer hiring candidates should never see "Apply for Job" functionality.
+- Separation roles prevents UI clutter and confusion.
+
+2. Secuirty and Data Protection
+
+- Job seekers should not access employer dashboard.
+- Employer should not access other employers applications.
+
+3. Admin Role for Platform Management
+
+- Job board needs moderation (fake accounts, inappropriate content, etc...).
+- Admin gives me one place to manage the entire platform without adding management features to employer or job seeker accounts.
+- Admin can see overview statistics like how many users registered, how many jobs are posted, and how many applications were submitted.
+
+4. Simplicity for V1
+
+- Three roles cover all essential use cases without overcomplicating the system.
+- More roles (recruiter, company admin, moderator) can be added later if needed.
+- Keeps authentication and authorization logic straightforward.
+
 ## Core Features (V1)
 
 ### Job Seekers
