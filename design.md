@@ -170,3 +170,53 @@ I chose a three role system for the following reasons:
 - updated_at: TIMESTAMP, DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 - is_active: BOOLEAN, DEFAULT TRUE
 
+### job_seekers_profiles
+- id: UUID (PRIMARY KEY)
+- user_id: UUID (FOREIGN KEY-> users.id), UNIQUE
+- full_name: VARCHAR(255), NOT NULL
+- phone: VARCHAR(255)
+- address: VARCAHR(255)
+- about: TEXT
+- resume_path: VARCHAR(255)
+- created_at: TIMESTAMP
+- updated_at: TIMESTAMP
+
+### experiences
+- id: UUID (PRIMARY KEY)
+- job_seeker_profile_id: UUID (FOREIGN KEY-> job_seekers_profiles.id)
+- company_name: VARCHAR(255)
+- job_title: VARCHAR(255)
+- start_date: DATE
+- end_date: DATE (NULLABLE - FOR CURRENT JOB)
+- description: TEXT
+- created_at: TIMESTAP
+
+### jobs
+- id: UUID (PRIMARY KEY)
+- employer_id: UUID (FOREIGN KEY → users.id where role='employer')
+- job_title: VARCHAR(255), NOT NULL
+- description: TEXT, NOT NULL
+- requirements: TEXT
+- location: VARCHAR(255) (or separate city/state/country?)
+- created_at: TIMESTAMP
+- updated_at: TIMESTAMP
+
+### applications 
+- id: UUID (PRIMARY KEY)
+- job_seeker_id: UUID (FOREIGN KEY → users.id)
+- job_id: UUID (FOREIGN KEY → jobs.id)
+- cover_letter: TEXT
+- resume_path: VARCHAR(255)
+- applied_at: TIMESTAMP
+- UNIQUE(job_seeker_id, job_id)
+
+### employer_profiles
+- id: UUID (PRIMARY KEY)
+- user_id: UUID (FOREIGN KEY → users.id), UNIQUE
+- company_name: VARCHAR(255), NOT NULL
+- company_description: TEXT
+- location: VARCHAR(255) (or separate city/state/country?)
+- website: VARCHAR(255) (optional - company website)
+- created_at: TIMESTAMP
+- updated_at: TIMESTAMP
+
