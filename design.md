@@ -220,3 +220,58 @@ I chose a three role system for the following reasons:
 - created_at: TIMESTAMP
 - updated_at: TIMESTAMP
 
+### Design Decisions
+
+#### 1. Single users Table with Role Field
+
+**Decision** Store all users (job seekers, employers, admins) in one table with a role field.
+
+**Reason:**
+- Avoid code duplication, authentication logic works the same for all user types.
+- Simpler to maintain, one login system instead of three separate ones.
+- All users share common fields.
+- Role specific data (profile, company info) lives in separate tables where it belongs.
+
+**Alternative considered:** Separate job seekers, employers and admins tables.
+
+**Why rejected:** Would require building three authentication systems with nearly identical code.
+
+#### 2. Separate Profile Tables
+
+**Decision:** 
+Instead of putting all user information in one giant users table, I split it into three tables:
+
+- users (authentication only)
+- job_seeker_profiles (job seeker info)
+- employer_profiles (employer info)
+
+**Reason:**
+
+- Keeps users table clean and foucsed on authentication.
+- Job seekers and Employers have completely different profile fields.
+- Easier to query.
+- better data organiztion.
+
+**Alternative considered:** Store all profile fields directly in users.
+
+**Why rejected:** Would result in a bloated users table with many NULL values. A job seeker doesn't need company_name field and an employer doesn't need resume_path field.
+
+#### 3. Admin Account Creation
+
+**Decision:** Admins cannot self register. Admin accounts are created manually via direct database insert.
+
+**Reason:**
+- Security: prevents anyone from making themselves an admin.
+- Admin is a privileged role that should be tightly controlled.
+- For V1, only the platform owner (me) needs admin access.
+
+#### 4. No Guest Browsing
+**Decision:** Users must register and login to browse jobs.
+
+**Reason:**
+- Keeps V1 scope small and focused.
+- Encourages user registration (builds user base).
+- Simpler authorization logic all routes require authentication.
+- Easier to track user behavior and applications.
+
+**Trade-off:** May reduce initial traffic, but acceptable for V1. Guest browsing can be added in V2 if needed.
