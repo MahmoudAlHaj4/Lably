@@ -51,6 +51,37 @@ I chose a three role system for the following reasons:
 - More roles (recruiter, company admin, moderator) can be added later if needed.
 - Keeps authentication and authorization logic straightforward.
 
+### Role Permissions & Access Control
+
+| Feature/Action | Job Seeker | Employer | Admin |
+|----------------|------------|----------|-------|
+| **Authentication** |
+| Register account | ✅ | ✅ | ❌ (created manually) |
+| Login/Logout | ✅ | ✅ | ✅ |
+| **Profile Management** |
+| Create own profile | ✅ | ✅ | ❌ |
+| Edit own profile | ✅ | ✅ | ❌ |
+| Delete own profile | ✅ | ✅ | ❌ |
+| View other users' profiles | ❌ | ❌ (only applicants) | ✅ (all users) |
+| **Jobs** |
+| Browse/search jobs | ✅ | ❌ | ✅ (all jobs) |
+| View job details | ✅ | ❌ | ✅ |
+| Post new job | ❌ | ✅ | ❌ |
+| Edit own job | ❌ | ✅ | ❌ |
+| Delete own job | ❌ | ✅ | ❌ |
+| Delete any job | ❌ | ❌ | ✅ |
+| See application count | ❌ | ✅ (own jobs) | ✅ (all jobs) |
+| **Applications** |
+| Apply to job | ✅ | ❌ | ❌ |
+| View own applications | ✅ | ❌ | ❌ |
+| View received applications | ❌ | ✅ (own jobs) | ✅ (all) |
+| View applicant profiles | ❌ | ✅ (who applied) | ✅ (all) |
+| View applicant resumes | ❌ | ✅ (who applied) | ✅ (all) |
+| **Platform Management** |
+| View platform statistics | ❌ | ❌ | ✅ |
+| Delete any user | ❌ | ❌ | ✅ |
+| View all users list | ❌ | ❌ | ✅ |
+
 ## Core Features (V1)
 
 ### Job Seekers
