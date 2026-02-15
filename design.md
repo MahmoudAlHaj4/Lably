@@ -165,6 +165,7 @@ I chose a three role system for the following reasons:
 - Advanced analytics dashboard for employers
 
 ## Database Schema
+
 ### users
 - id: UUID (PRIMARY KEY)
 - email: VARCHAR(255), UNIQUE, NOT NULL
@@ -202,6 +203,7 @@ I chose a three role system for the following reasons:
 - description: TEXT, NOT NULL
 - requirements: TEXT
 - location: VARCHAR(255) (or separate city/state/country?)
+- job_type: ENUM('remote', 'on-site', 'hybrid'), NOT NULL
 - created_at: TIMESTAMP
 - updated_at: TIMESTAMP
 
@@ -223,6 +225,22 @@ I chose a three role system for the following reasons:
 - website: VARCHAR(255) (optional - company website)
 - created_at: TIMESTAMP
 - updated_at: TIMESTAMP
+
+### verifications
+- id: UUID (PRIMARY KEY)
+- job_seeker_profile_id: UUID (FOREIGN KEY → job_seeker_profiles.id), UNIQUE
+- resume_path: VARCHAR(255), NOT NULL
+- portfolio_path: TEXT (comma-separated file paths or JSON)
+- submitted_at: TIMESTAMP
+- reviewed_at: TIMESTAMP (NULL until reviewed)
+- interview_scheduled_at: TIMESTAMP (NULL)
+- interview_completed_at: TIMESTAMP (NULL)
+- verification_result: ENUM('pending', 'approved', 'rejected'), DEFAULT 'pending'
+- assessment_notes: TEXT (admin's notes from technical assessment)
+- approved_at: TIMESTAMP (NULL - set when approved)
+- rejected_at: TIMESTAMP (NULL - set when rejected)
+- rejection_reason: TEXT (NULL - only if rejected)
+- reviewed_by: UUID (FOREIGN KEY → users.id where role='admin') (NULL until reviewed)
 
 ### Design Decisions
 
