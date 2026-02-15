@@ -28,27 +28,28 @@ Unlike general job boards, Lably maintains high quality standards through a rigo
 - Conducts technical interviews
 - Maintains platform quality
 
-### Why These Three Roles?
+## Why These Three Roles?
 
 I chose a three role system for the following reasons:
 
-1. Clear Separation of Concens
+### 1. Clear Separation of Concens
 
-- Job seekers and Employers have completely different goals and workflow.
+- **Job Seekers** (dental technicians, CAD/CAM specialists) are looking for work.
+- **Employers** (dental labs, clinics) are looking for verified talent.
 - Job seeker looking for work should never see "Post A Job" functionality.
 - An Employer hiring candidates should never see "Apply for Job" functionality.
 - Separation roles prevents UI clutter and confusion.
 
-2. Secuirty and Data Protection
+### 2. Secuirty and Data Protection
 
 - Job seekers should not access employer dashboard.
 - Employer should not access other employers applications.
 
-3. Admin Role for Platform Management
-
-- Job board needs moderation (fake accounts, inappropriate content, etc...).
-- Admin gives me one place to manage the entire platform without adding management features to employer or job seeker accounts.
-- Admin can see overview statistics like how many users registered, how many jobs are posted, and how many applications were submitted.
+### 3. Admin Role for Platform Management
+- **Verification Process:** Admin conducts interviews and technical assessments for all job seekers
+- **Quality Control:** Only verified candidates appear on the platform - maintaining Lably's core value proposition
+- **Platform Moderation:** Manages users, jobs, and ensures platform quality
+- Admin can see overview statistics like how many verified candidates, active jobs, and applications
 
 4. Simplicity for V1
 
