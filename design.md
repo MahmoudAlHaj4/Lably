@@ -1,6 +1,16 @@
-# Overview 
+# Lably - Design Documentation 
 
-This is a job board web application. It allows job seekers to find and apply for jobs, and allows employers to post jobs and find candidates.
+Lably is a specialized job board for the dental technology industry. It connects dental labs and clinics with pre-verified CAD/CAM specialists, dental technicians, and dental lab professionals.
+
+
+## What Makes Lably Different?
+
+Unlike general job boards, Lably maintains high quality standards through a rigorous verification process:
+
+- **Verified Candidates Only:** All job seekers must pass interviews and technical assessments before appearing on the platform
+- **Live Technical Assessments:** Candidates demonstrate their skills by creating dental work live in front of specialists
+- **Industry-Specific:** Focused exclusively on dental technology roles (CAD/CAM, dental technicians, lab technicians)
+- **Quality Over Quantity:** Employers access a curated pool of qualified professionals, not hundreds of unvetted applicants
 
 ## User Types and Roles
 
