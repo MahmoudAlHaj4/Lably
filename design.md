@@ -328,3 +328,28 @@ I chose a three role system for the following reasons:
 
 **Alternative:** Store as JSON or TEXT in job_seeker_profiles.experiences
 **Why rejected:** Makes querying difficult, can't easily filter by company or date range, harder to validate data structure.
+
+
+## Tech Stack
+
+### Frontend
+- **HTML/CSS/JavaScript (Vanilla)** - No framework dependencies, full control over code
+- **CSS** - Custom styling without framework overhead
+
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web framework for building REST API
+
+### Database
+- **PostgreSQL** - Relational database
+
+### File Storage
+- **Local Filesystem (Development)** - Store uploaded files in `/uploads` directory
+- **Cloudinary (Production - Free Tier)** - Cloud storage for resumes and portfolios
+
+**Alternative considered:** AWS S3
+**Why rejected for V1:** More complex setup, pricing less predictable for beginners, Cloudinary's free tier is sufficient.
+
+### Authentication
+- **JWT (JSON Web Tokens)** - Stateless authentication
+- **bcrypt** - Password hashing
