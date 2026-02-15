@@ -97,14 +97,20 @@ I chose a three role system for the following reasons:
 ## Core Features (V1)
 
 ### Job Seekers
-- Register and login.
-- Create profile.
-- Add about section.
-- add experience section.
-- upload resume.
-- Edit/delete profile.
-- Search and browse jobs.
-- Apply to jobs.
+- Register (creates pending account).
+- Upload CV/resume.
+- Upload work samples/portfolio.
+- Submit for verification.
+- Wait for admin to review and schedule interview.
+- Complete interview and live technical assessment with admin.
+- View verification status (pending/in review/approved/rejected).
+- Once verified:
+  - Create/edit profile.
+  - Add about section.
+  - Add experience section.
+  - Search and browse jobs.
+  - Apply to jobs.
+
 
 ### Employers
 - Register and login.
@@ -115,11 +121,18 @@ I chose a three role system for the following reasons:
 
 ### Admin
 - Login.
-- View all users.
+- View pending verification requests.
+- Review candidate submissions (CV and work samples).
+- Schedule interviews with candidates.
+- Conduct interviews.
+- Administer live technical assessments.
+- Approve or reject candidates with feedback.
+- View all users (pending, verified, rejected).
 - Delete users.
 - View all jobs.
 - Delete jobs.
 - View all applications.
+- View platform statistics (total verified candidates, pending verifications, etc.).
 
 
 ## User Flows
