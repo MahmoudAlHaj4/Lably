@@ -183,6 +183,8 @@ I chose a three role system for the following reasons:
 - address: VARCAHR(255)
 - about: TEXT
 - resume_path: VARCHAR(255)
+- verification_status: ENUM('pending', 'in_review', 'approved', 'rejected'), DEFAULT 'pending'
+- verified_at: TIMESTAMP (NULL - set when approved)
 - created_at: TIMESTAMP
 - updated_at: TIMESTAMP
 
@@ -242,58 +244,87 @@ I chose a three role system for the following reasons:
 - rejection_reason: TEXT (NULL - only if rejected)
 - reviewed_by: UUID (FOREIGN KEY → users.id where role='admin') (NULL until reviewed)
 
-### Design Decisions
+## Database Design Decisions
 
-#### 1. Single users Table with Role Field
+### 1. Single users Table with Role Field
 
-**Decision** Store all users (job seekers, employers, admins) in one table with a role field.
-
-**Reason:**
-- Avoid code duplication, authentication logic works the same for all user types.
-- Simpler to maintain, one login system instead of three separate ones.
-- All users share common fields.
-- Role specific data (profile, company info) lives in separate tables where it belongs.
-
-**Alternative considered:** Separate job seekers, employers and admins tables.
-
-**Why rejected:** Would require building three authentication systems with nearly identical code.
-
-#### 2. Separate Profile Tables
-
-**Decision:** 
-Instead of putting all user information in one giant users table, I split it into three tables:
-
-- users (authentication only)
-- job_seeker_profiles (job seeker info)
-- employer_profiles (employer info)
+**Decision:** Store all users (job seekers, employers, admins) in one `users` table with a `role` field.
 
 **Reason:**
+- Avoids code duplication, authentication logic works the same for all user types
+- Simpler to maintain, one login system instead of three separate ones
+- All users share common fields (email, password, timestamps, is_active)
+- Role-specific data (verification status, company info) lives in separate tables where it belongs
 
-- Keeps users table clean and foucsed on authentication.
-- Job seekers and Employers have completely different profile fields.
-- Easier to query.
-- better data organiztion.
+**Alternative considered:** Separate `job_seekers`, `employers`, and `admins` tables.
 
-**Alternative considered:** Store all profile fields directly in users.
+**Why rejected:** Would require building three authentication systems with nearly identical code. makes maintenance harder.
 
-**Why rejected:** Would result in a bloated users table with many NULL values. A job seeker doesn't need company_name field and an employer doesn't need resume_path field.
+### 2. Separate Profile Tables
 
-#### 3. Admin Account Creation
-
-**Decision:** Admins cannot self register. Admin accounts are created manually via direct database insert.
-
-**Reason:**
-- Security: prevents anyone from making themselves an admin.
-- Admin is a privileged role that should be tightly controlled.
-- For V1, only the platform owner (me) needs admin access.
-
-#### 4. No Guest Browsing
-**Decision:** Users must register and login to browse jobs.
+**Decision:** User-specific data lives in separate tables (`job_seeker_profiles`, `employer_profiles`) linked by foreign key to `users`.
 
 **Reason:**
-- Keeps V1 scope small and focused.
-- Encourages user registration (builds user base).
-- Simpler authorization logic all routes require authentication.
-- Easier to track user behavior and applications.
+- Keeps `users` table clean and focused on authentication
+- Job seekers and employers have completely different profile fields
+- Easier to query - don't need to filter through irrelevant NULL fields
+- Better data organization - profile data is separated from authentication data
 
-**Trade-off:** May reduce initial traffic, but acceptable for V1. Guest browsing can be added in V2 if needed.
+**Alternative considered:** Store all profile fields directly in the `users` table with many nullable columns.
+
+**Why rejected:** Would result in a bloated `users` table with many NULL values. A job seeker doesn't need `company_name` field and an employer doesn't need `resume_path` field.
+
+### 3. Separate Verifications Table
+
+**Decision:** Verification data (CV, portfolio, interview tracking) stored in dedicated `verifications` table, not in `job_seeker_profiles`.
+
+**Reason:**
+- Keeps `job_seeker_profiles` focused on public profile information
+- Verification is a one-time process with specific workflow tracking needs
+- Easier to query pending verifications without loading all profile data
+- Clear separation: profile data vs verification process data
+
+**Alternative considered:** Store verification fields directly in `job_seeker_profiles`.
+
+**Why rejected:** Would clutter the profile table with process-tracking fields (interview dates, assessment notes, rejection reasons) that aren't part of the public profile.
+
+### 4. Admin Account Creation
+
+**Decision:** Admins cannot self-register. Admin accounts are created manually via direct database insert.
+
+**Reason:**
+- Security - prevents anyone from making themselves an admin
+- Admin is a privileged role that conducts verification interviews
+- For V1, only the platform owner needs admin access
+- Simple solution for small-scale application
+
+**Implementation:** Use SQL INSERT or database seed script to create initial admin account.
+
+
+### 5. UUIDs Instead of Auto-Increment IDs
+
+**Decision:** Use UUIDs for all primary keys instead of auto-increment integers.
+
+**Reason:**
+- **Security:** Users cannot guess other users IDs by incrementing numbers (e.g., `/users/1`, `/users/2`)
+- **Privacy:** Protects against enumeration attacks where someone could discover all users
+- **Scalability:** UUIDs are globally unique  no ID conflicts if scaling to multiple databases
+- **Flexibility:** Can generate IDs in application code before inserting into database
+
+**Alternative considered:** Auto-increment INT IDs (1, 2, 3...).
+
+**Why rejected:** Sequential IDs expose how many users/jobs exist and make it easy to guess valid IDs. Security and privacy are more important than slightly better performance.
+
+**Trade-off:** UUIDs take more storage space (36 characters vs 4-8 bytes) and are slightly slower to index, but this is acceptable for the security benefits.
+
+### 6. Why Separate experiences Table?
+**Decision:** Store work experience in separate experiences table instead of TEXT field in profile.
+
+**Reason:**
+- Job seekers can have multiple work experiences (5-10+ jobs over career)
+- Each experience needs structured data (company, title, dates, description)
+- Easier to query, filter, and display individual experiences
+- Can add/edit/delete individual experiences without touching entire profile
+
+**Alternative:** Store as JSON or TEXT in job_seeker_profiles.experiences
+**Why rejected:** Makes querying difficult, can't easily filter by company or date range, harder to validate data structure.
