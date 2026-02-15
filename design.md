@@ -12,26 +12,21 @@ Unlike general job boards, Lably maintains high quality standards through a rigo
 - **Industry-Specific:** Focused exclusively on dental technology roles (CAD/CAM, dental technicians, lab technicians)
 - **Quality Over Quantity:** Employers access a curated pool of qualified professionals, not hundreds of unvetted applicants
 
-## User Types and Roles
+## Target Users
 
-The application has three types of users:
+**Job Seekers:**
+- Dental technicians
+- CAD/CAM specialists  
+- Dental lab technicians
 
-1. **Job Seekers**
-- Users looking for jobs.
-- They can create profiles.
-- They can upload resumes.
-- They can apply to job postings.
+**Employers:**
+- Dental laboratories
+- Dental clinics
 
-2. **Employers** 
-- Users looking for candidates.
-- They can create job listings.
-- They can view applications from job seekers.
-
-3. **Admin**
-- Platform Owner.
-- They manage Platform.
-- They moderate content.
-- They manage users.
+**Platform Owner:**
+- Manages verification process
+- Conducts technical interviews
+- Maintains platform quality
 
 ### Why These Three Roles?
 
