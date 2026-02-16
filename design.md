@@ -231,7 +231,7 @@ I chose a three role system for the following reasons:
 - id: UUID (PRIMARY KEY)
 - job_seeker_profile_id: UUID (FOREIGN KEY → job_seeker_profiles.id), UNIQUE
 - resume_path: VARCHAR(255), NOT NULL
-- portfolio_path: TEXT (comma-separated file paths or JSON)
+- portfolio_path: TEXT (stores JSON array of file paths)
 - submitted_at: TIMESTAMP
 - reviewed_at: TIMESTAMP (NULL until reviewed)
 - interview_scheduled_at: TIMESTAMP (NULL)
