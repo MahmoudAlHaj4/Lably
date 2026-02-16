@@ -328,6 +328,22 @@ I chose a three role system for the following reasons:
 **Alternative:** Store as JSON or TEXT in job_seeker_profiles.experiences
 **Why rejected:** Makes querying difficult, can't easily filter by company or date range, harder to validate data structure.
 
+### 7. File Upload Specifications
+
+### Resume Upload
+- Allowed formats: PDF only
+- Max file size: 2MB
+- Storage path: /uploads/resumes/{user_id}.pdf
+- Validation: Check MIME type (application/pdf)
+
+### Portfolio Upload  
+- Allowed formats: PDF, JPG, PNG
+- Max file size: 5MB per file
+- Max files: 5 files per submission
+- Storage path: /uploads/portfolios/{user_id}_{timestamp}.{ext}
+- Storage in database: JSON array of file paths
+- Validation: Check MIME type (application/pdf, image/jpeg, image/png)
+
 
 ## Tech Stack
 
