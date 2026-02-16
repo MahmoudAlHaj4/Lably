@@ -227,9 +227,13 @@ I chose a three role system for the following reasons:
 - created_at: TIMESTAMP
 - updated_at: TIMESTAMP
 
-### verifications
+### pending_applications
 - id: UUID (PRIMARY KEY)
-- job_seeker_profile_id: UUID (FOREIGN KEY → job_seeker_profiles.id), UNIQUE
+- email (VARCHAR, UNIQUE)
+- password (VARCHAR, hashed - saved for later)
+- full_name (VARCHAR)
+- phone (VARCHAR)
+- address (VARCHAR, optional)
 - resume_path: VARCHAR(255), NOT NULL
 - portfolio_path: TEXT (stores JSON array of file paths)
 - submitted_at: TIMESTAMP
