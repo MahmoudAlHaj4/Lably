@@ -182,7 +182,6 @@ I chose a three role system for the following reasons:
 - phone: VARCHAR(255)
 - address: VARCAHR(255)
 - about: TEXT
-- verification_status: ENUM('pending', 'in_review', 'approved', 'rejected'), DEFAULT 'pending'
 - verified_at: TIMESTAMP (NULL - set when approved)
 - created_at: TIMESTAMP
 - updated_at: TIMESTAMP
