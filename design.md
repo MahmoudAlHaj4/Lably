@@ -384,7 +384,7 @@ lably-backend/
 │   │   ├── jobSeekerController.js
 │   │   ├── employerController.js
 │   │   ├── adminController.js
-│   │   └── verificationController.js
+│   │   └── PendingApplicationsController.js
 │   ├── models/
 │   │   ├── User.js
 │   │   ├── JobSeekerProfile.js
