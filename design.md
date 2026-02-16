@@ -276,9 +276,9 @@ I chose a three role system for the following reasons:
 
 **Why rejected:** Would result in a bloated `users` table with many NULL values. A job seeker doesn't need `company_name` field and an employer doesn't need `resume_path` field.
 
-### 3. Separate Verifications Table
+### 3. Separate pending_applications Table
 
-**Decision:** Verification data (CV, portfolio, interview tracking) stored in dedicated `verifications` table, not in `job_seeker_profiles`.
+**Decision:** Verification data (CV, portfolio, interview tracking) stored in dedicated `pending_applications` table, not in `job_seeker_profiles`.
 
 **Reason:**
 - Keeps `job_seeker_profiles` focused on public profile information
