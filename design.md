@@ -229,27 +229,14 @@ I chose a three role system for the following reasons:
 **Resume:** PDF only, max 2MB. Path: /uploads/resumes/{user_id}.pdf
 **Portfolio:** PDF, JPG, or PNG. Max 5MB per file, up to 5 files. Path: /uploads/portfolios/{user_id}_{timestamp}.{ext}. Stored in DB as JSON array of file paths.
 
-### Frontend
-- **HTML/CSS/JavaScript (Vanilla)** - No framework dependencies, full control over code
-- **CSS** - Custom styling without framework overhead
-
-### Backend
-- **Node.js** - JavaScript runtime
-- **Express.js** - Web framework for building REST API
-
-### Database
-- **MySQL** - Relational database
-
-### File Storage
-- **Local Filesystem (Development)** - Store uploaded files in `/uploads` directory
-- **Cloudinary (Production - Free Tier)** - Cloud storage for resumes and portfolios
-
-**Alternative considered:** AWS S3
-**Why rejected for V1:** More complex setup, pricing less predictable for beginners, Cloudinary's free tier is sufficient.
-
-### Authentication
-- **JWT (JSON Web Tokens)** - Stateless authentication
-- **bcrypt** - Password hashing
+## Tech Stack
+- **HTML/CSS/JavaScript (Vanilla)** 
+- **Node.js** 
+- **Express.js** 
+- **MySQL** 
+- **Local Filesystem (Development)** 
+- **JWT (JSON Web Tokens)**
+- **bcrypt** 
 
 
 ## Architecture
