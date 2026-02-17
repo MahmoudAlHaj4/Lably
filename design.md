@@ -227,7 +227,7 @@ I chose a three role system for the following reasons:
 
 ### pending_applications
 - id: UUID (PRIMARY KEY)
-- email (VARCHAR, UNIQUE)
+- email (VARCHAR) UNIQUE NOT NULL
 - full_name (VARCHAR)
 - phone (VARCHAR)
 - address (VARCHAR, optional)
