@@ -169,6 +169,8 @@ I chose a three role system for the following reasons:
 - created_at: TIMESTAMP, DEFAULT CURRENT_TIMESTAMP
 - updated_at: TIMESTAMP, DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 - is_active: BOOLEAN, DEFAULT TRUE
+- activation_token: VARCHAR(255), NULL
+- activation_token_expires: TIMESTAMP, NULL
 
 ### job_seekers_profiles
 - id: UUID (PRIMARY KEY)
