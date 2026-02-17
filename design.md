@@ -239,7 +239,7 @@ I chose a three role system for the following reasons:
 - interview_completed_at: TIMESTAMP (NULL)
 - verification_result: ENUM('pending', 'approved', 'rejected'), DEFAULT 'pending'
 - assessment_notes: TEXT (admin's notes from technical assessment)
-- decision_notes: TEXT NOT NULL 
+- decision_notes: TEXT 
 - reviewed_by: UUID (FOREIGN KEY → users.id where role='admin') (NULL until reviewed)
 
 ## Database Design Decisions
