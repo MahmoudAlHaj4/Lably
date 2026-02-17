@@ -382,19 +382,20 @@ lably-backend/
 │   │   ├── Job.js
 │   │   ├── Application.js
 │   │   ├── Experience.js
-│   │   └── Verification.js
+│   │   └── PendingApplication.js
 │   ├── routes/
 │   │   ├── authRoutes.js
 │   │   ├── jobSeekerRoutes.js
 │   │   ├── employerRoutes.js
 │   │   ├── adminRoutes.js
-│   │   └── verificationRoutes.js
+│   │   └── pendingApplicationsRoutes.js
 │   ├── middleware/
 │   │   ├── authMiddleware.js
 │   │   ├── roleMiddleware.js
 │   │   └── uploadMiddleware.js
 │   ├── config/
-│   │   └── database.js
+│   │   |── database.js
+|   |   └── schema.sql
 │   └── utils/
 │       ├── jwtUtils.js
 │       └── fileUtils.js
