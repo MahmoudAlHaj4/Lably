@@ -225,6 +225,10 @@ I chose a three role system for the following reasons:
 **Separate experiences Table:** Job seekers can have 5–10+ experiences, each needing structured data. A separate table makes it easy to add, edit, or delete individual entries. Storing as JSON would make querying and validation significantly harder.
 **Activation Tokens in users Table:** Token fields are NULL until needed and cleared after use. A separate tokens table adds complexity with no V1 benefit. Can be refactored in V2 if more token types are needed.
 
+## File Upload Specifications
+**Resume:** PDF only, max 2MB. Path: /uploads/resumes/{user_id}.pdf
+**Portfolio:** PDF, JPG, or PNG. Max 5MB per file, up to 5 files. Path: /uploads/portfolios/{user_id}_{timestamp}.{ext}. Stored in DB as JSON array of file paths.
+
 ### Frontend
 - **HTML/CSS/JavaScript (Vanilla)** - No framework dependencies, full control over code
 - **CSS** - Custom styling without framework overhead
