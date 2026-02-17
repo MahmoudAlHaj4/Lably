@@ -103,7 +103,6 @@ I chose a three role system for the following reasons:
 - Submit for verification.
 - Wait for admin to review and schedule interview.
 - Complete interview and live technical assessment with admin.
-- View verification status (pending/in review/approved/rejected).
 - Once verified:
   - Create/edit profile.
   - Add about section.
