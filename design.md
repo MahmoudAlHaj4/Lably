@@ -531,7 +531,42 @@ lably-frontend/
 
 **Example:** If verification logic needs updating, I only touch `verificationController.js` and `verificationRoutes.js`, without affecting job posting or authentication code.
 
+## API Endpoints 
+**Purpose:**: Complete list of all API endpoints organized by feature area.
 
+### Authentication & Account Management
+1. POST /api/auth/login
+- Login for all user types (job seekers, employers, admins)
+- Input: email, password
+- Output: JWT token, user object (id, email, role)
+
+2. POST /api/auth/activate
+- Activate account and set password using token
+- Input: token, password
+- Output: Success message
+
+### Job Seeker Application Flow
+1. POST /api/pendingApplications/submit
+- Submit job seeker application with resume and portfolio
+- Input: email, full_name, phone, address (optional), resume (file), portfolio (files)
+- Output: Success message with application confirmation
+
+### Admin - Verification Management
+1. GET /api/admin/pending-applications
+- Get list of all pending applications
+- Auth: Requires admin JWT token
+- Output: Array of pending applications
+
+2. PUT /api/admin/pending-applications/:id/approve
+- Approve a pending application
+- Auth: Requires admin JWT token
+- Output: Success message
+
+3. PUT /api/admin/pending-applications/:id/reject
+- Reject a pending application with decision notes
+- Auth: Requires admin JWT token
+- Input: decision_notes
+- Output: Success message
 
 ## Building Phases
 
