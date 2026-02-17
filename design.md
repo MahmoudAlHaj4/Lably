@@ -28,71 +28,43 @@ Unlike general job boards, Lably maintains high quality standards through a rigo
 - Conducts technical interviews
 - Maintains platform quality
 
-## Why These Three Roles?
-
-I chose a three role system for the following reasons:
-
-### 1. Clear Separation of Concens
-
-- **Job Seekers** (dental technicians, CAD/CAM specialists) are looking for work.
-- **Employers** (dental labs, clinics) are looking for verified talent.
-- Job seeker looking for work should never see "Post A Job" functionality.
-- An Employer hiring candidates should never see "Apply for Job" functionality.
-- Separation roles prevents UI clutter and confusion.
-
-### 2. Secuirty and Data Protection
-
-- Job seekers should not access employer dashboard.
-- Employer should not access other employers applications.
-
-### 3. Admin Role for Platform Management
-- **Verification Process:** Admin conducts interviews and technical assessments for all job seekers
-- **Quality Control:** Only verified candidates appear on the platform - maintaining Lably's core value proposition
-- **Platform Moderation:** Manages users, jobs, and ensures platform quality
-- Admin can see overview statistics like how many verified candidates, active jobs, and applications
-
-4. Simplicity for V1
-
-- Three roles cover all essential use cases without overcomplicating the system.
-- More roles (recruiter, company admin, moderator) can be added later if needed.
-- Keeps authentication and authorization logic straightforward.
+## Role System
+Three roles cover all essential V1 use cases while keeping auth logic straightforward.
+**Separation of Concerns:** Job seekers never see "Post a Job." Employers never see "Apply for Job." This prevents UI clutter and role confusion.
+**Security:** Job seekers cannot access employer dashboards. Employers cannot access other employers' applications.
+**Admin:** Handles verification interviews, quality control, and moderation. Admin accounts are created manually via database insert to prevent unauthorized privilege escalation.
 
 ## Role Permissions & Access Control
 
-| Feature/Action | Job Seeker | Employer | Admin |
-|----------------|------------|----------|-------|
-| **Authentication** |
-| Register account | ✅ (pending verification) | ✅ | ❌ (created manually) |
-| Login/Logout | ✅ (only if verified) | ✅ | ✅ |
-| **Profile Management** |
-| Create own profile | ✅ | ✅ | ❌ |
-| Edit own profile | ✅ | ✅ | ❌ |
-| Delete own profile | ✅ | ✅ | ❌ |
-| View other users' profiles | ❌ | ❌ (only verified applicants) | ✅ (all users) |
-| **Verification** |
-| Submit for verification | ✅ (after registration) | ❌ | ❌ |
-| Conduct interviews | ❌ | ❌ | ✅ |
-| Approve/reject candidates | ❌ | ❌ | ✅ |
-| View verification status | ❌ | ❌ | ✅ (all statuses) |
-| **Jobs** |
-| Browse/search jobs | ✅ (only verified) | ❌ | ✅ (all jobs) |
-| View job details | ✅ (only verified) | ❌ | ✅ |
-| Post new job | ❌ | ✅ | ❌ |
-| Edit own job | ❌ | ✅ | ❌ |
-| Delete own job | ❌ | ✅ | ❌ |
-| Delete any job | ❌ | ❌ | ✅ |
-| See application count | ❌ | ✅ (own jobs) | ✅ (all jobs) |
-| **Applications** |
-| Apply to job | ✅ (only verified) | ❌ | ❌ |
-| View own applications | ✅ | ❌ | ❌ |
-| View received applications | ❌ | ✅ (own jobs, verified only) | ✅ (all) |
-| View applicant profiles | ❌ | ✅ (verified who applied) | ✅ (all) |
-| View applicant resumes | ❌ | ✅ (verified who applied) | ✅ (all) |
-| **Platform Management** |
-| View platform statistics | ❌ | ❌ | ✅ |
-| Delete any user | ❌ | ❌ | ✅ |
-| View all users list | ❌ | ❌ | ✅ |
-| View pending verifications | ❌ | ❌ | ✅ |
+### 1. Authentication
+**Register:** Seeker ✅ pending · Employer ✅ · Admin ❌ manual
+**Login:** Seeker ✅ verified only · Employer ✅ · Admin ✅
+
+### 2.Profile
+**Create/edit/delete:** Seeker ✅ · Employer ✅ · Admin ❌
+**View others:** Seeker ❌ · Employer ❌ applicants only · Admin ✅ all
+
+### 3.Verification
+**Submit:** Seeker ✅ · Employer ❌ · Admin ❌
+**Conduct interviews:** Seeker ❌ · Employer ❌ · Admin ✅
+**Approve/reject:** Seeker ❌ · Employer ❌ · Admin ✅
+**View status:** Seeker ❌ · Employer ❌ · Admin ✅ all
+
+### 4.Jobs
+**Browse/view:** Seeker ✅ verified only · Employer ❌ · Admin ✅
+**Post/edit/delete own:** Seeker ❌ · Employer ✅ · Admin ❌
+**Delete any:** Seeker ❌ · Employer ❌ · Admin ✅
+**Application count:** Seeker ❌ · Employer ✅ own · Admin ✅ all
+
+### 5.Applications
+**Apply:** Seeker ✅ verified only · Employer ❌ · Admin ❌
+**View own:** Seeker ✅ · Employer ❌ · Admin ❌
+**View received:** Seeker ❌ · Employer ✅ own · Admin ✅ all
+**View profiles/resumes:** Seeker ❌ · Employer ✅ verified only · Admin ✅ all
+
+### 6.Platform
+
+**Statistics / delete any user / view all users:** Seeker ❌ · Employer ❌ · Admin ✅
 
 ## Core Features (V1)
 
