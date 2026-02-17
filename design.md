@@ -142,6 +142,7 @@ I chose a three role system for the following reasons:
 
 ### Simple Registration and Job Posting 
 **Decision:** Keep employer registration and job posting free and unlimited for V1.
+**Note:** Employers must verify their email address during registration.
 
 **Reason:**
 - Focus on building the core product first
