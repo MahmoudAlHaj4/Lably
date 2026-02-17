@@ -194,6 +194,7 @@ I chose a three role system for the following reasons:
 ### jobs
 - id: UUID (PRIMARY KEY)
 - employer_id: UUID (FOREIGN KEY → users.id where role='employer')
+- status:  ENUM('active', 'filled', 'closed')
 - job_title: VARCHAR(255), NOT NULL
 - description: TEXT, NOT NULL
 - requirements: TEXT
