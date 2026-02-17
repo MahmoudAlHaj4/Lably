@@ -625,3 +625,42 @@ POST /api/auth/activate
   3. If token invalid or expired, return error
 - Output: Success message (user can now log in)
 
+
+### Activation Flow
+
+#### 1. Job Seeker Applies
+- Submits application with email and documents
+- No password required at this stage
+- Application status: pending
+
+#### 2. Admin Reviews and Approves
+- Admin reviews resume and portfolio
+- Clicks "Approve" in admin dashboard
+- System automatically:
+      - Creates user account (inactive)
+      - Generates unique activation token (expires in 48 hours)
+      - Sends activation email to applicant
+
+#### 3. Job Seeker Receives Email
+- Email contains unique link: https://lably.com/activate?token=xxx
+- Link expires in 48 hours for security
+- Clicking link takes user to "Set Password" page
+
+#### 4. Job Seeker Sets Password
+Enters new password
+Clicks "Activate Account"
+System validates token, saves password
+Account becomes active
+User redirected to login page
+
+#### 5. Job Seeker Logs In
+- Uses email and newly created password
+- Gains full access to platform features
+- Can now browse jobs and apply
+
+### Why This Flow?
+- No password stored during application stage
+- Only verified candidates get activation emails
+- Email verification confirms valid email address
+- 48-hour expiry adds security layer
+- **Clean separation:** application process vs account activation
