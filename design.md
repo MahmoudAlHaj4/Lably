@@ -530,3 +530,24 @@ lably-frontend/
 - **Maintainability** - Changes to one feature don't break others
 
 **Example:** If verification logic needs updating, I only touch `verificationController.js` and `verificationRoutes.js`, without affecting job posting or authentication code.
+
+
+
+## Building Phases
+
+### Phase 1: Job Seeker Application & Admin Verification System
+
+**Goal:** Job seekers can submit applications with documents. Admins can review and approve/reject applications. Approved users can login.
+
+#### 1. Database Schema Setup
+
+**Create all MySQL tables:**
+- `pending_applications` - Stores job seeker applications before approval
+- `users` - Stores all approved users (job seekers, employers, admins)
+- `job_seekers_profiles` - Profile data for approved job seekers
+- `experiences` - Work experience entries for job seekers
+- `employer_profiles` - Profile data for employers
+- `jobs` - Job postings from employers
+- `applications` - Job applications from job seekers to jobs
+
+**Implementation:** Write SQL CREATE TABLE statements and execute once to set up database structure.
