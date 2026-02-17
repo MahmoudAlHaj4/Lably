@@ -339,6 +339,18 @@ I chose a three role system for the following reasons:
 - Storage in database: JSON array of file paths
 - Validation: Check MIME type (application/pdf, image/jpeg, image/png)
 
+### 8. Why Activation Tokens in Users Table
+**Decision:** Store activation tokens directly in users table instead of creating a separate tokens table.
+
+**Reason:**
+- Simplifies V1 implementation - no extra tables or joins needed
+- Activation is a one-time process with clear start and end
+- Token fields are NULL until needed and cleared after use, keeping data clean
+- Can always migrate to dedicated tokens table in V2 if more token types needed
+
+**Alternative:** Separate tokens table.
+
+**Why rejected:** For V1 adds unnecessary complexity. For V1, only activation tokens exist. A separate table would mean more code, more queries, and more to maintain without any real benefit.
 
 ## Tech Stack
 
