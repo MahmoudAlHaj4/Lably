@@ -120,10 +120,7 @@ I chose a three role system for the following reasons:
 - Login.
 - View pending verification requests.
 - Review candidate submissions (CV and work samples).
-- Schedule interviews with candidates.
-- Conduct interviews.
-- Administer live technical assessments.
-- Approve or reject candidates with feedback.
+- Approve or reject candidates with decision notes.
 - View all users (pending, verified, rejected).
 - Delete users.
 - View all jobs.
