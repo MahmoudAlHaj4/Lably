@@ -551,3 +551,77 @@ lably-frontend/
 - `applications` - Job applications from job seekers to jobs
 
 **Implementation:** Write SQL CREATE TABLE statements and execute once to set up database structure.
+
+#### 2. Backend APIs 
+
+**Pending Application Submission:**
+POST /api/pendingApplications/submit
+```
+- Input: email, full_name, phone, address (optional), resume (file), portfolio (files)
+- Process: save files to /uploads/, insert into pending_applications
+- Output: Success message with application confirmation
+- Status: application_status = 'pending'
+```
+
+**Admin - Get Pending Applications:**
+GET /api/admin/pending-applications
+```
+- Output: List of all pending applications with id, email, full_name, application_status, submitted_at
+- Filter: Can filter by application_status (pending, in_review, approved, rejected)
+```
+
+**Admin - Approve Pending Application:**
+```
+PUT /api/admin/pending-applications/:id/approve
+- Auth: Requires admin JWT token
+- Process:
+  1. Retrieve application data from pending_applications
+  2. Create record in users table:
+     - email (from application)
+     - role = 'job_seeker'
+     - is_active = FALSE
+     - activation_token = generate_unique_token()
+     - activation_token_expires = NOW() + INTERVAL 48 HOUR
+  3. Create record in job_seekers_profiles:
+     - user_id = id from step 2
+     - full_name, phone, address (from application)
+     - verified_at = NOW()
+  4. Update pending_applications.application_status = 'approved'
+  5. Set reviewed_at = NOW(), reviewed_by = admin_id
+  6. Send email to applicant with activation link containing the token
+- Output: Success message
+```
+
+**Admin - Reject Pending Application:**
+```
+PUT /api/admin/pending-applications/:id/reject
+- Auth: Requires admin JWT token
+- Input: rejection_reason (text)
+- Process:
+  1. Update pending_applications.application_status = 'rejected'
+  2. Add decision_notes to record
+  3. Set reviewed_at = NOW(), reviewed_by = admin_id
+  4. Send rejection email to applicant
+- Output: Success message
+```
+
+**User Login:**
+```
+POST /api/auth/login
+- Input: email, password
+- Process: Verify credentials against users table, generate JWT token
+- Output: { token, user: { id, email, role } }
+- Note: Only approved users exist in users table, so only they can login
+```
+**User - Activate Account:**
+POST /api/auth/activate
+- Input: token, password
+- Process:
+  1. Find user where activation_token = token AND activation_token_expires > NOW()
+  2. If found:
+     - Hash the password and save to user record
+     - Set is_active = TRUE
+     - Clear activation_token and activation_token_expires (set to NULL)
+  3. If token invalid or expired, return error
+- Output: Success message (user can now log in)
+
