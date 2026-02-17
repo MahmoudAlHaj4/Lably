@@ -218,38 +218,12 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 lably-backend/
 ├── src/
 │   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── jobSeekerController.js
-│   │   ├── employerController.js
-│   │   ├── adminController.js
-│   │   └── PendingApplicationsController.js
 │   ├── models/
-│   │   ├── User.js
-│   │   ├── JobSeekerProfile.js
-│   │   ├── EmployerProfile.js
-│   │   ├── Job.js
-│   │   ├── Application.js
-│   │   ├── Experience.js
-│   │   └── PendingApplication.js
 │   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── jobSeekerRoutes.js
-│   │   ├── employerRoutes.js
-│   │   ├── adminRoutes.js
-│   │   └── pendingApplicationsRoutes.js
 │   ├── middleware/
-│   │   ├── authMiddleware.js
-│   │   ├── roleMiddleware.js
-│   │   └── uploadMiddleware.js
 │   ├── config/
-│   │   |── database.js
-|   |   └── schema.sql
 │   └── utils/
-│       ├── jwtUtils.js
-│       └── fileUtils.js
 ├── uploads/
-│   ├── resumes/
-│   └── portfolios/
 ├── server.js
 ├── .env
 └── package.json
@@ -260,33 +234,13 @@ lably-backend/
 lably-frontend/
 ├── index.html
 |── pages/
-│   ├── auth/
-│   ├── jobSeeker/
-│   ├── employer/
-│   └── admin/
 ├── css/
-│   ├── styles.css
-│   ├── auth.css
-│   └── dashboard.css
 ├── js/
 │   ├── auth/
-│   │   ├── login.js
-│   │   └── register.js
 │   ├── jobSeeker/
-│   │   ├── profile.js
-│   │   ├── jobs.js
-│   │   └── applications.js
 │   ├── employer/
-│   │   ├── dashboard.js
-│   │   ├── postJob.js
-│   │   └── viewApplications.js
 │   ├── admin/
-│   │   ├── dashboard.js
-│   │   ├── verifications.js
-│   │   └── users.js
 │   └── utils/
-│       ├── api.js
-│       └── auth.js
 └── assets/
     └── images/
 ```
