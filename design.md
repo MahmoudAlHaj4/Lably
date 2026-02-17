@@ -110,7 +110,7 @@ I chose a three role system for the following reasons:
 
 
 ### Employers
-- Register and login.
+- Register with email verification and login.
 - Post jobs.
 - View applications received.
 - View applicant profiles and resumes.
