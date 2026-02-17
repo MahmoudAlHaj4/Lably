@@ -230,8 +230,6 @@ I chose a three role system for the following reasons:
 - portfolio_path: TEXT (stores JSON array of file paths)
 - submitted_at: TIMESTAMP
 - reviewed_at: TIMESTAMP (NULL until reviewed)
-- interview_scheduled_at: TIMESTAMP (NULL)
-- interview_completed_at: TIMESTAMP (NULL)
 - application_status: ENUM('pending', 'approved', 'rejected'), DEFAULT 'pending'
 - assessment_notes: TEXT (admin's notes from technical assessment)
 - decision_notes: TEXT 
