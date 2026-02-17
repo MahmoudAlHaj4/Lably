@@ -349,7 +349,7 @@ I chose a three role system for the following reasons:
 - **Express.js** - Web framework for building REST API
 
 ### Database
-- **PostgreSQL** - Relational database
+- **MySQL** - Relational database
 
 ### File Storage
 - **Local Filesystem (Development)** - Store uploaded files in `/uploads` directory
