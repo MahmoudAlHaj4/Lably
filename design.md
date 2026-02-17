@@ -128,28 +128,6 @@ I chose a three role system for the following reasons:
 - View all applications.
 - View platform statistics (total verified candidates, pending verifications, etc.).
 
-## Why These Features for V1?
-
-### Focus on Verification Over Everything Else
-**Problem:** Most dental labs and clinics struggle to find qualified candidates. Generic job boards are flooded with unqualified applicants, wasting employers time.
-
-**Solution:** Lably's core value is quality over quantity. The verification process ensures only qualified dental technicians and CAD/CAM specialists appear on the platform. This makes it dramatically easier for employers to find the right candidate.
-
-**Why verification is V1 priority:**
-- It's Lably's competitive advantage and main differentiator
-- Without it, Lably is just another generic job board
-- Employers will use the platform specifically because candidates are pre-verified
-
-### Simple Registration and Job Posting 
-**Decision:** Keep employer registration and job posting free and unlimited for V1.
-**Note:** Employers must verify their email address during registration.
-
-**Reason:**
-- Focus on building the core product first
-- Need to attract employers to the platform before charging
-- Payment integration adds complexity
-- Can add paid tiers in V2 once platform proves valuable
-
 ## What's Intentionally Left Out for V2
 
 - Direct messaging between employers and candidates
