@@ -231,7 +231,6 @@ I chose a three role system for the following reasons:
 - submitted_at: TIMESTAMP
 - reviewed_at: TIMESTAMP (NULL until reviewed)
 - application_status: ENUM('pending', 'approved', 'rejected'), DEFAULT 'pending'
-- assessment_notes: TEXT (admin's notes from technical assessment)
 - decision_notes: TEXT 
 - reviewed_by: UUID (FOREIGN KEY → users.id where role='admin') (NULL until reviewed)
 
