@@ -73,7 +73,7 @@ I chose a three role system for the following reasons:
 | Submit for verification | ✅ (after registration) | ❌ | ❌ |
 | Conduct interviews | ❌ | ❌ | ✅ |
 | Approve/reject candidates | ❌ | ❌ | ✅ |
-| View verification status | ✅ (own status) | ❌ | ✅ (all statuses) |
+| View verification status | ❌ | ❌ | ✅ (all statuses) |
 | **Jobs** |
 | Browse/search jobs | ✅ (only verified) | ❌ | ✅ (all jobs) |
 | View job details | ✅ (only verified) | ❌ | ✅ |
