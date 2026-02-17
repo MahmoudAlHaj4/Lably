@@ -97,7 +97,7 @@ I chose a three role system for the following reasons:
 ## Core Features (V1)
 
 ### Job Seekers
-- Register (creates pending account).
+- Submit application (creates pending verification request).
 - Upload CV/resume.
 - Upload work samples/portfolio.
 - Submit for verification.
