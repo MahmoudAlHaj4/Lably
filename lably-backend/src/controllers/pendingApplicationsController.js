@@ -2,7 +2,7 @@ const PendingApplication = require('../models/PendingApplication')
 const fs = require('fs')
 async function submitApplication(req, res) {
     try{
-        const { email, full_name, phone , address , portfolio_path} = req.body
+        const { email, full_name, phone , address} = req.body
 
         if(!email || !full_name){
             return res.status(400).json({error: 'Missing required fields'})
