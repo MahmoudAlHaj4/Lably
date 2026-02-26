@@ -20,10 +20,10 @@ class User {
             userData.email,
             userData.password,
             userData.role,
-            false
+            userData.is_active
         ] )
 
-        return {id, email: userData.email , role: userData.role , is_active : false}
+        return {id, email: userData.email , role: userData.role , is_active : userData.is_active}
     }
 
     static async setActivationToken(token ,expiry, userId) {
