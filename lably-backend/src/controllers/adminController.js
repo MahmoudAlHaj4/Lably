@@ -48,7 +48,8 @@ async function getPendingApplication(req, res) {
             const user = await User.createUser({
                 email: application.email,
                 password,
-                role: 'job_seeker'
+                role: 'job_seeker',
+                is_active: false
             })
 
             await User.setActivationToken(token, expiry , user.id)
