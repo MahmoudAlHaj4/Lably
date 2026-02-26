@@ -10,6 +10,8 @@ app.use('/api/pendingApplication', pendingApplicationsRoutes)
 const authRoutes = require('./src/routes/authRoutes')
 app.use('/api/auth', authRoutes)
 
+const adminRoutes = require('./src/routes/adminRoutes')
+app.use('/api/admin', adminRoutes)
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, ()=>{
