@@ -20,6 +20,24 @@ class PendingApplication {
         return {...applicationData}
     }
 
+    static async getAll(){
+        const query = `SELECT * FROM pending_applications`
+        const [rows] = await pool.query(query)
+
+        return rows
+    }
+
+    static async getPendingApp(id){
+        const query = `SELECT * FROM pending_applications WHERE id=?`
+        const [row] = await pool.query(query ,[id])
+        return row[0]
+    }
+
+    static async approved(id){
+        const query = `UPDATE pending_applications SET 	application_status =? WHERE id = ?`
+        const [row] = await pool.query(query, ['approved', id])
+        return row[0]
+    }
 }
 
 module.exports = PendingApplication
