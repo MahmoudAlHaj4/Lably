@@ -43,4 +43,30 @@ async function login(req, res) {
 
 }
 
-module.exports = {login}
+async function activateAccount(req, res) {
+    try{
+        const {password , token} = req.body
+
+        if(!password) {
+            return res.status(400).json({message: 'Password is required'})
+        } 
+        const checkToken = await User.findActivationToken(token)
+        if(!checkToken) {
+            return res.status(400).json({ message: 'Invalid token' })
+        }
+
+        if(new Date() > new Date(checkToken.activation_token_expires)) {
+            return res.status(400).json({ message: 'Token expired' })
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10)
+
+        const activate = await User.activateUser(checkToken.id , hashedPassword)
+        return res.status(200).json({ message: 'Account activated successfully' })
+
+    }catch(err) {
+        return res.status(500).json({message: err.message})
+    }
+}
+
+module.exports = {login , activateAccount}
