@@ -32,6 +32,18 @@ class User {
         await pool.query(query, [token, expiry, userId])
 
     }
+
+    static async findActivationToken(token) {
+        const query = `SELECT id, activation_token_expires  FROM users WHERE activation_token =?`
+        const [row] = await pool.query(query , [token])
+
+        return row[0]
+    }
+
+    static async activateUser(userId, hashedPassword) {
+    const query = `UPDATE users SET password = ?, is_active = true, activation_token = NULL, activation_token_expires = NULL WHERE id = ?`
+    await pool.query(query, [hashedPassword, userId])
+    }   
 }
 
 module.exports = User
