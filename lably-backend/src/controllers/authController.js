@@ -61,12 +61,49 @@ async function activateAccount(req, res) {
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        const activate = await User.activateUser(checkToken.id , hashedPassword)
+         await User.activateUser(checkToken.id , hashedPassword)
         return res.status(200).json({ message: 'Account activated successfully' })
 
     }catch(err) {
         return res.status(500).json({message: err.message})
     }
+
 }
 
-module.exports = {login , activateAccount}
+
+async function employerRegister(req , res) {
+    try{
+        const {email , password} = req.body
+
+        if(!email){
+            return res.status(400).json({message : "Email is required"})
+        }
+        const checkEmail = await User.findByEmail(email)
+        if(checkEmail){
+            return res.status(400).json({message: "Email already Used"})
+        }
+
+        if(!password){
+            return res.status(400).json({message: "Password is required"})
+        }
+        const hashedPassword = await bcrypt.hash(password , 10)
+        const user = await User.createUser({
+            email: email,
+            password: hashedPassword,
+            role: 'employer',
+            is_active: true
+            
+        })
+
+        if(!user) {
+            return res.status(400).json({message: "Failed to register"})
+        }
+
+        return res.status(201).json({message: 'success'})
+
+    }catch(err) {
+        return res.status(500).json({message: err.message})
+    }
+    }
+
+module.exports = {login , activateAccount , employerRegister}
