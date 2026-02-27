@@ -25,6 +25,19 @@ class EmployerProfile {
         return row[0]
     }
 
+    static async update(userId, profileData){
+        const query = `UPDATE employer_profiles SET company_name = ?, company_description = ?, location = ?, website = ? WHERE user_id = ?`
+        await pool.query(query , [
+            profileData.company_name,
+            profileData.company_description,
+            profileData.location,
+            profileData.website,
+            userId
+        ])
+
+        return { ...profileData , user_id: userId}
+    }
+
 }
 
 module.exports = EmployerProfile
