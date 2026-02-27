@@ -23,6 +23,35 @@ class JobSeekerProfile {
         const [row] = await pool.query(query , [userId])
         return row[0]
     }
+
+    static async update(userId , profileData) {
+        const fields = []
+        const values = []
+
+        if(profileData.full_name) {
+        fields.push('full_name = ?')
+        values.push(profileData.full_name)
+        }
+        if(profileData.phone) {
+            fields.push('phone = ?')
+            values.push(profileData.phone)
+        }
+        if(profileData.address){
+            fields.push('address = ?')
+            values.push(profileData.address)
+        }
+        if(profileData.about){
+            fields.push('about = ?')
+            values.push(profileData.about)
+        }
+
+        const query = `UPDATE job_seekers_profiles SET  ${fields.join(', ')} WHERE user_id = ? `
+        values.push(userId)
+
+        await pool.query(query, values)
+
+        return {...profileData , user_id: userId}
+    }
 }
 
 module.exports = JobSeekerProfile
