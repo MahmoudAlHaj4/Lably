@@ -136,9 +136,9 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 ### experiences
 - id: UUID (PRIMARY KEY)
 - job_seeker_profile_id: UUID (FOREIGN KEY-> job_seekers_profiles.id)
-- company_name: VARCHAR(255)
-- job_title: VARCHAR(255)
-- start_date: DATE
+- company_name: VARCHAR(255) NOT NULL
+- job_title: VARCHAR(255) NOT NULL
+- start_date: DATE NOT NULL
 - end_date: DATE (NULLABLE - FOR CURRENT JOB)
 - description: TEXT
 - created_at: TIMESTAP
