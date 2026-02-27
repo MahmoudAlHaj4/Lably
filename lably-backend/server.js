@@ -3,6 +3,8 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 
+const corsMiddleware  = require('./src/middleware/crosMiddleware')
+app.use(corsMiddleware )
 
 const pendingApplicationsRoutes = require('./src/routes/pendingApplicationsRoutes')
 app.use('/api/pendingApplication', pendingApplicationsRoutes)
@@ -12,6 +14,9 @@ app.use('/api/auth', authRoutes)
 
 const adminRoutes = require('./src/routes/adminRoutes')
 app.use('/api/admin', adminRoutes)
+
+const employerProfileRoutes = require('./src/routes/employerprofileRoutes')
+app.use('/api/employer/profile', employerProfileRoutes)
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, ()=>{
