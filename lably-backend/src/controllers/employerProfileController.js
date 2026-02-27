@@ -33,4 +33,28 @@ async function createEmployerProfile(req, res) {
     }
 }
 
-module.exports = {createEmployerProfile}
+async function updateEmployerProfile(req, res) {
+    try{
+        const {company_name , company_description , location , website} = req.body
+        const role = req.user.role
+        const userId = req.user.id
+
+        if(role !== 'employer') {
+            return res.status(403).json({message: "You are not an employer"})
+        }
+
+        await EmployerProfile.update(userId , {
+            company_name : company_name,
+            company_description: company_description,
+            location: location,
+            website: website
+        })
+
+        return res.status(200).json({message : "Profile Updated successfully"})
+    }catch(error){
+        return res.status(500).json({message : error.message})
+    }
+}
+
+
+module.exports = {createEmployerProfile , updateEmployerProfile}
