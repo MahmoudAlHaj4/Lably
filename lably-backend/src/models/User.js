@@ -44,6 +44,12 @@ class User {
     const query = `UPDATE users SET password = ?, is_active = true, activation_token = NULL, activation_token_expires = NULL WHERE id = ?`
     await pool.query(query, [hashedPassword, userId])
     }   
+
+    static async findById(userId){
+        const query = `SELECT id, email, role, is_active FROM users WHERE id =?`
+        const [row] = await pool.query(query , [userId])
+        return row[0]
+    }
 }
 
 module.exports = User
