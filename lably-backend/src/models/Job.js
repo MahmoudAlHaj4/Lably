@@ -50,6 +50,13 @@ class Job {
 
         return {...jobData , id: jobId}
     }
+
+    static async delete(jobId) {
+        const query = 'DELETE FROM jobs WHERE id =?' 
+        await pool.query(query , [jobId])
+
+        return {jobId}
+    }
 }
 
 module.exports = Job
