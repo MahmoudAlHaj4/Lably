@@ -24,6 +24,9 @@ app.use('/api/job-seeker/profile', jobSeekerProfileRoutes)
 const experienceRoutes = require('./src/routes/experienceRoutes')
 app.use('/api/experience-section', experienceRoutes)
 
+const jobRoutes = require('./src/routes/jobRoutes')
+app.use('/api/jobs', jobRoutes)
+
 const PORT = process.env.PORT || 3000
 app.listen(PORT, ()=>{
     console.log(`Express server is running on http://localhost:${PORT}`)
