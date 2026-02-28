@@ -35,6 +35,21 @@ class Job {
 
         return row[0]
     }
+
+    static async update (jobId , jobData) {
+        const query = `UPDATE jobs SET status = ? , job_title =? , description = ?, requirements = ?, location =?, job_type = ? WHERE id =? `
+        await pool.query(query , [
+            jobData.status,
+            jobData.job_title,
+            jobData.description,
+            jobData.requirements,
+            jobData.location,
+            jobData.job_type,
+            jobId
+        ])
+
+        return {...jobData , id: jobId}
+    }
 }
 
 module.exports = Job
