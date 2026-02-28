@@ -28,6 +28,13 @@ class Job {
 
         return rows
     }
+
+    static async getOneJob(jobId){
+        const query = `SELECT * FROM jobs WHERE id =? `
+        const [row] = await pool.query(query, [jobId])
+
+        return row[0]
+    }
 }
 
 module.exports = Job
