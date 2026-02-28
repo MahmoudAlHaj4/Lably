@@ -1,29 +1,12 @@
 const Experience = require('../models/Experience')
 const JobSeekerProfile = require('../models/JobSeekerProfile')
-const User = require('../models/User')
 
 
 async function addExperience (req, res) {
     try{
-
         const {company_name , job_title, start_date, end_date , description} = req.body
-        const role = req.user.role 
-        const userId = req.user.id
 
-        if(role !== 'job_seeker'){
-            return res.status(403).json({message: "You are not a job seeker"})
-        }
-        const isActive = await User.findById(userId)
-        if(isActive.is_active === false){
-            return res.status(403).json({message: "Your account is not activated please activate your account first"})
-        }
-        const profile = await JobSeekerProfile.findByUserId(userId)
-
-        if(!profile){
-            return res.status(404).json({message: "Profile Not found"})
-        }
-
-        await Experience.create(profile.id, {
+        const data = await Experience.create(req.profile.id, {
             company_name: company_name,
             job_title: job_title,
             start_date: start_date,
@@ -31,7 +14,7 @@ async function addExperience (req, res) {
             description: description
         })
 
-        return res.status(201).json({message: 'success'})
+        return res.status(201).json({message: 'success', data:data})
     }catch(error) {
         return res.status(500).json({message : error.message})
     }
