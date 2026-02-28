@@ -58,8 +58,17 @@ async function UpdateJobExperience(req, res) {
 async function  GetExperience(req, res) {
     try{
         const experienceId =req.params.id
-
+        const userId = req.user.id
+        const profile = await JobSeekerProfile.findByUserId(userId)
         const data = await Experience.getOneExperience(experienceId)
+
+        if(!data){
+            return res.status(404).json({message : "Not found"})
+        }
+
+        if(data.job_seeker_profile_id !== profile.id){
+            return res.status(403).json({message : "forbidden Its not your profile"})
+        }
 
         return res.status(200).json({
             message: "Success",
