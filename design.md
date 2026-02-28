@@ -262,8 +262,9 @@ lably-frontend/
 
 ### Admin - Verification 
 1. GET /api/admin/pending-applications
-2. PUT /api/admin/pending-applications/:id/approve
-3. PUT /api/admin/pending-applications/:id/reject
+2. GET /api/admin/pending-applications/:id
+3. PUT /api/admin/pending-applications/:id/approve
+4. PUT /api/admin/pending-applications/:id/reject
 
 
 
