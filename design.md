@@ -264,6 +264,14 @@ lably-frontend/
 1. POST /api/job-seeker/profile/job-seeker-profile
 2. PUT /api/job-seeker/profile/job-seeker-profile
 
+### Experience 
+1. GET /api/experience-section/experience
+2. GET /api/experience-section/experience/:id
+3. POST /api/experience-section/experience
+4. PUT /api/experience-section/experience/:id
+5. DELETE /api/experience-section/experience/:id
+
+
 ### Admin - Verification 
 1. GET /api/admin/pending-applications
 2. GET /api/admin/pending-applications/:id
