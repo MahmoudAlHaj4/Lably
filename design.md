@@ -251,6 +251,7 @@ lably-frontend/
 ### Authentication 
 1. POST /api/auth/login
 2. POST /api/auth/activate
+3. POST /api/auth/register
 
 ### Job Seeker Application 
 1. POST /api/pendingApplications/submit
