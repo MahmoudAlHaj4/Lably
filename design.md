@@ -260,6 +260,10 @@ lably-frontend/
 1. POST /api/employer/profile/employer-profile
 2. PUT /api/employer/profile/employer-profile
 
+### Job Seeker - Profile
+1. POST /api/job-seeker/profile/job-seeker-profile
+2. PUT /api/job-seeker/profile/job-seeker-profile
+
 ### Admin - Verification 
 1. GET /api/admin/pending-applications
 2. GET /api/admin/pending-applications/:id
