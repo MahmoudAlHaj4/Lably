@@ -22,6 +22,12 @@ class Job {
         return {id, employer_id : employerId , ...jobData}
     }
 
+    static async getAllEmployerJobs(employerId) {
+        const query = `SELECT * FROM jobs WHERE employer_id = ?`
+        const [rows] = await pool.query(query , [employerId])
+
+        return rows
+    }
 }
 
 module.exports = Job
