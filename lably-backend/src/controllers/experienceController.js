@@ -82,32 +82,15 @@ async function  GetExperience(req, res) {
 async function DeleteExperience(req, res) {
     try{
         const experienceId = req.params.id
-        const role = req.user.role
-        const userId = req.user.id
-
-        if(role !== 'job_seeker'){
-            return res.status(403).json({message: 'You are not a Job Seeker'})
-        }
-
-        const isActive = await User.findById(userId)
-        if(isActive.is_active === false){
-            return res.status(403).json({message: "You must actiavte Your account"})
-        }
-
-        const profile = await JobSeekerProfile.findByUserId(userId)
-        if(!profile){
-            return res.status(404).json({message: "Profile Not found"})
-        }
-
-        const is_found = Experience.getOneExperience(experienceId)
+        const is_found = await Experience.getOneExperience(experienceId)
 
         if(!is_found){
             return res.status(404).json({message: "Experience Not Found"})
         }
 
-        await Experience.delete(experienceId)
+        const data = await Experience.delete(experienceId)
 
-        return res.status(200).json({message: 'Successfully Deleted'})
+        return res.status(200).json({message: 'Successfully Deleted' , data : data.experienceId})
     }catch(error){
         return res.status(500).json({message: error.message})
     }
