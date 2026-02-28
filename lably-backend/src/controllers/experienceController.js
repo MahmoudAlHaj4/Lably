@@ -22,8 +22,7 @@ async function addExperience (req, res) {
 
 async function getJobExperiences(req, res){
     try{
-        const userId = req.user.id
-        const profileId = await JobSeekerProfile.findByUserId(userId)
+        const profileId = req.profile
         const data = await Experience.getUserExperience(profileId.id)
 
         return res.status(200).json({message: "success", data: data})
