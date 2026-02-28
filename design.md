@@ -256,6 +256,10 @@ lably-frontend/
 ### Job Seeker Application 
 1. POST /api/pendingApplications/submit
 
+### Employer - Profile 
+1. POST /api/employer/profile/employer-profile
+2. PUT /api/employer/profile/employer-profile
+
 ### Admin - Verification 
 1. GET /api/admin/pending-applications
 2. PUT /api/admin/pending-applications/:id/approve
