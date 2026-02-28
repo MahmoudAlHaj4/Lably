@@ -35,36 +35,23 @@ async function UpdateJobExperience(req, res) {
     try{
         const {company_name , job_title, start_date, end_date , description} = req.body
         const experienceId = req.params.id
-        const role = req.user.role
-        const userId = req.user.id
 
-        if(role !== 'job_seeker'){
-            return res.status(403).json({message: 'You are Not a job seeker'})
+        const data = await Experience.Update(experienceId , {
+                company_name: company_name,
+                job_title: job_title,
+                start_date: start_date,
+                end_date: end_date,
+                description: description
+
+            })
+
+        if(!data) {
+            return res.status(404).json({message: "Experience Not found"})
         }
 
-        const isActive = await User.findById(userId)
-
-        if(isActive.is_active === false) {
-            return res.status(403).json({message: 'You must activate your account first'})
-        }
-
-        const profile = await JobSeekerProfile.findByUserId(userId)
-
-        if(!profile){
-            return res.status(404).json({message: "Profile Not found"})
-        }
-
-        await Experience.Update(experienceId , {
-            company_name: company_name,
-            job_title: job_title,
-            start_date: start_date,
-            end_date: end_date,
-            description: description
-
-        })
-        return res.status(200).json({message: "Updated Success"})
+        return res.status(200).json({message: "Updated Success", data: data})
     }catch(error){
-        return res.statu(500).json({message: error.message})
+        return res.status(500).json({message: error.message})
     }
 }
 
