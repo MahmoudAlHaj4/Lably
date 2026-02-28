@@ -271,6 +271,12 @@ lably-frontend/
 4. PUT /api/experience-section/experience/:id
 5. DELETE /api/experience-section/experience/:id
 
+### Jobs
+1. GET /api/jobs/job
+2. GET /api/jobs/job/:id
+3. POST /api/jobs/job/:id
+4. PUT /api/jobs/job/:id
+5. DELETE /api/jobs/job/:id
 
 ### Admin - Verification 
 1. GET /api/admin/pending-applications
