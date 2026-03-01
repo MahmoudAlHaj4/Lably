@@ -1,3 +1,19 @@
+/**
+ * jobSeekerMiddleware.js
+ * 
+ * Protects job seeker routes. Runs after authMiddleware.
+ * Checks role, account activation, and attaches the job seeker profile to the request.
+ * 
+ * jobSeekerMiddleware Flow:
+ * 1. Check req.user.role, if not job_seeker → 403 Forbidden.
+ * 2. Find user by ID using User.findById checks is_active status.
+ * 3. If account not activated → 403 Account not activated.
+ * 4. Find job seeker profile using JobSeekerProfile.findByUserId.
+ * 5. If no profile found → 404 Profile not found.
+ * 6. Attach profile to req.profile so controllers can use it without querying again.
+ * 7. Call next.
+ */
+
 const JobSeekerProfile = require("../models/JobSeekerProfile")
 const User = require("../models/User")
 
