@@ -42,6 +42,11 @@ async function updateEmployerProfile(req, res) {
         if(role !== 'employer') {
             return res.status(403).json({message: "You are not an employer"})
         }
+         const checkProfile = await EmployerProfile.findByUserId(userId)
+
+        if(!checkProfile){
+            return res.status(404).json({message: "Not Found"})
+        }
 
         await EmployerProfile.update(userId , {
             company_name : company_name,
@@ -56,5 +61,20 @@ async function updateEmployerProfile(req, res) {
     }
 }
 
+async function getEmployerProfile(req, res) {
+    try{
+        const employerId = req.user.id
 
-module.exports = {createEmployerProfile , updateEmployerProfile}
+        const data = await EmployerProfile.findByUserId(employerId)
+
+        return res.status(200).json({
+            message: 'Success', 
+            data: data
+        })
+    }catch(error){
+        return res.status(500).json({message: error.message})
+    }
+}
+
+
+module.exports = {createEmployerProfile , updateEmployerProfile, getEmployerProfile}
