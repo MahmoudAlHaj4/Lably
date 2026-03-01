@@ -1,3 +1,16 @@
+/**
+ * Job.js
+ * 
+ * Handles all database queries for the jobs table.
+ * 
+ * Functions:
+ * create: inserts a new job, status defaults to active.
+ * getAllEmployerJobs: returns all jobs posted by a specific employer.
+ * getOneJob: returns a single job by ID.
+ * update: updates job fields including status.
+ * delete: deletes a job by ID.
+ */
+
 const pool = require('../config/database')
 const { randomUUID } = require('crypto')
 
