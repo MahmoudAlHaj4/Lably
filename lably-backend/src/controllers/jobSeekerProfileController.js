@@ -1,5 +1,38 @@
+/**
+ * jobSeekerProfileController.js
+ * 
+ * Handles job seeker profile logic.
+ * Routes are protected by authMiddleware and jobSeekerMiddleware.
+ * 
+ * Functions:
+ * createJobSeekerProfile: creates a new profile for the authenticated job seeker.
+ * updateJobSeekerProfile: updates an existing profile.
+ * getProfile: returns the authenticated job seeker's profile.
+ * 
+ * 
+ * createJobSeekerProfile Flow:
+ * 1. Extract profile fields from request body.
+ * 2. Get user ID from req.user, set by authMiddleware.
+ * 3. Check if profile already exists using JobSeekerProfile.findByUserId.
+ * 4. If profile exists → 400 Profile already exists.
+ * 5. Create profile using JobSeekerProfile.create.
+ * 6. Return 201 with created profile data.
+ * 
+ * 
+ * updateJobSeekerProfile Flow:
+ * 1. Extract profile fields from request body.
+ * 2. Get user ID from req.user, set by authMiddleware.
+ * 3. Update profile using JobSeekerProfile.update.
+ * 4. Return 200 with updated profile data.
+ * 
+ * 
+ * getProfile Flow:
+ * 1. Get user ID from req.user, set by authMiddleware.
+ * 2. Fetch profile using JobSeekerProfile.findByUserId.
+ * 3. Return 200 with profile data.
+ */
+
 const JobSeekerProfile = require('../models/JobSeekerProfile')
-const User = require('../models/User')
 
 async function createJobSeekerProfile(req, res) {
     try{
