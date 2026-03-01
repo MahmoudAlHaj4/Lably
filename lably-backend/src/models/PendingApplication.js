@@ -38,6 +38,12 @@ class PendingApplication {
         const [row] = await pool.query(query, ['approved', id])
         return row[0]
     }
+
+    static async reject(applicationId) {
+        const query = `UPDATE pending_applications SET application_status = ? WHERE id = ?`
+        const [row] = await pool.query(query , ['rejected' , applicationId])
+        return row[0]
+    }
 }
 
 module.exports = PendingApplication
