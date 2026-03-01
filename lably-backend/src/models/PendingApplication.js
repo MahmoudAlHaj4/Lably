@@ -1,4 +1,17 @@
-
+/**
+ * PendingApplication.js
+ * 
+ * Handles all database queries for the pending_applications table.
+ * A pending application is submitted by a job seeker before they have an account.
+ * Admin reviews these and either approves or rejects them.
+ * 
+ * Functions:
+ * create: inserts a new pending application with resume and portfolio file paths.
+ * getAll: returns all pending applications for the admin dashboard.
+ * getPendingApp: returns a single application by ID for admin review.
+ * approved: updates application status to approved.
+ * reject: updates application status to rejected.
+ */
 const pool = require('../config/database')
 
 class PendingApplication {
