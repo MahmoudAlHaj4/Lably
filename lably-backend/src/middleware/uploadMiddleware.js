@@ -1,3 +1,22 @@
+/**
+ * uploadMiddleware.js
+ * 
+ * Configures multer for handling resume and portfolio file uploads.
+ * Runs before the controller, sets file destinations, names, and validates file types.
+ * 
+ * 
+ * storage: tells multer where to save files and what to name them:
+ * - destination: resumes go to uploads/resumes, portfolios go to uploads/portfolios.
+ * - filename: resume gets named after a generated UUID (also saved to req.generatedId so the controller can use it).
+ *             portfolio files get their own random UUID with original extension kept.
+ * 
+ * fileFilter: validates file types before saving:
+ * - resume: PDF only, reject anything else.
+ * - portfolio: PDF, JPG, PNG allowed, reject anything else.
+ * 
+ * upload: combines storage, fileFilter, and sets max file size to 5MB.
+ */
+
 const multer = require('multer')
 const { randomUUID } = require('crypto')
 
