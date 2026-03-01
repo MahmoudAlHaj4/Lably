@@ -1,3 +1,39 @@
+/**
+ * applicationController.js
+ * 
+ * Handles job application logic for job seekers and employers.
+ * 
+ * Functions:
+ * apply: allows a verified job seeker to apply to a job.
+ * getEmployerApplication: returns a single application, checks employer ownership.
+ * getEmployerApplications: returns all applications received by the authenticated employer.
+ * 
+ * 
+ * apply Flow:
+ * 1. Get job ID from request params.
+ * 2. If no job ID → 404 Job not found.
+ * 3. Check job exists using Job.getOneJob.
+ * 4. If job not found → 404 Job not found.
+ * 5. Create application using Application.create linked to job seeker ID and job ID.
+ * 6. If job seeker already applied → 409 Already applied (caught from DB duplicate entry error).
+ * 7. Return 201 with created application data.
+ * 
+ * 
+ * getEmployerApplication Flow:
+ * 1. Get application ID from request params.
+ * 2. Get employer ID from req.user — set by authMiddleware.
+ * 3. Fetch application using Application.getApplication includes employer ID and applicant name.
+ * 4. If not found → 404 Application not found.
+ * 5. If employer ID does not match → 403 Forbidden.
+ * 6. Return 200 with application data.
+ * 
+ * 
+ * getEmployerApplications Flow:
+ * 1. Get employer ID from req.user, set by authMiddleware.
+ * 2. Fetch all applications using Application.getAllApplications.
+ * 3. Return 200 with applications data.
+ */
+
 const Application = require("../models/Application")
 const Job = require('../models/Job')
 
