@@ -1,3 +1,15 @@
+/**
+ * EmployerProfile.js
+ * 
+ * Handles all database queries for the employer_profiles table.
+ * 
+ * Functions:
+ * create: inserts a new employer profile, optional fields default to null.
+ * findByUserId: returns an employer profile by user ID.
+ * update: updates an existing employer profile by user ID.
+ */
+
+
 const pool = require('../config/database')
 const { randomUUID } = require('crypto')
 
