@@ -1,3 +1,29 @@
+/**
+ * authMiddleware.js
+ * 
+ * Protects routes by verifying JWT tokens and checking user roles.
+ * Must be applied before any protected route.
+ * 
+ * Functions:
+ * authMiddleware: verifies the JWT token and attaches the decoded user to the request.
+ * adminMiddleware: checks if the authenticated user has the admin role.
+ * 
+ * 
+ * authMiddleware Flow:
+ * 1. Extract the Authorization header from the request.
+ * 2. Split off the Bearer prefix to get the token.
+ * 3. If no token found → 401 Unauthorized.
+ * 4. Decode and verify the token using JWT_SECRET.
+ * 5. If token invalid or expired → 401 Invalid token.
+ * 6. If valid, attach decoded user (id and role) to req.user and call next.
+ * 
+ * 
+ * adminMiddleware Flow:
+ * 1. Check req.user.role.
+ * 2. If role is not admin → 403 Access denied.
+ * 3. If role is admin → call next.
+ */
+
 const jwt = require("jsonwebtoken")
 
 function authMiddleware (req, res ,next) {
