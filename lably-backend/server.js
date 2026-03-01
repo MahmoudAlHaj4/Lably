@@ -1,6 +1,18 @@
+/**
+ * server.js
+ * 
+ * Application entry point.
+ * - Loads environment variables
+ * - Initializes Express and global middleware (CORS, body parser, static files)
+ * - Mounts all API routes
+ * - Verifies DB connection then starts listening on configured port
+ */
+
 require('dotenv').config()
 const express = require('express')
 const app = express()
+
+// Body parser must be registered before routes so req.body is available in controllers
 app.use(express.json())
 
 const corsMiddleware  = require('./src/middleware/crosMiddleware')
