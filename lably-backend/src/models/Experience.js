@@ -1,3 +1,17 @@
+/**
+ * Experience.js
+ * 
+ * Handles all database queries for the experiences table.
+ * Experiences belong to a job seeker profile, not directly to a user.
+ * 
+ * Functions:
+ * create: inserts a new experience entry linked to a job seeker profile ID.
+ * getUserExperience: returns all experiences for a specific job seeker profile.
+ * getOneExperience: returns a single experience by ID.
+ * Update: updates an existing experience entry.
+ * delete: deletes an experience by ID.
+ */
+
 const pool = require('../config/database')
 const { randomUUID } = require('crypto')
 
