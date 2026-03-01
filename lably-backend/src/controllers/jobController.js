@@ -1,3 +1,52 @@
+/**
+ * jobController.js
+ * 
+ * Handles job management logic for employers.
+ * Routes are protected by authMiddleware and employerMiddleware.
+ * 
+ * Functions:
+ * createJob: creates a new job posting for the authenticated employer.
+ * getEmployerJobs: returns all jobs posted by the authenticated employer.
+ * getJob: returns a single job by ID.
+ * updateJob: updates an existing job posting.
+ * deleteJob: deletes a job posting.
+ * 
+ * 
+ * createJob Flow:
+ * 1. Extract job fields from request body.
+ * 2. Get employer ID from req.user, set by authMiddleware.
+ * 3. Create job using Job.create, status defaults to active.
+ * 4. Return 201 with created job data.
+ * 
+ * 
+ * getEmployerJobs Flow:
+ * 1. Get employer ID from req.user, set by authMiddleware.
+ * 2. Fetch all jobs using Job.getAllEmployerJobs.
+ * 3. Return 200 with jobs data.
+ * 
+ * 
+ * getJob Flow:
+ * 1. Get job ID from request params.
+ * 2. Fetch job using Job.getOneJob.
+ * 3. Return 200 with job data.
+ * 
+ * 
+ * updateJob Flow:
+ * 1. Extract job fields from request body.
+ * 2. Get job ID from request params.
+ * 3. Update job using Job.update.
+ * 4. If job not found → 404 Job not found.
+ * 5. Return 200 with updated job data.
+ * 
+ * 
+ * deleteJob Flow:
+ * 1. Get job ID from request params.
+ * 2. Check job exists using Job.getOneJob.
+ * 3. If not found → 404 Job not found.
+ * 4. Delete job using Job.delete.
+ * 5. Return 200 with success message.
+ */
+
 const Job = require('../models/Job')
 
 
