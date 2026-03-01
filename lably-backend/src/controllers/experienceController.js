@@ -1,3 +1,55 @@
+/**
+ * experienceController.js
+ * 
+ * Handles experience section logic for job seekers.
+ * Routes are protected by authMiddleware and jobSeekerMiddleware.
+ * req.profile is attached by jobSeekerMiddleware.
+ * 
+ * Functions:
+ * addExperience: adds a new experience entry to the job seeker's profile.
+ * getJobExperiences: returns all experiences for the authenticated job seeker.
+ * UpdateJobExperience: updates an existing experience entry by ID.
+ * GetExperience: returns a single experience by ID, checks ownership.
+ * DeleteExperience: deletes an experience by ID.
+ * 
+ * 
+ * addExperience Flow:
+ * 1. Extract experience fields from request body.
+ * 2. Create experience using Experience.create linked to req.profile.id.
+ * 3. Return 201 with created experience data.
+ * 
+ * 
+ * getJobExperiences Flow:
+ * 1. Get profile from req.profile, set by jobSeekerMiddleware.
+ * 2. Fetch all experiences using Experience.getUserExperience.
+ * 3. Return 200 with experiences data.
+ * 
+ * 
+ * UpdateJobExperience Flow:
+ * 1. Extract experience fields from request body.
+ * 2. Get experience ID from request params.
+ * 3. Update experience using Experience.Update.
+ * 4. If not found → 404 Experience not found.
+ * 5. Return 200 with updated experience data.
+ * 
+ * 
+ * GetExperience Flow:
+ * 1. Get experience ID from request params.
+ * 2. Fetch profile using JobSeekerProfile.findByUserId.
+ * 3. Fetch experience using Experience.getOneExperience.
+ * 4. If not found → 404 Not found.
+ * 5. If experience does not belong to this profile → 403 Forbidden.
+ * 6. Return 200 with experience data.
+ * 
+ * 
+ * DeleteExperience Flow:
+ * 1. Get experience ID from request params.
+ * 2. Check experience exists using Experience.getOneExperience.
+ * 3. If not found → 404 Experience not found.
+ * 4. Delete experience using Experience.delete.
+ * 5. Return 200 with deleted experience ID.
+ */
+
 const Experience = require('../models/Experience')
 const JobSeekerProfile = require('../models/JobSeekerProfile')
 
