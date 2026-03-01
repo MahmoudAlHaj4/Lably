@@ -263,6 +263,7 @@ lably-frontend/
 ### Job Seeker - Profile
 1. POST /api/job-seeker/profile/job-seeker-profile
 2. PUT /api/job-seeker/profile/job-seeker-profile
+3. GET /api/job-seeker/profile/job-seeker-profile
 
 ### Experience 
 1. GET /api/experience-section/experience
