@@ -1,3 +1,15 @@
+/**
+ * JobSeekerProfile.js
+ * 
+ * Handles all database queries for the job_seekers_profiles table.
+ * Profile is created after the job seeker activates their account.
+ * 
+ * Functions:
+ * create: inserts a new job seeker profile, phone, address, and about default to null if not provided.
+ * findByUserId: returns a job seeker profile by user ID, used to get profile data.
+ * update: dynamically builds the UPDATE query based on only the fields provided, so partial updates are supported without overwriting existing data.
+ */
+
 const pool = require('../config/database')
 const { randomUUID } = require('crypto')
 
