@@ -1,3 +1,43 @@
+/**
+ * employerProfileController.js
+ * 
+ * Handles employer profile logic.
+ * Routes are protected by authMiddleware and employerMiddleware.
+ * 
+ * Functions:
+ * createEmployerProfile: creates a new profile for the authenticated employer.
+ * updateEmployerProfile: updates an existing employer profile.
+ * getEmployerProfile: returns the authenticated employer's profile.
+ * 
+ * 
+ * createEmployerProfile Flow:
+ * 1. Extract profile fields from request body.
+ * 2. Get user ID and role from req.user, set by authMiddleware.
+ * 3. If role is not employer → 403 Forbidden.
+ * 4. If company_name missing → 400 Company name is required.
+ * 5. Check if profile already exists using EmployerProfile.findByUserId.
+ * 6. If profile exists → 400 Already have a profile.
+ * 7. Create profile using EmployerProfile.create.
+ * 8. Return 201 success.
+ * 
+ * 
+ * updateEmployerProfile Flow:
+ * 1. Extract profile fields from request body.
+ * 2. Get user ID and role from req.user, set by authMiddleware.
+ * 3. If role is not employer → 403 Forbidden.
+ * 4. Check profile exists using EmployerProfile.findByUserId.
+ * 5. If not found → 404 Not found.
+ * 6. Update profile using EmployerProfile.update.
+ * 7. Return 200 success.
+ * 
+ * 
+ * getEmployerProfile Flow:
+ * 1. Get user ID from req.user, set by authMiddleware.
+ * 2. Fetch profile using EmployerProfile.findByUserId.
+ * 3. Return 200 with profile data.
+ */
+
+
 const EmployerProfile = require('../models/EmployerProfile')
 
 async function createEmployerProfile(req, res) {
