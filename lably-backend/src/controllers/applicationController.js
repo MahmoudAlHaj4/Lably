@@ -58,4 +58,18 @@ async function getEmployerApplication (req, res) {
     }
 }
 
-module.exports = {apply, getEmployerApplication}
+async function getEmployerApplications(req, res) {
+    try{
+        const employerId = req.user.id 
+
+        const data = await Application.getAllApplications(employerId)
+
+
+
+        return res.status(200).json({message : "Success", data: data})
+    }catch(error) {
+        return res.status(500).json({message: error.message})
+    }
+}
+
+module.exports = {apply, getEmployerApplication, getEmployerApplications}
