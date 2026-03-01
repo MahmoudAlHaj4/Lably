@@ -1,3 +1,14 @@
+/**
+ * Application.js
+ * 
+ * Handles all database queries for the applications table.
+ * 
+ * Functions:
+ * create: inserts a new application linked to a job seeker and a job.
+ * getApplication: returns a single application by ID, joins jobs and job seeker profile to include job title, employer ID, and applicant name.
+ * getAllApplications: returns all applications received by an employer, joins jobs and job seeker profiles to include job title and applicant name.
+ */
+
 const pool = require('../config/database')
 const { randomUUID } = require('crypto')
 
