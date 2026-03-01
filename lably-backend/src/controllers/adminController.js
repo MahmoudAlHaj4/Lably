@@ -1,3 +1,47 @@
+/**
+ * adminController.js
+ * 
+ * Handles admin verification logic for managing pending applications.
+ * All functions are protected by authMiddleware and adminMiddleware.
+ * 
+ * Functions:
+ * getAllPendingApplications: returns all pending applications for the admin dashboard.
+ * getPendingApplication: returns a single pending application by ID.
+ * approvePendingApplication: approves an application, creates a job seeker account, and generates an activation token.
+ * rejectPendingApplication: rejects a pending application.
+ * 
+ * 
+ * getAllPendingApplications Flow:
+ * 1. Fetch all applications using PendingApplication.getAll.
+ * 2. Return 200 with applications data.
+ * 
+ * 
+ * getPendingApplication Flow:
+ * 1. Get application ID from request params.
+ * 2. Fetch application using PendingApplication.getPendingApp.
+ * 3. Return 200 with application data.
+ * 
+ * 
+ * approvePendingApplication Flow:
+ * 1. Get application ID from request params.
+ * 2. Fetch application using PendingApplication.getPendingApp.
+ * 3. If not found → 404 Application not found.
+ * 4. Generate activation token (UUID) and set expiry to 48 hours from now.
+ * 5. Generate a temporary hashed password — will be replaced when job seeker activates account.
+ * 6. Create inactive user account using User.createUser with role job_seeker and is_active false.
+ * 7. Save activation token using User.setActivationToken.
+ * 8. Update application status to approved using PendingApplication.approved.
+ * 9. Return 200 with activation token.
+ * 
+ * 
+ * rejectPendingApplication Flow:
+ * 1. Get application ID from request params.
+ * 2. Fetch application using PendingApplication.getPendingApp.
+ * 3. If not found → 404 Application not found.
+ * 4. Update application status to rejected using PendingApplication.reject.
+ * 5. Return 200 with success message.
+ */
+
 const PendingApplication = require('../models/PendingApplication')
 const User = require('../models/User')
 const { randomUUID } = require('crypto')
