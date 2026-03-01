@@ -66,4 +66,21 @@ async function getPendingApplication(req, res) {
         }
     }
 
-module.exports = {getAllPendingApplications, getPendingApplication, approvePendingApplication}
+async function rejectPendingApplication(req,res) {
+    try{ 
+        const applicationId = req.params.id
+        const application = await PendingApplication.getPendingApp(applicationId)
+
+        if(!application){
+            return res.status(404).json({message : "Application Not found"})
+        }
+
+        const data = await PendingApplication.reject(applicationId)
+
+        return res.status(200).json({message : "Application is rejected" , data : data})
+    }catch(error) {
+        return res.status(500).json({message : error.message})
+    }
+}
+
+module.exports = {getAllPendingApplications, getPendingApplication, approvePendingApplication, rejectPendingApplication}
