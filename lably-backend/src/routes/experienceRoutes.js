@@ -1,3 +1,15 @@
+/**
+ * experienceRoutes.js
+ * 
+ * Routes for job seeker experience section.
+ * 
+ * POST   /api/experience-section/experience       — Add a new experience. Job seeker only.
+ * GET    /api/experience-section/experience       — Get all experiences. Job seeker only.
+ * PUT    /api/experience-section/experience/:id   — Update an experience. Job seeker only.
+ * GET    /api/experience-section/experience/:id   — Get a single experience. Authenticated only.
+ * DELETE /api/experience-section/experience/:id   — Delete an experience. Job seeker only.
+ */
+
 const express = require('express')
 const { authMiddleware } = require('../middleware/authMiddleware')
 const { addExperience, getJobExperiences, UpdateJobExperience, GetExperience, DeleteExperience } = require('../controllers/experienceController')
