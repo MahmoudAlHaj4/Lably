@@ -32,11 +32,12 @@ async function submitApplication(req, res) {
         if(!email || !full_name){
             return res.status(400).json({error: 'Missing required fields'})
         }
-        if(!req.files) {
+        if(!req.files || !req.files['resume']) {
             return res.status(400).json({error: 'resume is required'})
         }
         const id = req.generatedId
         const resume_path = `uploads/resumes/${id}.pdf`
+        
         const portfolioPaths = req.files['portfolio'] 
             ? req.files['portfolio'].map(file => file.path) 
             : []
