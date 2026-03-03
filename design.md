@@ -210,6 +210,25 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 - **JWT (JSON Web Tokens)**
 - **bcrypt** 
 
+## Testing Strategy
+
+Integration tests using Jest and Supertest against a real MySQL database to catch real-world issues that mocks would miss.
+
+### Why Real Database
+A real DB catches actual constraint violations, duplicate entries, and failures.
+
+### What I Test
+**Authentication** — login success, wrong password, wrong email.
+**Pending Applications** — file upload submission, missing resume validation.
+**Activation Flow** — the full end-to-end flow:
+- Job seeker submits application
+- Admin approves and generates activation token
+- Invalid token rejection
+- Successful account activation with valid token
+- Login after activation confirms full flow works
+
+### Cleanup Strategy
+Every test file runs `beforeAll` and `afterAll` cleanup against the test email to ensure a fresh state before each run and no leftover data after — protecting against false failures from crashed previous runs
 
 ## Architecture
 
