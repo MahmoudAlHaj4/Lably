@@ -14,7 +14,7 @@ describe('Auth', ()=>{
 
     afterAll(async()=>{
         await pool.query('DELETE FROM users WHERE email = ?', ['test@gmail.com'])
-        await pool.end()
+
     })
     it('Should login successfully' , async ()=>{
         const res = await request.post('/api/auth/login').send({
