@@ -5,9 +5,14 @@ const pool = require('../src/config/database')
 const request = superTest(app)
 
 describe('PendingApplication',()=>{
+
+    beforeAll(async()=>{
+        await pool.query(`DELETE FROM pending_applications WHERE email = ?`, ['test@gmail.com'])
+    })
+
     afterAll(async()=>{
         await pool.query(`DELETE FROM pending_applications WHERE email =?`, ['test@gmail.com'])
-        await pool.end()
+       
     })
 
     it('Should Successfully submit', async()=>{
