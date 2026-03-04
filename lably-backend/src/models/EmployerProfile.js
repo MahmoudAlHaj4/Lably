@@ -17,7 +17,7 @@ class EmployerProfile {
     static async create(userId , profileData) {
         const id = randomUUID()
 
-        const query = `INSERT INTO employer_profiles (id, user_id, company_name, company_description, location, website) VALUES (?, ?, ?, ?, ?, ?)`
+        const query = `INSERT INTO employer_profiles (id, user_id, company_name, company_description, location, website) VALUES ($1, $2, $3, $4, $5, $6)`
 
         await pool.query(query , [
             id,
@@ -32,13 +32,13 @@ class EmployerProfile {
     }
 
     static async findByUserId(userId) {
-        const query = `SELECT * FROM employer_profiles WHERE user_id =?`
-        const [row] = await pool.query(query , [userId])
-        return row[0]
+        const query = `SELECT * FROM employer_profiles WHERE user_id =$1`
+        const result = await pool.query(query , [userId])
+        return result.rows[0]
     }
 
     static async update(userId, profileData){
-        const query = `UPDATE employer_profiles SET company_name = ?, company_description = ?, location = ?, website = ? WHERE user_id = ?`
+        const query = `UPDATE employer_profiles SET company_name = $1, company_description = $2, location = $3, website = $4 WHERE user_id = $5`
         await pool.query(query , [
             profileData.company_name,
             profileData.company_description,
