@@ -20,7 +20,7 @@ class Experience {
        const id = randomUUID()
 
        const query = `INSERT INTO experiences (id, job_seeker_profile_id, company_name, job_title, start_date, end_date, description)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`
 
        await pool.query(query , [
         id,
@@ -36,18 +36,18 @@ class Experience {
     }
 
     static async getUserExperience (profileId){
-        const query = 'SELECT * FROM experiences WHERE job_seeker_profile_id = ?'
-        const [rows] = await pool.query(query , [profileId])
-        return rows
+        const query = 'SELECT * FROM experiences WHERE job_seeker_profile_id = $1'
+        const result = await pool.query(query , [profileId])
+        return result.rows
     }
     static async getOneExperience(experienceId) {
-        const query = `SELECT * from experiences WHERE id = ?`
-        const [row] = await pool.query(query, [experienceId])
-        return row[0]
+        const query = `SELECT * from experiences WHERE id = $1`
+        const result = await pool.query(query, [experienceId])
+        return result.rows[0]
     }
 
-    static async Update(experienceId , experienceData) {
-        const query = `UPDATE experiences SET company_name = ?, job_title = ?, start_date = ?, end_date = ?, description = ? WHERE id = ?`
+    static async update(experienceId , experienceData) {
+        const query = `UPDATE experiences SET company_name = $1, job_title = $2, start_date = $3, end_date = $4, description = $5 WHERE id = $6`
 
         await pool.query(query, [
             experienceData.company_name,
@@ -61,7 +61,7 @@ class Experience {
     }
 
     static async delete(experienceId){
-        const query = `DELETE FROM experiences WHERE id = ?`
+        const query = `DELETE FROM experiences WHERE id = $1`
 
         await pool.query(query, [experienceId])
 
