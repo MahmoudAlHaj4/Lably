@@ -7,7 +7,7 @@ const request = superTest(app)
 describe('Auth', ()=>{
     beforeAll(async ()=>{
         await request.post('/api/auth/register').send({
-            email: "test@gmail.com",
+            email: "auth-test@gmail.com",
             password: "test123@"
         })
     })
@@ -18,7 +18,7 @@ describe('Auth', ()=>{
     })
     it('Should login successfully' , async ()=>{
         const res = await request.post('/api/auth/login').send({
-            email: "test@gmail.com",
+            email: "auth-test@gmail.com",
             password: "test123@"
         })
         expect(res.status).toBe(200)
@@ -27,7 +27,7 @@ describe('Auth', ()=>{
 
     it('Should Password Wrong', async()=>{
         const res = await request.post('/api/auth/login').send({
-            email: "test@gamil.com",
+            email: "auth-test@gamil.com",
             password: "test123"
         })
         expect(res.status).toBe(401)
@@ -36,7 +36,7 @@ describe('Auth', ()=>{
 
     it('Should Email Wrong', async ()=>{
         const res = await request.post('/api/auth/login').send({
-            email: "tests@gail.com",
+            email: "auth-tests@gail.com",
             password: "test123@"
         })
 
