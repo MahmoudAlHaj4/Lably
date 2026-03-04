@@ -18,7 +18,7 @@ class PendingApplication {
     static async create(applicationData){
         const query = `INSERT INTO pending_applications 
         (id, email, full_name, phone, address,resume_path, portfolio_path)
-        VALUES (?, ?, ?, ?, ?, ?,?)`
+        VALUES ($1, $2, $3, $4, $5, $6, $7)`
 
         await pool.query(query, [
             applicationData.id,
@@ -35,27 +35,27 @@ class PendingApplication {
 
     static async getAll(){
         const query = `SELECT * FROM pending_applications`
-        const [rows] = await pool.query(query)
+        const result = await pool.query(query)
 
-        return rows
+        return result.rows
     }
 
     static async getPendingApp(id){
-        const query = `SELECT * FROM pending_applications WHERE id=?`
-        const [row] = await pool.query(query ,[id])
-        return row[0]
+        const query = `SELECT * FROM pending_applications WHERE id= $1`
+        const result = await pool.query(query ,[id])
+        return result.rows[0]
     }
 
     static async approved(id){
-        const query = `UPDATE pending_applications SET 	application_status =? WHERE id = ?`
-        const [row] = await pool.query(query, ['approved', id])
-        return row[0]
+        const query = `UPDATE pending_applications SET 	application_status = $1 WHERE id = $2 RETURNING *`
+        const result = await pool.query(query, ['approved', id])
+        return result.rows[0]
     }
 
     static async reject(applicationId) {
-        const query = `UPDATE pending_applications SET application_status = ? WHERE id = ?`
-        const [row] = await pool.query(query , ['rejected' , applicationId])
-        return row[0]
+        const query = `UPDATE pending_applications SET application_status = $1 WHERE id = $2 RETURNING *`
+        const result = await pool.query(query , ['rejected' , applicationId])
+        return result.rows[0]
     }
 }
 
