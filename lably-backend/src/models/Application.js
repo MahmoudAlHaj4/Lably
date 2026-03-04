@@ -16,7 +16,7 @@ class Application {
     static async create(jobSeekerId, jobId, applicationData){
         const id = randomUUID()
         const query = ` INSERT INTO applications (id, job_seeker_id, job_id, cover_letter, resume_path)
-        VALUES (?, ?, ?, ?, ?)`
+        VALUES ($1, $2, $3, $4, $5)`
 
         await pool.query(query, [
             id,
@@ -34,11 +34,11 @@ class Application {
                         FROM applications 
                         JOIN jobs ON applications.job_id = jobs.id
                         JOIN job_seekers_profiles ON applications.job_seeker_id = job_seekers_profiles.user_id
-                        WHERE applications.id = ?`
+                        WHERE applications.id = $1`
         
-        const [row] = await pool.query(query , [applicationId])
+        const result = await pool.query(query , [applicationId])
 
-        return row[0]
+        return result.rows[0]
     }
     
     static async getAllApplications(employerId) {
@@ -46,11 +46,11 @@ class Application {
                         FROM applications
                         JOIN jobs ON applications.job_id = jobs.id
                         JOIN job_seekers_profiles ON applications.job_seeker_id = job_seekers_profiles.user_id
-                        WHERE jobs.employer_id = ?`
+                        WHERE jobs.employer_id = $1`
 
-        const [rows] = await pool.query(query , [employerId])
+        const result = await pool.query(query , [employerId])
 
-        return rows
+        return result.rows
     }
 }
 
