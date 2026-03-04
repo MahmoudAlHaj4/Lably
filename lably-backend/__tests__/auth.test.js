@@ -13,7 +13,7 @@ describe('Auth', ()=>{
     })
 
     afterAll(async()=>{
-        await pool.query('DELETE FROM users WHERE email = ?', ['test@gmail.com'])
+        await pool.query('DELETE FROM users WHERE email = $1', ['test@gmail.com'])
 
     })
     it('Should login successfully' , async ()=>{
