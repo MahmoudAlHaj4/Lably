@@ -16,7 +16,7 @@ const { randomUUID } = require('crypto')
 class JobSeekerProfile {
     static async create(userId , profileData){
         const id = randomUUID()
-        const query = `INSERT INTO job_seekers_profiles (id, user_id, full_name, phone, address, about) VALUES (?, ?, ?, ?, ?, ?)`
+        const query = `INSERT INTO job_seekers_profiles (id, user_id, full_name, phone, address, about) VALUES ($1, $2, $3, $4, $5, $6)`
 
         await pool.query(query, [
             id,
@@ -31,38 +31,38 @@ class JobSeekerProfile {
     }
 
     static async findByUserId(userId) {
-        const query = `SELECT id, user_id, full_name, phone,address, about FROM job_seekers_profiles WHERE user_id= ?`
-        const [row] = await pool.query(query , [userId])
-        return row[0]
+        const query = `SELECT id, user_id, full_name, phone,address, about FROM job_seekers_profiles WHERE user_id= $1`
+        const result = await pool.query(query , [userId])
+        return result.rows[0]
     }
 
-    static async update(userId , profileData) {
+    static async update(userId, profileData) {
         const fields = []
         const values = []
 
-        if(profileData.full_name) {
-        fields.push('full_name = ?')
-        values.push(profileData.full_name)
+        if (profileData.full_name) {
+            values.push(profileData.full_name)
+            fields.push(`full_name = $${values.length}`)
         }
-        if(profileData.phone) {
-            fields.push('phone = ?')
+        if (profileData.phone) {
             values.push(profileData.phone)
+            fields.push(`phone = $${values.length}`)
         }
-        if(profileData.address){
-            fields.push('address = ?')
+        if (profileData.address) {
             values.push(profileData.address)
+            fields.push(`address = $${values.length}`)
         }
-        if(profileData.about){
-            fields.push('about = ?')
+        if (profileData.about) {
             values.push(profileData.about)
+            fields.push(`about = $${values.length}`)
         }
 
-        const query = `UPDATE job_seekers_profiles SET  ${fields.join(', ')} WHERE user_id = ? `
         values.push(userId)
+        const query = `UPDATE job_seekers_profiles SET ${fields.join(', ')} WHERE user_id = $${values.length}`
 
         await pool.query(query, values)
 
-        return {...profileData , user_id: userId}
+        return { ...profileData, user_id: userId }
     }
 }
 
