@@ -9,24 +9,21 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env: 
-      DB_HOST: ${{secrets.DB_HOST}}
-      DB_USER: ${{secrets.DB_USER}}
-      DB_PASSWORD: ${{secrets.DB_PASSWORD}}
-      DB_NAME: ${{secrets.DB_NAME}}
-      PORT: ${{secrets.PORT}}
-      JWT_SECRET: ${{secrets.JWT_SECRET}}
-    services: 
-      mysql: 
-        image: mariadb:10.4
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/lably
+      PORT: ${{ secrets.PORT }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+    services:
+      postgres:
+        image: postgres:18
         env:
-          MYSQL_ROOT_PASSWORD: "root"
-          MYSQL_ALLOW_EMPTY_PASSWORD: "no"
-          MYSQL_DATABASE: lably
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: lably
         ports:
-          - 3306:3306
+          - 5432:5432
         options: >-
-          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-cmd="pg_isready -U postgres"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
@@ -39,7 +36,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
-        
+
       - name: Cache node modules
         uses: actions/cache@v3
         with:
@@ -50,8 +47,11 @@ jobs:
         run: npm install
         working-directory: lably-backend
 
-      - name: Setup database 
-        run: mysql -h 127.0.0.1 -u root -proot lably < database.sql
+      - name: Install psql client
+        run: sudo apt-get install -y postgresql-client
+
+      - name: Setup database
+        run: psql postgresql://postgres:postgres@localhost:5432/lably -f database.sql
         working-directory: lably-backend
 
       - name: Run tests
