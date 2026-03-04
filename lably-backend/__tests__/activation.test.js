@@ -18,13 +18,13 @@ describe('Activation', ()=>{
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
     )
-    await pool.query('DELETE FROM users WHERE email = ?', ['activation@test.com'])
-    await pool.query('DELETE FROM pending_applications WHERE email = ?', ['activation@test.com'])
+    await pool.query('DELETE FROM users WHERE email = $1', ['activation@test.com'])
+    await pool.query('DELETE FROM pending_applications WHERE email = $1', ['activation@test.com'])
   })
 
   afterAll(async () => {
-    await pool.query('DELETE FROM users WHERE email = ?', ['activation@test.com'])
-    await pool.query('DELETE FROM pending_applications WHERE email = ?', ['activation@test.com'])
+    await pool.query('DELETE FROM users WHERE email = $1', ['activation@test.com'])
+    await pool.query('DELETE FROM pending_applications WHERE email = $1', ['activation@test.com'])
   })
 
   it('Should submit pending application', async () => {
