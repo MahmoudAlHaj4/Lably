@@ -9,6 +9,27 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env: 
+      DB_HOST: ${{secrets.DB_HOST}}
+      DB_USER: ${{secrets.DB_USER}}
+      DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+      DB_NAME: ${{secrets.DB_NAME}}
+      PORT: ${{secrets.PORT}}
+      JWT_SECRET: ${{secrets.JWT_SECRET}}
+    services: 
+      mysql: 
+        image: mariadb:10.4
+        env:
+          MYSQL_ROOT_PASSWORD: "root"
+          MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+          MYSQL_DATABASE: lably
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
       - name: Checkout code
