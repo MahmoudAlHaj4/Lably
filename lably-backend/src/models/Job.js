@@ -19,7 +19,7 @@ class Job {
         const id = randomUUID()
 
         const query = `INSERT INTO jobs (id, employer_id, status, job_title, description, requirements, location, job_type)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`
 
         await pool.query(query, [
             id,
@@ -36,21 +36,21 @@ class Job {
     }
 
     static async getAllEmployerJobs(employerId) {
-        const query = `SELECT * FROM jobs WHERE employer_id = ?`
-        const [rows] = await pool.query(query , [employerId])
+        const query = `SELECT * FROM jobs WHERE employer_id = $1`
+        const result = await pool.query(query , [employerId])
 
-        return rows
+        return result.rows
     }
 
     static async getOneJob(jobId){
-        const query = `SELECT * FROM jobs WHERE id =? `
-        const [row] = await pool.query(query, [jobId])
+        const query = `SELECT * FROM jobs WHERE id =$1 `
+        const result = await pool.query(query, [jobId])
 
-        return row[0]
+        return result.rows[0]
     }
 
     static async update (jobId , jobData) {
-        const query = `UPDATE jobs SET status = ? , job_title =? , description = ?, requirements = ?, location =?, job_type = ? WHERE id =? `
+        const query = `UPDATE jobs SET status = $1 , job_title = $2 , description = $3, requirements = $4, location = $5, job_type = $6 WHERE id =$7 `
         await pool.query(query , [
             jobData.status,
             jobData.job_title,
@@ -65,7 +65,7 @@ class Job {
     }
 
     static async delete(jobId) {
-        const query = 'DELETE FROM jobs WHERE id =?' 
+        const query = 'DELETE FROM jobs WHERE id =$1' 
         await pool.query(query , [jobId])
 
         return {jobId}
