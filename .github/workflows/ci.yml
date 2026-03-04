@@ -42,6 +42,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: lably-backend
 
       - name: Run tests
         run: npm test
+        working-directory: lably-backend
