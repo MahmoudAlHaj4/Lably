@@ -12,19 +12,19 @@ class User {
     // Find a user by email used during login to get password for bcrypt comparison
     static async findByEmail(email){
 
-        const query = `SELECT id, email, password, role, is_active FROM users WHERE email = ?`
+        const query = `SELECT id, email, password, role, is_active FROM users WHERE email = $1`
 
-        const [row] = await pool.query(query, [email])
+        const result = await pool.query(query, [email])
 
-        return row[0]
+        return result.rows[0]
     }
 
 // Create a new user, account is inactive by default until user activate it
     static async createUser(userData) {
-        const query = `INSERT INTO users (id, email, password, role, is_active) VALUES (?, ?, ?, ?, ?)`
+        const query = `INSERT INTO users (id, email, password, role, is_active) VALUES ($1, $2, $3, $4, $5)`
         const id = randomUUID()
 
-        const [result] = await pool.query(query ,[
+        await pool.query(query ,[
             id,
             userData.email,
             userData.password,
@@ -38,29 +38,29 @@ class User {
     // Set an activation token after admin approves, token expires in 48 hours
     static async setActivationToken(token ,expiry, userId) {
    
-        const query = `UPDATE users SET activation_token = ?, activation_token_expires = ? WHERE id = ?`
+        const query = `UPDATE users SET activation_token = $1, activation_token_expires = $2 WHERE id = $3`
         await pool.query(query, [token, expiry, userId])
 
     }
 
     // Validate token before activating
     static async findActivationToken(token) {
-        const query = `SELECT id, activation_token_expires  FROM users WHERE activation_token =?`
-        const [row] = await pool.query(query , [token])
+        const query = `SELECT id, activation_token_expires  FROM users WHERE activation_token =$1`
+        const result = await pool.query(query , [token])
 
-        return row[0]
+        return result.rows[0]
     }
 
     // Activate account, sets password, marks active, clears token so it cant be reused
     static async activateUser(userId, hashedPassword) {
-    const query = `UPDATE users SET password = ?, is_active = true, activation_token = NULL, activation_token_expires = NULL WHERE id = ?`
+    const query = `UPDATE users SET password = $1, is_active = true, activation_token = NULL, activation_token_expires = NULL WHERE id = $2`
     await pool.query(query, [hashedPassword, userId])
     }   
     // Find user by ID 
     static async findById(userId){
-        const query = `SELECT id, email, role, is_active FROM users WHERE id =?`
-        const [row] = await pool.query(query , [userId])
-        return row[0]
+        const query = `SELECT id, email, role, is_active FROM users WHERE id = $1`
+        const result = await pool.query(query , [userId])
+        return result.rows[0]
     }
 }
 
