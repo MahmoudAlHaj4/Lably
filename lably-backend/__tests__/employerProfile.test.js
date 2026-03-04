@@ -1,0 +1,36 @@
+const superTest = require('supertest')
+const app = require('../app')
+const pool = require('../src/config/database')
+const request = superTest(app)
+const jwt = require('jsonwebtoken')
+
+describe('EmployerProfile ',()=>{
+    let token 
+
+    beforeAll( async () =>{
+         await request.post('/api/auth/register')
+        .send({
+            email: "employertest@test.com",
+            password : "employer123"
+        })
+
+        const res = await request.post('/api/auth/login')
+        .send({
+            email: "employertest@test.com",
+            password: "employer123"
+        })
+        token = res.body.token
+    })
+
+    afterAll(async () => {
+        await pool.query('DELETE FROM employer_profiles WHERE user_id = (SELECT id FROM users WHERE email = $1)', ['employer-test@gmail.com'])
+        await pool.query('DELETE FROM users WHERE email = $1', ['employer-test@gmail.com'])
+    })
+
+    it("Should Create Employer profile" , async () => {
+        const res = await request.post(`/api/employer/profile/employer-profile`)
+        .set('Authorization' , `Bearer ${token}`)
+        .send({ company_name: 'Test Company' })
+        expect(res.status).toBe(201)
+    })
+})
