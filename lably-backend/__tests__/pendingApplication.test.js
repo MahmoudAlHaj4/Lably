@@ -1,17 +1,24 @@
 const superTest = require("supertest")
 const app = require('../app')
 const pool = require('../src/config/database')
+const jwt = require('jsonwebtoken')
 
 const request = superTest(app)
 
 describe('PendingApplication',()=>{
+    let applicationId
+      adminToken = jwt.sign(
+        { id: 'admin-test-id', role: 'admin' },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+        )
 
     beforeAll(async()=>{
-        await pool.query(`DELETE FROM pending_applications WHERE email = ?`, ['test@gmail.com'])
+        await pool.query(`DELETE FROM pending_applications WHERE email = $1`, ['test@gmail.com'])
     })
 
     afterAll(async()=>{
-        await pool.query(`DELETE FROM pending_applications WHERE email =?`, ['test@gmail.com'])
+        await pool.query(`DELETE FROM pending_applications WHERE email =$1`, ['test@gmail.com'])
        
     })
 
@@ -20,6 +27,7 @@ describe('PendingApplication',()=>{
         console.log(res.body)
         expect(res.status).toBe(201)
         expect(res.body.message).toBe("Application submitted")
+        applicationId = res.body.data.id
     })
 
     it('Should fail without resume', async () => {
@@ -29,4 +37,24 @@ describe('PendingApplication',()=>{
 
     expect(res.status).toBe(400)
 })
+    it('Should get all pending applications', async () => {
+        const res = await request.get('/api/admin/pending-applications')
+        .set('Authorization', `Bearer ${adminToken}`)
+
+        expect(res.status).toBe(200)
+    })
+
+    it('Should get pending application', async () => {
+        const res = await request.get(`/api/admin/pending-application/${applicationId}`)
+        .set('Authorization', `Bearer ${adminToken}`)
+
+        expect(res.status).toBe(200)
+    })
+
+    it('Should reject pending application', async () => {
+        const res = await request.put(`/api/admin/approve/${applicationId}`)
+        .set('Authorization', `Bearer ${adminToken}`)
+
+        expect(res.status).toBe(200)
+    })
 })
