@@ -15,8 +15,8 @@ const { jobSeekerMiddleware } = require('../middleware/jobSeekerMiddleware')
 const { employerMiddleware } = require('../middleware/employerMiddleware')
 const router = express.Router() 
 
-router.post('/application/:id', authMiddleware, jobSeekerMiddleware , apply)
-router.get('/application/:id', authMiddleware,employerMiddleware , getEmployerApplication)
-router.get('/application', authMiddleware, employerMiddleware , getEmployerApplications)
+router.post('/applications/:id', authMiddleware, jobSeekerMiddleware , apply)
+router.get('/applications/:id', authMiddleware,employerMiddleware , getEmployerApplication)
+router.get('/applications', authMiddleware, employerMiddleware , getEmployerApplications)
 
 module.exports = router
