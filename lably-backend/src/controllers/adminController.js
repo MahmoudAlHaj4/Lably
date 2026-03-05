@@ -46,7 +46,7 @@ const PendingApplication = require('../models/PendingApplication')
 const User = require('../models/User')
 const { randomUUID } = require('crypto')
 const bcrypt = require('bcrypt')
-
+const { sendActivationEmail } = require('../services/emailService')
 
 async function getAllPendingApplications(req,res) {
     try{
@@ -57,7 +57,7 @@ async function getAllPendingApplications(req,res) {
         })
         
     }catch(error){
-        return res.status(500).json({message: error.message})
+        return res.status(500).json({message: error.message, data: data})
     }
 }
 
@@ -98,6 +98,7 @@ async function getPendingApplication(req, res) {
 
             await User.setActivationToken(token, expiry , user.id)
             const result = await PendingApplication.approved(id)
+            await sendActivationEmail(application.email, token)
 
             return res.status(200).json({
             message: 'Application approved, activation token generated',
