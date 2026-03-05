@@ -218,8 +218,13 @@ Integration tests using Jest and Supertest against a real PostgreSQL database (N
 A real DB catches actual constraint violations, duplicate entries, and failures.
 
 ### What I Test
-**Authentication** — login success, wrong password, wrong email.
-**Pending Applications** — file upload submission, missing resume validation.
+
+**Authentication** 
+- login success, wrong password, wrong email.
+
+**Pending Applications** 
+- file upload submission, missing resume validation.
+
 **Activation Flow** — the full end-to-end flow:
 - Job seeker submits application
 - Admin approves and generates activation token
