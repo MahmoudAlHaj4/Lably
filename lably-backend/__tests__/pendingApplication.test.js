@@ -24,10 +24,19 @@ describe('PendingApplication',()=>{
     })
 
     afterAll(async()=>{
-        await pool.query(`DELETE FROM pending_applications WHERE email =$1`, ['test@gmail.com'])
-       
-    })
+        const result = await pool.query(`SELECT resume_path, portfolio_path FROM pending_applications WHERE email = $1`, ['test@gmail.com'])
+        
+        if(result.rows[0]){
+            await supabase.storage.from('resumes').remove([result.rows[0].resume_path])
+            
+            const portfolioPaths = JSON.parse(result.rows[0].portfolio_path || '[]')
+            if(portfolioPaths.length > 0){
+                await supabase.storage.from('portfolios').remove(portfolioPaths)
+            }
+        }
 
+        await pool.query(`DELETE FROM pending_applications WHERE email = $1`, ['test@gmail.com'])
+    })
     it('Should Successfully submit', async()=>{
         const res = await request.post('/api/pending-applications').attach('resume', './__tests__/test-resume.pdf').field({email: "test@gmail.com"}).field({full_name: "Mahmoud"}).field({phone: "0236545789"}).field({address: "any Address"})
         console.log(res.body)
