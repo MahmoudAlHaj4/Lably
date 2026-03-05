@@ -37,34 +37,33 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 ## Role Permissions & Access Control
 
 ### 1. Authentication
-**Register:** Seeker ✅ pending · Employer ✅ · Admin ❌ manual
-**Login:** Seeker ✅ verified only · Employer ✅ · Admin ✅
+**Register:** Employer only. Admin accounts are created manually.
+**Login:** Verified seekers, employers, and admins.
 
-### 2.Profile
-**Create/edit/delete:** Seeker ✅ · Employer ✅ · Admin ❌
-**View others:** Seeker ❌ · Employer ❌ applicants only · Admin ✅ all
+### 2. Profile
+**Create / Edit / Delete:** Seekers and employers manage their own profiles.
+**View others:** Employers can view applicant profiles only. Admins can view all.
 
-### 3.Verification
-**Submit:** Seeker ✅ · Employer ❌ · Admin ❌
-**Conduct interviews:** Seeker ❌ · Employer ❌ · Admin ✅
-**Approve/reject:** Seeker ❌ · Employer ❌ · Admin ✅
-**View status:** Seeker ❌ · Employer ❌ · Admin ✅ all
+### 3. Verification
+**Submit:** Seekers only.
+**Conduct interviews:** Admin only.
+**Approve / Reject:** Admin only.
+**View status:** Admin only.
 
-### 4.Jobs
-**Browse/view:** Seeker ✅ verified only · Employer ❌ · Admin ✅
-**Post/edit/delete own:** Seeker ❌ · Employer ✅ · Admin ❌
-**Delete any:** Seeker ❌ · Employer ❌ · Admin ✅
-**Application count:** Seeker ❌ · Employer ✅ own · Admin ✅ all
+### 4. Jobs
+**Browse / View:** Verified seekers and admins.
+**Post / Edit / Delete own:** Employers only.
+**Delete any:** Admin only.
+**Application count:** Employers see their own. Admins see all.
 
-### 5.Applications
-**Apply:** Seeker ✅ verified only · Employer ❌ · Admin ❌
-**View own:** Seeker ✅ · Employer ❌ · Admin ❌
-**View received:** Seeker ❌ · Employer ✅ own · Admin ✅ all
-**View profiles/resumes:** Seeker ❌ · Employer ✅ verified only · Admin ✅ all
+### 5. Applications
+**Apply:** Verified seekers only.
+**View own:** Seekers only.
+**View received:** Employers see their own. Admins see all.
+**View profiles / Resumes:** Employers and admins.
 
-### 6.Platform
-
-**Statistics / delete any user / view all users:** Seeker ❌ · Employer ❌ · Admin ✅
+### 6. Platform
+**Statistics / Delete users / View all users:** Admin only.
 
 ## Core Features (V1)
 
