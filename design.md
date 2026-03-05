@@ -232,6 +232,10 @@ A real DB catches actual constraint violations, duplicate entries, and failures.
 - Successful account activation with valid token
 - Login after activation confirms full flow works
 
+**Email Service**
+- sendActivationEmail is mocked in activation tests to prevent real emails being sent during CI.
+- Activation token is fetched directly from the database after approval instead of from the API response.
+
 ### Cleanup Strategy
 Every test file runs `beforeAll` and `afterAll` cleanup against the test email to ensure a fresh state before each run and no leftover data after — protecting against false failures from crashed previous runs
 
