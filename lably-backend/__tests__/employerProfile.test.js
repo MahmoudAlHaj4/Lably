@@ -20,7 +20,7 @@ describe('EmployerProfile ',()=>{
             password: "employer123"
         })
         token = res.body.token
-    })
+    }, 15000)
 
     afterAll(async () => {
         await pool.query('DELETE FROM employer_profiles WHERE user_id = (SELECT id FROM users WHERE email = $1)', ['employertest@test.com'])
@@ -37,6 +37,16 @@ describe('EmployerProfile ',()=>{
     it("Should Get Employer Profile" , async ()=> {
         const res = await request.get('/api/employer/profile/employer-profile')
         .set('Authorization', `Bearer ${token}`)
+
+        expect(res.status).toBe(200)
+    })
+
+    it("Should Update Employer Profile" , async () => {
+        const res = await request.put('/api/employer/profile/employer-profile')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+            company_name : "test update"
+        })
 
         expect(res.status).toBe(200)
     })
