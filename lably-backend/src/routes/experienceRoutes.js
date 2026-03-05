@@ -16,10 +16,10 @@ const { addExperience, getJobExperiences, UpdateJobExperience, GetExperience, De
 const { jobSeekerMiddleware } = require('../middleware/jobSeekerMiddleware')
 const router = express.Router()
 
-router.post('/experience', authMiddleware,jobSeekerMiddleware , addExperience)
-router.get('/experience', authMiddleware ,jobSeekerMiddleware, getJobExperiences)
-router.put('/experience/:id', authMiddleware, jobSeekerMiddleware , UpdateJobExperience)
-router.get('/experience/:id', authMiddleware , GetExperience)
-router.delete('/experience/:id', authMiddleware, jobSeekerMiddleware , DeleteExperience)
+router.post('/experiences', authMiddleware,jobSeekerMiddleware , addExperience)
+router.get('/experiences', authMiddleware ,jobSeekerMiddleware, getJobExperiences)
+router.put('/experiences/:id', authMiddleware, jobSeekerMiddleware , UpdateJobExperience)
+router.get('/experiences/:id', authMiddleware , GetExperience)
+router.delete('/experiences/:id', authMiddleware, jobSeekerMiddleware , DeleteExperience)
 
 module.exports = router
