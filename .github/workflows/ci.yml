@@ -3,7 +3,11 @@ name: Backend CI
 on:
   push:
     branches: [main]
+    paths:
+      - 'lably-backend/**'
   pull_request:
+    paths: 
+      - 'lably-backend/**'
     branches: [main]
 
 jobs:
