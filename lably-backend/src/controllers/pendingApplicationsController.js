@@ -24,7 +24,8 @@
  */
 
 const PendingApplication = require('../models/PendingApplication')
-const fs = require('fs')
+const { uploadToSupabase } = require('../middleware/uploadMiddleware')
+
 async function submitApplication(req, res) {
     try{
         const { email, full_name, phone , address} = req.body
@@ -35,21 +36,20 @@ async function submitApplication(req, res) {
         if(!req.files || !req.files['resume']) {
             return res.status(400).json({error: 'resume is required'})
         }
-        const id = req.generatedId
-        const resume_path = `uploads/resumes/${id}.pdf`
         
-        const portfolioPaths = req.files['portfolio'] 
-            ? req.files['portfolio'].map(file => file.path) 
-            : []
+        const resume_path = await uploadToSupabase(req.files['resume'][0], 'resumes')
+        
+        const portfolioPaths = req.files['portfolio']
+        ? await Promise.all(req.files['portfolio'].map(file => uploadToSupabase(file, 'portfolios')))
+        : []
         
         
         const cleanData = {
-            id,
             email,
             full_name,
             phone: phone || null,
-            address: address || null ,
-            resume_path ,
+            address: address || null,
+            resume_path,
             portfolio_path: JSON.stringify(portfolioPaths)
         }
 
@@ -60,16 +60,6 @@ async function submitApplication(req, res) {
             data: result
         })
     }catch(error) {
-        if(req.files){
-            if(req.files['resume']){
-                await fs.promises.unlink(req.files['resume'][0].path)
-            }
-            if(req.files['portfolio']){
-                for(const file of req.files['portfolio']){
-                    await fs.promises.unlink(file.path)
-                }
-            }
-        }
         res.status(500).json({ error: error.message })
     }
 }
