@@ -204,7 +204,7 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 - **HTML/CSS/JavaScript (Vanilla)** 
 - **Node.js** 
 - **Express.js** 
-- **MySQL** 
+- **PostgresSQL** 
 - **Local Filesystem (Development)** 
 - **JWT (JSON Web Tokens)**
 - **bcrypt** 
