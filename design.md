@@ -348,3 +348,29 @@ User redirected to login page
 - Uses email and newly created password
 - Gains full access to platform features
 - Can now browse jobs and apply
+
+
+## Development Decisions
+
+### JWT Authentication Strategy
+**Decision:** Single access token, stored in localStorage, 24hr expiry.
+**Dropped:** Refresh tokens, not needed for V1.
+**Dropped:** httpOnly cookies would require rewriting existing controllers.
+**Revisit in V2:** Refresh tokens + httpOnly cookies.
+
+
+### CORS Policy
+**Allowed Origins:** http://127.0.0.1:5500 (development) / Render domain (production)
+**Allowed Methods:** GET, POST, PUT, DELETE
+**Allowed Headers:** Content-Type, Authorization
+**Note:** Origin will be moved to environment variable before deployment.
+
+### Input Sanitization
+**Decision:** Dropped for V1.
+**Reason:** Backend already built with 27 routes, not worth retrofitting at this stage.
+**Revisit in V2:** Add express-validator to all routes as a dedicated hardening pass.
+
+### CI/CD Pipeline
+**Decision:** GitHub Actions for CI, auto-deploy to Render on success.
+**Tests:** Run on every push/PR to main (backend changes only).
+**Pipeline:** Install deps → Setup DB → Run tests → Deploy to Render.
