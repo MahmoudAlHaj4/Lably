@@ -13,15 +13,18 @@
  * reject: updates application status to rejected.
  */
 const pool = require('../config/database')
+const { randomUUID } = require('crypto')
 
 class PendingApplication {
     static async create(applicationData){
+        const id = randomUUID()
+
         const query = `INSERT INTO pending_applications 
         (id, email, full_name, phone, address,resume_path, portfolio_path)
         VALUES ($1, $2, $3, $4, $5, $6, $7)`
 
         await pool.query(query, [
-            applicationData.id,
+            id,
             applicationData.email,
             applicationData.full_name,
             applicationData.phone,
@@ -30,7 +33,7 @@ class PendingApplication {
             applicationData.portfolio_path
         ])
 
-        return {...applicationData}
+        return {id,...applicationData}
     }
 
     static async getAll(){
