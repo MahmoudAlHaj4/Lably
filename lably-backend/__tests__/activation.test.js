@@ -28,7 +28,7 @@ describe('Activation', ()=>{
   })
 
   it('Should submit pending application', async () => {
-    const res = await request.post('/api/pendingApplication/submit')
+    const res = await request.post('/api/pending-applications')
     .attach('resume', './__tests__/test-resume.pdf')
     .field('email', 'activation@test.com')
     .field('full_name', 'Flow Test')
