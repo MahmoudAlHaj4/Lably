@@ -307,7 +307,7 @@ lably-frontend/
 ### Applications
 1. GET /api/applications 
 2. GET /api/applications/:id
-3. POST /api/applications/:id
+3. POST /api/applications
 
 ### Admin - Verification 
 1. GET /api/admin/pending-applications
