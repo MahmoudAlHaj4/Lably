@@ -5,7 +5,9 @@ const jwt = require('jsonwebtoken')
 
 const request = superTest(app)
 
-
+jest.mock('../src/services/emailService', () => ({
+    sendActivationEmail: jest.fn().mockResolvedValue(undefined)
+}))
 
 describe('Activation', ()=>{
   let pendingApplicationId
@@ -38,14 +40,19 @@ describe('Activation', ()=>{
     pendingApplicationId = res.body.data.id
   })
 
-  it('Should approve and get Activation Token', async () => {
+ it('Should approve and get Activation Token', async () => {
     const res = await request
     .put('/api/admin/approve/' + pendingApplicationId)
     .set('Authorization', `Bearer ${adminToken}`)
     expect(res.status).toBe(200)
-    expect(res.body.activationToken).toBeDefined()
-    activationToken = res.body.activationToken
-  })
+
+    const result = await pool.query(
+        'SELECT activation_token FROM users WHERE email = $1',
+        ['activation@test.com']
+    )
+    activationToken = result.rows[0].activation_token
+    expect(activationToken).toBeDefined()
+})
 
   it('Should fail activation with wrong token', async () => {
     const res = await request.put('/api/auth/activate')
