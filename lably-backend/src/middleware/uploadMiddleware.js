@@ -19,26 +19,9 @@
 
 const multer = require('multer')
 const { randomUUID } = require('crypto')
+const supabase = require('../config/supabase')
 
-const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        if(file.fieldname === 'resume'){
-            cb(null, 'uploads/resumes')
-        } else {
-            cb(null, 'uploads/portfolios')
-        }
-    },
-    filename: function(req, file, cb){
-        if(file.fieldname === 'resume'){
-            const id = randomUUID()
-            req.generatedId = id
-            cb(null, `${id}.pdf`)
-        } else {
-            const ext = file.originalname.split('.').pop()
-            cb(null, `${randomUUID()}.${ext}`)
-        }
-    }
-})
+const storage = multer.memoryStorage()
 
 const fileFilter = function(req, file, cb){
     if(file.fieldname === 'resume'){
@@ -59,4 +42,17 @@ const fileFilter = function(req, file, cb){
 
 const upload = multer({ storage, fileFilter, limits: { fileSize: 5 * 1024 * 1024 }})
 
-module.exports = upload
+const uploadToSupabase = async (file, bucket) => {
+    const ext = file.originalname.split('.').pop()
+    const filename = `${randomUUID()}.${ext}`
+
+    const { error } = await supabase.storage
+        .from(bucket)
+        .upload(filename, file.buffer, { contentType: file.mimetype })
+
+    if(error) throw new Error(`Upload failed: ${error.message}`)
+
+    return filename
+}
+
+module.exports = { upload, uploadToSupabase }
