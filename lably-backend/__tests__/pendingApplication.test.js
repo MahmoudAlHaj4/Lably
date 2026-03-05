@@ -2,6 +2,7 @@ const superTest = require("supertest")
 const app = require('../app')
 const pool = require('../src/config/database')
 const jwt = require('jsonwebtoken')
+const supabase = require('../src/config/supabase')
 
 const request = superTest(app)
 
@@ -14,6 +15,11 @@ describe('PendingApplication',()=>{
         )
 
     beforeAll(async()=>{
+        const result = await pool.query(`SELECT resume_path FROM pending_applications WHERE email = $1`, ['test@gmail.com'])
+    
+        if(result.rows[0]){
+            await supabase.storage.from('resumes').remove([result.rows[0].resume_path])
+        }
         await pool.query(`DELETE FROM pending_applications WHERE email = $1`, ['test@gmail.com'])
     })
 
