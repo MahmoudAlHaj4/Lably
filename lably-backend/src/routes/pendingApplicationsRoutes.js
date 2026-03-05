@@ -13,7 +13,7 @@ const { submitApplication } = require('../controllers/pendingApplicationsControl
 const upload = require('../middleware/uploadMiddleware')
 const router = express.Router()
 
-router.post('/submit', upload.fields([
+router.post('/pending-applications', upload.fields([
         { name: 'resume', maxCount: 1 },
         { name: 'portfolio', maxCount: 5 }
     ]), submitApplication)
