@@ -286,11 +286,11 @@ lably-frontend/
 3. GET /api/job-seeker/profile
 
 ### Experience 
-1. GET /api/experience-section/experience
-2. GET /api/experience-section/experience/:id
-3. POST /api/experience-section/experience
-4. PUT /api/experience-section/experience/:id
-5. DELETE /api/experience-section/experience/:id
+1. GET /api/experiences
+2. GET /api/experiences/:id
+3. POST /api/experiences
+4. PUT /api/experiences/:id
+5. DELETE /api/experiences/:id
 
 ### Jobs
 1. GET /api/jobs/job
