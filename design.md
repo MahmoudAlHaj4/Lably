@@ -278,7 +278,7 @@ lably-frontend/
 3. POST /api/auth/register
 
 ### Job Seeker Application 
-1. POST /api/pendingApplications/submit
+1. POST /api/pending-applications
 
 ### Employer - Profile 
 1. POST /api/employer/profile
