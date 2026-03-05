@@ -276,9 +276,9 @@ lably-frontend/
 1. POST /api/pendingApplications/submit
 
 ### Employer - Profile 
-1. POST /api/employer/profile/employer-profile
-2. PUT /api/employer/profile/employer-profile
-3. GET /api/empoyer/profile/employer-profile
+1. POST /api/employer/profile
+2. PUT /api/employer/profile
+3. GET /api/empoyer/profile
 
 ### Job Seeker - Profile
 1. POST /api/job-seeker/profile/job-seeker-profile
