@@ -374,3 +374,12 @@ User redirected to login page
 **Decision:** GitHub Actions for CI, auto-deploy to Render on success.
 **Tests:** Run on every push/PR to main (backend changes only).
 **Pipeline:** Install deps → Setup DB → Run tests → Deploy to Render.
+
+### Rate Limiting
+**Decision:** Applied only on POST /api/auth/login.
+**Library:** express-rate-limit
+**Limit:** 25 attempts per 15 minutes per IP.
+**Reset:** Automatic after window expires.
+**Test bypass:** Skipped when NODE_ENV=test to prevent CI failures.
+**Revisit in V2:** Per-user rate limiting post-authentication.
+
