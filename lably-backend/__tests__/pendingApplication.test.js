@@ -52,7 +52,7 @@ describe('PendingApplication',()=>{
     })
 
     it('Should reject pending application', async () => {
-        const res = await request.put(`/api/admin/approve/${applicationId}`)
+        const res = await request.put(`/api/admin/reject/${applicationId}`)
         .set('Authorization', `Bearer ${adminToken}`)
 
         expect(res.status).toBe(200)
