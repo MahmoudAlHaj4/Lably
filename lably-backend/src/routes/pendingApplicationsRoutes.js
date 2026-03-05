@@ -10,7 +10,7 @@
 
 const express = require('express')
 const { submitApplication } = require('../controllers/pendingApplicationsController')
-const upload = require('../middleware/uploadMiddleware')
+const { upload } = require('../middleware/uploadMiddleware')
 const router = express.Router()
 
 router.post('/pending-applications', upload.fields([
