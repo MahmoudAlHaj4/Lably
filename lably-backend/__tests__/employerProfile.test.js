@@ -28,21 +28,21 @@ describe('EmployerProfile ',()=>{
     })
 
     it("Should Create Employer profile" , async () => {
-        const res = await request.post(`/api/employer/profile/employer-profile`)
+        const res = await request.post(`/api/employer/profile`)
         .set('Authorization' , `Bearer ${token}`)
         .send({ company_name: 'Test Company' })
         expect(res.status).toBe(201)
     })
 
     it("Should Get Employer Profile" , async ()=> {
-        const res = await request.get('/api/employer/profile/employer-profile')
+        const res = await request.get('/api/employer/profile')
         .set('Authorization', `Bearer ${token}`)
 
         expect(res.status).toBe(200)
     })
 
     it("Should Update Employer Profile" , async () => {
-        const res = await request.put('/api/employer/profile/employer-profile')
+        const res = await request.put('/api/employer/profile')
         .set('Authorization', `Bearer ${token}`)
         .send({
             company_name : "test update"
