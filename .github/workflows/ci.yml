@@ -57,3 +57,7 @@ jobs:
       - name: Run tests
         run: npm test
         working-directory: lably-backend
+
+      - name: Deploy to Render
+        if: success()
+        run: curl "${{ secrets.RENDER_DEPLOY_HOOK }}"
