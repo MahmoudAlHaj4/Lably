@@ -19,7 +19,7 @@ const corsMiddleware  = require('./src/middleware/crosMiddleware')
 app.use(corsMiddleware )
 
 const pendingApplicationsRoutes = require('./src/routes/pendingApplicationsRoutes')
-app.use('/api/pendingApplication', pendingApplicationsRoutes)
+app.use('/api', pendingApplicationsRoutes)
 
 const authRoutes = require('./src/routes/authRoutes')
 app.use('/api/auth', authRoutes)
@@ -28,18 +28,18 @@ const adminRoutes = require('./src/routes/adminRoutes')
 app.use('/api/admin', adminRoutes)
 
 const employerProfileRoutes = require('./src/routes/employerprofileRoutes')
-app.use('/api/employer/profile', employerProfileRoutes)
+app.use('/api/employer', employerProfileRoutes)
 
 const jobSeekerProfileRoutes = require('./src/routes/jobSeekerProfileRoutes')
-app.use('/api/job-seeker/profile', jobSeekerProfileRoutes)
+app.use('/api/job-seeker', jobSeekerProfileRoutes)
 
 const experienceRoutes = require('./src/routes/experienceRoutes')
-app.use('/api/experience-section', experienceRoutes)
+app.use('/api', experienceRoutes)
 
 const jobRoutes = require('./src/routes/jobRoutes')
-app.use('/api/jobs', jobRoutes)
+app.use('/api', jobRoutes)
 
 const applicationRoutes = require('./src/routes/applicationRoutes')
-app.use('/api/applications/', applicationRoutes)
+app.use('/api', applicationRoutes)
 
 module.exports = app
