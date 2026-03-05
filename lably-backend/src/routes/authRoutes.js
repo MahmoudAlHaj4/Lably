@@ -10,9 +10,10 @@
 
 const express = require('express')
 const { login, activateAccount, employerRegister } = require('../controllers/authController')
+const { loginRateLimit } = require('../middleware/rateLimitMiddleware')
 const router = express.Router()
 
-router.post('/login', login)
+router.post('/login', loginRateLimit, login)
 router.put('/activate', activateAccount)
 router.post('/register', employerRegister)
 
