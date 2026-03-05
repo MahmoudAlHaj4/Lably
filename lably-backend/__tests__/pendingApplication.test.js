@@ -23,7 +23,7 @@ describe('PendingApplication',()=>{
     })
 
     it('Should Successfully submit', async()=>{
-        const res = await request.post('/api/pending-application').attach('resume', './__tests__/test-resume.pdf').field({email: "test@gmail.com"}).field({full_name: "Mahmoud"}).field({phone: "0236545789"}).field({address: "any Address"})
+        const res = await request.post('/api/pending-applications').attach('resume', './__tests__/test-resume.pdf').field({email: "test@gmail.com"}).field({full_name: "Mahmoud"}).field({phone: "0236545789"}).field({address: "any Address"})
         console.log(res.body)
         expect(res.status).toBe(201)
         expect(res.body.message).toBe("Application submitted")
@@ -31,7 +31,7 @@ describe('PendingApplication',()=>{
     })
 
     it('Should fail without resume', async () => {
-    const res = await request.post('/api/pending-application')
+    const res = await request.post('/api/pending-applications')
         .field('email', 'test2@gmail.com')
         .field('full_name', 'Mahmoud')
 
