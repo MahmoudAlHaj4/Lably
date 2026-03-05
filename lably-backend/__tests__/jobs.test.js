@@ -29,7 +29,7 @@ describe('Jobs', ()=>{
     })
 
     it('Should create A job', async ()=>{
-        const res = await request.post('/api/jobs/job')
+        const res = await request.post('/api/jobs')
         .set('Authorization', `Bearer ${token}`)
         .send({
             job_title: "Job Test",
@@ -44,21 +44,21 @@ describe('Jobs', ()=>{
     })
 
     it('Should get Employer Jobs' , async () => {
-        const res = await request.get('/api/jobs/job')
+        const res = await request.get('/api/jobs')
         .set('Authorization', `Bearer ${token}`)
 
         expect(res.status).toBe(200)
     })
 
     it('Should Get a Job ', async () => {
-        const res= await request.get(`/api/jobs/job/${jobId}`)
+        const res= await request.get(`/api/jobs/${jobId}`)
         .set('Authorization', `Bearer ${token}`)
 
         expect(res.status).toBe(200)
     })
 
     it("Should Update A Job", async () => {
-        const res = await request.put(`/api/jobs/job/${jobId}`)
+        const res = await request.put(`/api/jobs/${jobId}`)
         .set('Authorization', `Bearer ${token}`)
         .send({
             job_title: 'test update',
@@ -72,7 +72,7 @@ describe('Jobs', ()=>{
     })
 
     it('Should Delete A Job', async () => {
-        const res = await request.delete(`/api/jobs/job/${jobId}`)
+        const res = await request.delete(`/api/jobs/${jobId}`)
         .set('Authorization', `Bearer ${token}`)
 
         expect(res.status).toBe(200)
