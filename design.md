@@ -212,7 +212,7 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 
 ## Testing Strategy
 
-Integration tests using Jest and Supertest against a real MySQL database to catch real-world issues that mocks would miss.
+Integration tests using Jest and Supertest against a real PostgreSQL database (Neon) to catch real-world issues that mocks would miss.
 
 ### Why Real Database
 A real DB catches actual constraint violations, duplicate entries, and failures.
