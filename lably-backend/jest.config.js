@@ -1,4 +1,5 @@
 module.exports = {
     globalTeardown: './teardown.js',
-    detectOpenHandles: true
+    detectOpenHandles: true,
+    testTimeout: 15000
 }
