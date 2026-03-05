@@ -387,3 +387,8 @@ User redirected to login page
 **Test bypass:** Skipped when NODE_ENV=test to prevent CI failures.
 **Revisit in V2:** Per-user rate limiting post-authentication.
 
+
+### Email Service
+**Decision:** Resend API via raw fetch, no SDK.
+**Trigger:** Sent automatically when admin approves a pending application.
+**Template:** Activation link with
