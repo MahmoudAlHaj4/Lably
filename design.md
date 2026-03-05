@@ -198,8 +198,8 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 6. **Activation Tokens in users Table:** Token fields are NULL until needed and cleared after use. A separate tokens table adds complexity with no V1 benefit. Can be refactored in V2 if more token types are needed.
 
 ## File Upload Specifications
-**Resume:** PDF only, max 2MB. Path: /uploads/resumes/{user_id}.pdf
-**Portfolio:** PDF, JPG, or PNG. Max 5MB per file, up to 5 files. Path: /uploads/portfolios/{user_id}_{timestamp}.{ext}. Stored in DB as JSON array of file paths.
+**Resume:** PDF only, max 5MB. Stored in Supabase Storage `resumes` bucket. Path saved to DB as filename.
+**Portfolio:** PDF, JPG, or PNG. Max 5MB per file, up to 5 files. Stored in Supabase Storage `portfolios` bucket. Paths saved to DB as JSON array of filenames.
 
 ## Tech Stack
 - **HTML/CSS/JavaScript (Vanilla)** 
@@ -209,6 +209,7 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 - **Local Filesystem (Development)** 
 - **JWT (JSON Web Tokens)**
 - **bcrypt** 
+- **Supabase Storage**
 
 ## Testing Strategy
 
