@@ -283,7 +283,7 @@ lably-frontend/
 ### Employer - Profile 
 1. POST /api/employer/profile
 2. PUT /api/employer/profile
-3. GET /api/empoyer/profile
+3. GET /api/employer/profile
 
 ### Job Seeker - Profile
 1. POST /api/job-seeker/profile
