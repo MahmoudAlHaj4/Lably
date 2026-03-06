@@ -123,7 +123,7 @@ async function employerRegister(req , res) {
             return res.status(400).json({message: "Email already Used"})
         }
 
-        if(!password){
+        if(!password || !password.trim()){
             return res.status(400).json({message: "Password is required"})
         }
         const hashedPassword = await bcrypt.hash(password , 10)
