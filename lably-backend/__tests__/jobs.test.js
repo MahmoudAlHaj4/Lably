@@ -77,4 +77,17 @@ describe('Jobs', ()=>{
 
         expect(res.status).toBe(200)
     })
+
+    it('Should reject du to unauthorize', async () => {
+        const res = await request.post('/api/jobs')
+        .send({
+             job_title: 'test update',
+            description: "test description",
+            requirements: "test requirements",
+            location: 'test location',
+            job_type:"on_site"
+        })
+
+        expect(res.status).toBe(401)
+    })
 })
