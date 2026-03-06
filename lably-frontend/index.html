@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lably — Dental Tech Careers</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.02); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+        .animate-float { animation: float 8s ease-in-out infinite; }
+        .animate-float-slow { animation: float 12s ease-in-out infinite; }
+        .animate-float-delay { animation: float 10s ease-in-out infinite; animation-delay: -3s; }
+        .soft-card {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(228,229,232,0.3);
+            border-radius: 24px;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up  { animation: fadeUp 0.7s ease both; }
+        .fade-up-2{ animation: fadeUp 0.7s 0.15s ease both; }
+        .fade-up-3{ animation: fadeUp 0.7s 0.3s ease both; }
+    </style>
+</head>
+<body class="font-['DM_Sans'] bg-[#F5F6F8] text-[#0D1B2A] overflow-x-hidden relative">
+
+    <!-- Background blobs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
+        <div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-teal-100 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-float-slow"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float-delay"></div>
+        <div class="absolute bottom-20 right-20 w-72 h-72 bg-green-100 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-float" style="animation-delay:-2s"></div>
+        <div class="absolute top-20 left-20 w-80 h-80 bg-green-50 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-float-slow" style="animation-delay:-5s"></div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#E4E5E8] px-[7%] h-16 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-2 no-underline">
+            <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+            <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
+        </a>
+        <div class="flex gap-2 items-center">
+            <a href="./pages/login.html" class="px-5 py-2 rounded-md border border-[#E4E5E8] bg-transparent text-sm font-medium text-[#0D1B2A] hover:bg-[#F5F6F8] transition no-underline">Sign In</a>
+            <a href="./pages/apply.html" class="px-5 py-2 rounded-md bg-[#16a34a] text-sm font-medium text-white hover:bg-[#15803d] transition no-underline">Apply Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative z-10 px-[7%] pt-[60px] md:pt-[90px] pb-14 flex flex-col items-center text-center">
+        <div class="fade-up inline-flex items-center gap-1.5 bg-green-100 text-[#16a34a] text-xs font-semibold px-3.5 py-1 rounded-full mb-7 tracking-wide uppercase">
+            <span class="w-1.5 h-1.5 bg-[#16a34a] rounded-full animate-pulse"></span>
+            Dental Tech Jobs — Verified Professionals Only
+        </div>
+        <h1 class="fade-up-2 font-['DM_Serif_Display'] text-4xl sm:text-5xl md:text-6xl leading-tight text-[#0D1B2A] mb-5 tracking-tight max-w-2xl">
+            Find a job that fits your <em class="italic text-[#16a34a]">dental</em> expertise.
+        </h1>
+        <p class="fade-up-3 text-base text-[#767F8C] leading-relaxed mb-10 max-w-lg">
+            Lably connects pre-verified CAD/CAM specialists, dental technicians, and lab professionals with top dental labs and clinics.
+        </p>
+        <div class="fade-up-3 flex flex-col sm:flex-row gap-3">
+            <a href="./pages/apply.html" class="px-7 py-3 rounded-xl bg-[#16a34a] text-white text-sm font-semibold hover:bg-[#15803d] transition shadow-lg">
+                Get Verified &amp; Apply
+            </a>
+            <a href="./pages/login.html" class="px-7 py-3 rounded-xl border border-[#E4E5E8] bg-white text-sm font-semibold text-[#0D1B2A] hover:bg-[#F5F6F8] transition">
+                Sign In
+            </a>
+        </div>
+        <!-- Trust badges -->
+        <div class="fade-up-3 flex flex-wrap justify-center gap-5 mt-10">
+            <div class="flex items-center gap-1.5 text-xs text-[#767F8C]">
+                <i class="fa-solid fa-shield-halved text-[#16a34a]"></i> Every candidate verified
+            </div>
+            <div class="flex items-center gap-1.5 text-xs text-[#767F8C]">
+                <i class="fa-solid fa-video text-[#16a34a]"></i> Live technical assessments
+            </div>
+            <div class="flex items-center gap-1.5 text-xs text-[#767F8C]">
+                <i class="fa-solid fa-industry text-[#16a34a]"></i> Dental industry only
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="relative z-10 px-[7%] pb-16">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <div class="bg-white border border-[#E4E5E8] rounded-xl p-5 flex items-center gap-4">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-[#16a34a] text-lg shrink-0"><i class="fa-solid fa-briefcase"></i></div>
+                <div><h3 class="text-2xl font-semibold text-[#0D1B2A] tracking-tight">1,240</h3><p class="text-xs text-[#767F8C] mt-0.5">Live Jobs</p></div>
+            </div>
+            <div class="bg-white border border-[#E4E5E8] rounded-xl p-5 flex items-center gap-4">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-[#16a34a] text-lg shrink-0"><i class="fa-solid fa-building"></i></div>
+                <div><h3 class="text-2xl font-semibold text-[#0D1B2A] tracking-tight">320</h3><p class="text-xs text-[#767F8C] mt-0.5">Dental Labs</p></div>
+            </div>
+            <div class="bg-white border border-[#E4E5E8] rounded-xl p-5 flex items-center gap-4">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-[#16a34a] text-lg shrink-0"><i class="fa-solid fa-user-check"></i></div>
+                <div><h3 class="text-2xl font-semibold text-[#0D1B2A] tracking-tight">2,847</h3><p class="text-xs text-[#767F8C] mt-0.5">Verified Candidates</p></div>
+            </div>
+            <div class="bg-white border border-[#E4E5E8] rounded-xl p-5 flex items-center gap-4">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-[#16a34a] text-lg shrink-0"><i class="fa-solid fa-newspaper"></i></div>
+                <div><h3 class="text-2xl font-semibold text-[#0D1B2A] tracking-tight">143</h3><p class="text-xs text-[#767F8C] mt-0.5">New This Week</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How Lably Works -->
+    <section class="relative z-10 px-[7%] py-20 bg-white/50 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-14">
+                <h2 class="font-['DM_Serif_Display'] text-3xl md:text-4xl text-[#0D1B2A] mb-3">How Lably Works</h2>
+                <p class="text-[#767F8C] max-w-xl mx-auto">A rigorous verification process ensures only the best professionals reach employers.</p>
+            </div>
+            <div class="flex flex-col md:flex-row items-center md:items-stretch gap-0">
+                <!-- Step 1 -->
+                <div class="flex-1 soft-card p-7 text-center flex flex-col items-center">
+                    <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center text-[#16a34a] text-2xl mb-4 shadow-sm"><i class="fa-solid fa-video"></i></div>
+                    <span class="text-xs font-bold text-[#16a34a] tracking-widest uppercase mb-2">Step 1</span>
+                    <h3 class="font-semibold text-lg mb-2 text-[#0D1B2A]">Live Assessment</h3>
+                    <p class="text-sm text-[#767F8C] leading-relaxed">Demonstrate your skills live in front of our dental specialists via video call.</p>
+                </div>
+                <!-- Arrow -->
+                <div class="flex items-center justify-center mx-2 my-3 md:my-0 shrink-0">
+                    <div class="hidden md:flex"><div class="w-8 h-8 rounded-full bg-white border border-[#E4E5E8] flex items-center justify-center shadow-sm"><i class="fa-solid fa-chevron-right text-[#16a34a] text-xs"></i></div></div>
+                    <div class="flex md:hidden"><div class="w-8 h-8 rounded-full bg-white border border-[#E4E5E8] flex items-center justify-center shadow-sm"><i class="fa-solid fa-chevron-down text-[#16a34a] text-xs"></i></div></div>
+                </div>
+                <!-- Step 2 -->
+                <div class="flex-1 soft-card p-7 text-center flex flex-col items-center">
+                    <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center text-[#16a34a] text-2xl mb-4 shadow-sm"><i class="fa-solid fa-circle-check"></i></div>
+                    <span class="text-xs font-bold text-[#16a34a] tracking-widest uppercase mb-2">Step 2</span>
+                    <h3 class="font-semibold text-lg mb-2 text-[#0D1B2A]">Get Verified</h3>
+                    <p class="text-sm text-[#767F8C] leading-relaxed">Once approved, your profile is marked <strong class="text-[#0D1B2A] font-medium">pre-verified</strong> — visible to top employers.</p>
+                </div>
+                <!-- Arrow -->
+                <div class="flex items-center justify-center mx-2 my-3 md:my-0 shrink-0">
+                    <div class="hidden md:flex"><div class="w-8 h-8 rounded-full bg-white border border-[#E4E5E8] flex items-center justify-center shadow-sm"><i class="fa-solid fa-chevron-right text-[#16a34a] text-xs"></i></div></div>
+                    <div class="flex md:hidden"><div class="w-8 h-8 rounded-full bg-white border border-[#E4E5E8] flex items-center justify-center shadow-sm"><i class="fa-solid fa-chevron-down text-[#16a34a] text-xs"></i></div></div>
+                </div>
+                <!-- Step 3 -->
+                <div class="flex-1 soft-card p-7 text-center flex flex-col items-center border border-[#16a34a]/20 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-green-50/40 pointer-events-none rounded-3xl"></div>
+                    <div class="w-14 h-14 bg-[#16a34a] rounded-2xl flex items-center justify-center text-white text-2xl mb-4 shadow-md shadow-green-200 relative z-10"><i class="fa-solid fa-briefcase"></i></div>
+                    <span class="text-xs font-bold text-[#16a34a] tracking-widest uppercase mb-2 relative z-10">Step 3</span>
+                    <h3 class="font-semibold text-lg mb-2 text-[#0D1B2A] relative z-10">Land Your Job</h3>
+                    <p class="text-sm text-[#767F8C] leading-relaxed relative z-10">Browse exclusive listings and apply with one click to the best dental labs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Lably -->
+    <section class="relative z-10 px-[7%] py-20">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-14">
+                <h2 class="font-['DM_Serif_Display'] text-3xl md:text-4xl text-[#0D1B2A] mb-3">Why Lably?</h2>
+                <p class="text-[#767F8C] max-w-xl mx-auto">We're not another generic job board. Built exclusively for the dental technology industry.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white border border-[#E4E5E8] rounded-2xl p-7">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-[#16a34a] text-xl mb-5"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3 class="font-semibold text-lg mb-2">Verified Talent Only</h3>
+                    <p class="text-sm text-[#767F8C] leading-relaxed">Every candidate on Lably has passed a live technical assessment. No unvetted applicants, no noise.</p>
+                </div>
+                <div class="bg-white border border-[#E4E5E8] rounded-2xl p-7">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-[#16a34a] text-xl mb-5"><i class="fa-solid fa-tooth"></i></div>
+                    <h3 class="font-semibold text-lg mb-2">Industry-Focused</h3>
+                    <p class="text-sm text-[#767F8C] leading-relaxed">Built exclusively for dental technology — CAD/CAM, ceramics, lab management, and more.</p>
+                </div>
+                <div class="bg-white border border-[#E4E5E8] rounded-2xl p-7">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-[#16a34a] text-xl mb-5"><i class="fa-solid fa-bolt"></i></div>
+                    <h3 class="font-semibold text-lg mb-2">Faster Hiring</h3>
+                    <p class="text-sm text-[#767F8C] leading-relaxed">Employers skip screening entirely. Candidates are pre-vetted so you move straight to offers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Seekers & Employers — Split Section -->
+    <section class="relative z-10 px-[7%] py-20 bg-white/50 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-14">
+                <h2 class="font-['DM_Serif_Display'] text-3xl md:text-4xl text-[#0D1B2A] mb-3">Who is Lably for?</h2>
+                <p class="text-[#767F8C] max-w-xl mx-auto">Whether you're looking for work or looking to hire, Lably has you covered.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Seekers -->
+                <div class="bg-[#0D1B2A] rounded-3xl p-10 flex flex-col relative overflow-hidden">
+                    <div class="absolute -top-16 -right-16 w-56 h-56 bg-[#16a34a] rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+                    <div class="absolute bottom-0 left-0 w-40 h-40 bg-green-400 rounded-full opacity-5 blur-2xl pointer-events-none"></div>
+                    <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-white text-xl mb-6">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <p class="text-xs font-bold text-green-400 tracking-widest uppercase mb-3">For Candidates</p>
+                    <h3 class="font-['DM_Serif_Display'] text-2xl md:text-3xl text-white mb-4 leading-snug">Get verified.<br>Get hired.</h3>
+                    <p class="text-sm text-white/60 leading-relaxed mb-8">Submit your documents, pass a live technical assessment, and unlock exclusive access to dental lab jobs posted by top employers — all in one place.</p>
+                    <ul class="space-y-3 mb-10">
+                        <li class="flex items-center gap-3 text-sm text-white/70">
+                            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-green-400 text-[10px]"></i></span>
+                            Pre-verified badge on your profile
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-white/70">
+                            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-green-400 text-[10px]"></i></span>
+                            Access to exclusive dental tech listings
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-white/70">
+                            <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-green-400 text-[10px]"></i></span>
+                            One-click applications with your profile
+                        </li>
+                    </ul>
+                    <a href="./pages/apply.html" class="mt-auto inline-flex items-center gap-2 self-start px-6 py-3 rounded-xl bg-[#16a34a] text-white text-sm font-semibold hover:bg-[#15803d] transition">
+                        Apply for Verification <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Employers -->
+                <div class="bg-white border border-[#E4E5E8] rounded-3xl p-10 flex flex-col relative overflow-hidden">
+                    <div class="absolute -bottom-16 -right-16 w-56 h-56 bg-green-200 rounded-full opacity-50 blur-3xl pointer-events-none"></div>
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-[#16a34a] text-xl mb-6">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <p class="text-xs font-bold text-[#16a34a] tracking-widest uppercase mb-3">For Employers</p>
+                    <h3 class="font-['DM_Serif_Display'] text-2xl md:text-3xl text-[#0D1B2A] mb-4 leading-snug">Post a job.<br>Hire with confidence.</h3>
+                    <p class="text-sm text-[#767F8C] leading-relaxed mb-8">Forget sifting through hundreds of unqualified resumes. Every candidate on Lably has already been screened and verified by our dental specialists.</p>
+                    <ul class="space-y-3 mb-10">
+                        <li class="flex items-center gap-3 text-sm text-[#767F8C]">
+                            <span class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[#16a34a] text-[10px]"></i></span>
+                            Only pre-verified applicants
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-[#767F8C]">
+                            <span class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[#16a34a] text-[10px]"></i></span>
+                            View resumes and work portfolios
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-[#767F8C]">
+                            <span class="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center shrink-0"><i class="fa-solid fa-check text-[#16a34a] text-[10px]"></i></span>
+                            Post and manage jobs from your dashboard
+                        </li>
+                    </ul>
+                    <a href="./pages/register.html" class="mt-auto inline-flex items-center gap-2 self-start px-6 py-3 rounded-xl bg-[#0D1B2A] text-white text-sm font-semibold hover:opacity-90 transition">
+                        Post a Job <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="relative z-10 bg-[#0D1B2A] text-white px-[7%] py-12">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+                    <span class="font-['DM_Serif_Display'] text-2xl tracking-tight">Lably</span>
+                </div>
+                <p class="text-sm text-white/60">Connecting verified dental professionals with top labs and clinics.</p>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">For Candidates</h4>
+                <ul class="space-y-2 text-sm text-white/60">
+                    <li><a href="./pages/apply.html" class="hover:text-white transition">Apply for Verification</a></li>
+                    <li><a href="./pages/login.html" class="hover:text-white transition">Sign In</a></li>
+                    <li><a href="#" class="hover:text-white transition">How it Works</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">For Employers</h4>
+                <ul class="space-y-2 text-sm text-white/60">
+                    <li><a href="./pages/register.html" class="hover:text-white transition">Post a Job</a></li>
+                    <li><a href="./pages/login.html" class="hover:text-white transition">Employer Login</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold mb-4">Contact</h4>
+                <ul class="space-y-2 text-sm text-white/60">
+                    <li><i class="fa-regular fa-envelope mr-2"></i>hello@lably.com</li>
+                    <li><i class="fa-regular fa-phone mr-2"></i>+1 (800) 555-0199</li>
+                    <li><i class="fa-regular fa-building mr-2"></i>San Francisco, CA</li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-white/10 mt-8 pt-6 text-center text-sm text-white/40">
+            © 2026 Lably. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
