@@ -84,6 +84,9 @@ async function getPendingApplication(req, res) {
             if(!application){
                 return res.status(404).json({message: 'application not found'})
             }
+            if(application.application_status === 'approved'){
+                return res.status(400).json({message: 'application already approved'})
+            }
 
             const token = randomUUID()
             const expiry = new Date(Date.now() + + 48 * 60 * 60 * 1000)
@@ -102,7 +105,6 @@ async function getPendingApplication(req, res) {
 
             return res.status(200).json({
             message: 'Application approved, activation token generated',
-            activationToken: token,
             data: result
 
             })
