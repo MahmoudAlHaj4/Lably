@@ -115,7 +115,7 @@ async function employerRegister(req , res) {
     try{
         const {email , password} = req.body
 
-        if(!email){
+        if(!email || !email.trim()){
             return res.status(400).json({message : "Email is required"})
         }
         const checkEmail = await User.findByEmail(email)
