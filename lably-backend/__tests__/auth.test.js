@@ -47,7 +47,7 @@ describe('Auth', ()=>{
     it('Should Email duplicate', async()=>{
         const res = await request.post('/api/auth/register')
         .send({
-            email: "auth-test@gmaail.com",
+            email: "auth-test@gmail.com",
             password: "123456789"
         })
 
