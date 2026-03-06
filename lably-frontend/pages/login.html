@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lably — Sign In / Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .panel-fade { animation: fadeIn 0.22s ease-out; }
+    </style>
+</head>
+<body class="font-['DM_Sans'] bg-[#F5F6F8] text-[#0D1B2A] min-h-screen flex items-center justify-center p-4 md:p-8">
+
+    <div class="w-full max-w-lg bg-white rounded-2xl p-8 md:p-12">
+
+        <!-- Logo -->
+        <a href="../index.html" class="flex items-center gap-2 mb-10 no-underline w-fit">
+            <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+            <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
+        </a>
+
+        <!-- Tabs -->
+        <div class="flex gap-1 bg-[#F5F6F8] rounded-xl p-1 mb-8 w-full">
+            <button data-tab="login" class="tab-btn flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 text-[#767F8C]">
+                Sign In
+            </button>
+            <button data-tab="register" class="tab-btn flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 text-[#767F8C]">
+                Create Account
+            </button>
+        </div>
+
+        <!-- ── LOGIN PANEL ── -->
+        <div id="panel-login" class="panel panel-fade">
+            <h2 class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] mb-1">Welcome back</h2>
+            <p class="text-sm text-[#767F8C] mb-7">Sign in to access your Lably account.</p>
+
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label for="login-email" class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Email address</label>
+                    <input type="email" id="login-email" placeholder="anna@example.com" required
+                        class="w-full px-4 py-3 border border-[#E4E5E8] rounded-lg text-sm text-[#0D1B2A] placeholder-[#b0b7c3] focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/10 transition">
+                </div>
+                <div>
+                    <label for="login-password" class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Password</label>
+                    <div class="relative">
+                        <input type="password" id="login-password" placeholder="••••••••" required
+                            class="w-full px-4 py-3 border border-[#E4E5E8] rounded-lg text-sm text-[#0D1B2A] placeholder-[#b0b7c3] focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/10 transition pr-11">
+                        <button type="button" class="toggle-pw absolute right-3 top-1/2 -translate-y-1/2 text-[#767F8C] hover:text-[#16a34a] transition" data-for="login-password">
+                            <i class="fa-regular fa-eye text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 text-sm text-[#767F8C] cursor-pointer select-none">
+                        <input type="checkbox" class="w-4 h-4 accent-[#16a34a] rounded border-[#E4E5E8]">
+                        Remember me
+                    </label>
+                    <a href="./forgetPassword.html" class="text-xs text-[#16a34a] font-medium hover:underline">Forgot password?</a>
+                </div>
+               <button type="submit" id="login-btn"
+                    class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2 mt-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    Sign In <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+                <p class="text-xs text-red-500 min-h-[1rem]" id="login-error"></p>
+            </form>
+        </div>
+
+        <!-- ── REGISTER PANEL ── -->
+        <div id="panel-register" class="panel panel-fade hidden">
+            <h2 class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] mb-1">Create your account</h2>
+            <p class="text-sm text-[#767F8C] mb-7">Register as an employer to post jobs and find verified talent.</p>
+
+            <form id="register-form" class="space-y-4">
+                <div>
+                    <label for="reg-email" class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Work email</label>
+                    <input type="email" id="reg-email" placeholder="company@example.com" required
+                        class="w-full px-4 py-3 border border-[#E4E5E8] rounded-lg text-sm text-[#0D1B2A] placeholder-[#b0b7c3] focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/10 transition">
+                </div>
+                <div>
+                    <label for="reg-password" class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Password</label>
+                    <div class="relative">
+                        <input type="password" id="reg-password" placeholder="Min 8 characters" required
+                            class="w-full px-4 py-3 border border-[#E4E5E8] rounded-lg text-sm text-[#0D1B2A] placeholder-[#b0b7c3] focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/10 transition pr-11">
+                        <button type="button" class="toggle-pw absolute right-3 top-1/2 -translate-y-1/2 text-[#767F8C] hover:text-[#16a34a] transition" data-for="reg-password">
+                            <i class="fa-regular fa-eye text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                <button id="reg-btn" type="submit" class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-semibold py-3 rounded-lg transition flex items-center justify-center gap-2 mt-2 disabled:opacity-50 disabled:cursor-not-allowed ">
+                    Create Account <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+                <p class="text-xs text-red-500 min-h-[1rem]" id="register-error"></p>
+            </form>
+
+            <!-- Job seeker note -->
+            <div class="mt-5 flex items-start gap-3 bg-[#F5F6F8] border border-[#E4E5E8] rounded-xl p-4">
+                <i class="fa-solid fa-circle-info text-[#16a34a] mt-0.5 shrink-0"></i>
+                <p class="text-xs text-[#767F8C] leading-relaxed">
+                    <span class="font-semibold text-[#0D1B2A]">Looking for a job?</span> Your account is created automatically once your verification is approved by our team.
+                    <a href="./apply.html" class="text-[#16a34a] font-medium hover:underline ml-1">Submit your application →</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../config.js"></script>
+    <script src="../scripts/Auth/authUI.js"></script>
+    <script src="../scripts/Auth/auth.js"></script>
+</body>
+</html>
