@@ -36,11 +36,30 @@ describe('Auth', ()=>{
 
     it('Should Email Wrong', async ()=>{
         const res = await request.post('/api/auth/login').send({
-            email: "auth-tests@gail.com",
+            email: "auth-tests@gmail.com",
             password: "test123@"
         })
 
         expect(res.status).toBe(401)
         expect(res.body.message).toBe("Invalid credentials")
+    })
+
+    it('Should Email duplicate', async()=>{
+        const res = await request.post('/api/auth/register')
+        .send({
+            email: "auth-test@gmaail.com",
+            password: "123456789"
+        })
+
+        expect(res.status).toBe(400)
+    })
+
+    it('Should empty fields', async ()=>{
+        const res = await request.post('/api/auth/register')
+        .send({
+            email: "",
+            password: ""
+        })
+        expect(res.status).toBe(400)
     })
 })
