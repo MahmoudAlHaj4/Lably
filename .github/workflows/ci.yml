@@ -19,6 +19,8 @@ jobs:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      GMAIL_USER: ${{secrets.GMAIL_USER}}
+      GMAIL_PASSWORD: ${{secrets.GMAIL_PASSWORD}}
       NODE_ENV: test
     services:
       postgres:
