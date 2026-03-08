@@ -10,6 +10,17 @@ const registerForm = document.getElementById('register-form')
 const regError = document.getElementById('register-error')
 const regBtn = document.getElementById('reg-btn')
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+const validateFields = (fields) => {
+    for(const { value, message } of fields){
+        if(!value){
+            return message
+        }
+    }
+    return null
+}
+
 
 const login = async() =>{
 
