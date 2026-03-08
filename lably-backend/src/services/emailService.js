@@ -1,21 +1,19 @@
 const nodemailer = require('nodemailer')
 
+const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
+    }
+})
+
 const sendActivationEmail = async (toEmail, activationToken) => {
     const activationLink = `${process.env.FRONTEND_URL}/activate?token=${activationToken}`
 
-    const testAccount = await nodemailer.createTestAccount()
-
-    const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        auth: {
-            user: testAccount.user,
-            pass: testAccount.pass
-        }
-    })
-
-    const info = await transporter.sendMail({
-        from: `"Lably" <${testAccount.user}>`,
+    await transporter.sendMail({
+        from: `"Lably" <${process.env.SMTP_USER}>`,
         to: toEmail,
         subject: 'Activate your Lably account',
         html: `
