@@ -84,10 +84,10 @@ const login = async() =>{
     }else{
         localStorage.removeItem('token')
         localStorage.removeItem('role')
-        loginError.textContent = data.message
+        showToast(data.message)
     }
     }catch(error){
-        console.log(error)
+        showToast('Something went wrong')
     }finally {
 
         loginBtn.disabled = false
