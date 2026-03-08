@@ -28,19 +28,14 @@ const login = async() =>{
     const passwordVal = password.value.trim()
     loginError.textContent = ''
 
-    if(!emailVal){
-        loginError.textContent = 'Email is required'
-        return
-    }
+    const error = validateFields([
+        { value: emailVal, message: 'Email is required' },
+        { value: emailRegex.test(emailVal) ? emailVal : '', message: 'Invalid email format' },
+        { value: passwordVal, message: 'Password is required' },
+    ])
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if(!emailRegex.test(emailVal)){
-        loginError.textContent = 'Please enter a valid email'
-        return
-    }
-
-    if(!passwordVal){
-        loginError.textContent = 'Password is required'
+    if(error){
+        showToast(error)
         return
     }
     loginBtn.disabled = true
