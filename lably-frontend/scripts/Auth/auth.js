@@ -72,12 +72,14 @@ const login = async() =>{
             const ProfileData = await profile.json()
 
             if(ProfileData.data){
-                window.location.href = '../pages/Employer/dashboard.html'
+                window.location.href = '../Employer/dashboard.html'
             }else{
-                window.location.href = '../pages/Employer/setUpProfile.html'
+                window.location.href = '../Employer/setUpProfile.html'
             }
         }else if(data.role === 'job_seeker'){
-            window.location.href = '../pages/forgetPassword.html'
+            window.location.href = '../forgetPassword.html'
+        }else if(data.role === 'admin'){
+            window.location.href = '../Admin/adminDashboard.html'
         }
     }else{
         localStorage.removeItem('token')
