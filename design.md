@@ -389,6 +389,6 @@ User redirected to login page
 
 
 ### Email Service
-**Decision:** Resend API via raw fetch, no SDK.
+**Decision:** Nodemailer with Gmail SMTP, no SDK.
 **Trigger:** Sent automatically when admin approves a pending application.
-**Template:** Activation link with
+**Template:** Activation link with 48 hour expiry.
