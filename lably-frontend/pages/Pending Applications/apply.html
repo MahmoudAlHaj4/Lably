@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lably — Apply for Verification</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.02); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+        .animate-float {
+            animation: float 8s ease-in-out infinite;
+        }
+        .animate-float-slow {
+            animation: float 12s ease-in-out infinite;
+        }
+        .animate-float-delay {
+            animation: float 10s ease-in-out infinite;
+            animation-delay: -3s;
+        }
+        /* Hide default file input */
+        .file-input-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+        /* Modal backdrop */
+        .modal-backdrop {
+            transition: opacity 0.2s ease;
+        }
+    </style>
+</head>
+<body class="font-['DM_Sans'] bg-[#F5F6F8] text-[#0D1B2A] overflow-x-hidden relative min-h-screen">
+
+    <!-- Background circles (fixed, full page) -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
+        <div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-teal-100 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-float-slow"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-50 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float-delay"></div>
+        <div class="absolute bottom-20 right-20 w-72 h-72 bg-green-100 rounded-full mix-blend-multiply filter blur-2xl opacity-50 animate-float" style="animation-delay: -2s;"></div>
+        <div class="absolute top-20 left-20 w-80 h-80 bg-green-50 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-float-slow" style="animation-delay: -5s;"></div>
+    </div>
+
+    <!-- Navbar (sticky, matches homepage) -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#E4E5E8] px-[7%] h-16 flex items-center justify-between relative">
+        <a href="../index.html" class="flex items-center gap-2 no-underline">
+            <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+            <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
+        </a>
+        <div class="flex gap-2 items-center">
+            <a href="./login.html" class="px-5 py-2 rounded-md border border-[#E4E5E8] bg-transparent text-sm font-medium text-[#0D1B2A] hover:bg-[#F5F6F8] transition no-underline">Sign In</a>
+           
+    </nav>
+
+    <!-- Main content – scrollable -->
+    <main class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <span class="inline-block px-4 py-1.5 bg-green-100 text-[#16a34a] text-xs font-semibold rounded-full mb-4">Start your journey</span>
+            <h1 class="font-['DM_Serif_Display'] text-4xl md:text-5xl text-[#0D1B2A] mb-4">Become a verified<br>dental professional</h1>
+            <p class="text-[#767F8C] max-w-2xl mx-auto text-lg">Join hundreds of technicians who found their dream job through Lably. No password needed – we'll email you if approved.</p>
+        </div>
+
+        <!-- Application Form -->
+        <div class="bg-white/80 backdrop-blur-sm rounded-3xl border border-[#E4E5E8]/60 p-6 md:p-8 lg:p-10 shadow-sm hover:shadow-md transition">
+            <form id="apply-form" enctype="multipart/form-data">
+                <!-- Personal Information Section -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-semibold text-[#0D1B2A] mb-4 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-[#16a34a] text-sm">1</span>
+                        Personal information
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="full_name" class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Full name</label>
+                            <input type="text" id="full_name" name="full_name" placeholder="Anna Schmidt" 
+                                   class="w-full px-4 py-3 border border-[#E4E5E8] rounded-xl text-sm text-[#0D1B2A] placeholder-[#b0b7c3] focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/10 transition bg-white">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Email address</label>
+                            <input type="email" id="email" name="email" placeholder="anna@example.com" 
+                                   class="w-full px-4 py-3 border border-[#E4E5E8] rounded-xl text-sm text-[#0D1B2A] placeholder-[#b0b7c3] focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/10 transition bg-white">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Phone number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 234 567 890" 
+                                   class="w-full px-4 py-3 border border-[#E4E5E8] rounded-xl text-sm text-[#0D1B2A] placeholder-[#b0b7c3] focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/10 transition bg-white">
+                        </div>
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Address <span class="text-[#767F8C] font-normal">(optional)</span></label>
+                            <input type="text" id="address" name="address" placeholder="City, State"
+                                   class="w-full px-4 py-3 border border-[#E4E5E8] rounded-xl text-sm text-[#0D1B2A] placeholder-[#b0b7c3] focus:outline-none focus:border-[#16a34a] focus:ring-2 focus:ring-[#16a34a]/10 transition bg-white">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documents Section with Beautiful File Uploader -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-semibold text-[#0D1B2A] mb-4 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-[#16a34a] text-sm">2</span>
+                        Upload documents
+                    </h2>
+
+                    <!-- Resume Upload (single file) -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-[#0D1B2A] mb-2">Resume (PDF, max 2MB)</label>
+                        <div class="resume-upload-area border-2 border-dashed border-[#E4E5E8] rounded-xl p-4 hover:border-[#16a34a] transition cursor-pointer bg-white/50" id="resume-dropzone">
+                            <input type="file" id="resume" name="resume" accept=".pdf"  class="hidden">
+                            <div class="text-center" id="resume-placeholder">
+                                <i class="fa-solid fa-cloud-upload-alt text-3xl text-[#16a34a] mb-2"></i>
+                                <p class="text-sm text-[#767F8C]">Drag & drop your resume or <span class="text-[#16a34a] font-medium">browse</span></p>
+                                <p class="text-xs text-[#767F8C] mt-1">PDF only, up to 2MB</p>
+                            </div>
+                            <div class="hidden flex items-center justify-between p-2 bg-green-50 rounded-lg" id="resume-preview">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-regular fa-file-pdf text-[#16a34a] text-xl"></i>
+                                    <span class="text-sm font-medium text-[#0D1B2A]" id="resume-name"></span>
+                                </div>
+                                <button type="button" class="text-red-500 hover:text-red-700" id="remove-resume">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Upload (multiple files with previews) -->
+                    <div>
+                        <label class="block text-sm font-medium text-[#0D1B2A] mb-2">Portfolio (images or PDF, up to 5 files)</label>
+                        <div class="portfolio-upload-area border-2 border-dashed border-[#E4E5E8] rounded-xl p-4 hover:border-[#16a34a] transition cursor-pointer bg-white/50" id="portfolio-dropzone">
+                            <input type="file" id="portfolio" name="portfolio" accept=".jpg,.jpeg,.png,.pdf" multiple class="hidden">
+                            <div class="text-center" id="portfolio-placeholder">
+                                <i class="fa-solid fa-images text-3xl text-[#16a34a] mb-2"></i>
+                                <p class="text-sm text-[#767F8C]">Drag & drop files or <span class="text-[#16a34a] font-medium">browse</span></p>
+                                <p class="text-xs text-[#767F8C] mt-1">JPG, PNG, PDF up to 5MB each (max 5 files)</p>
+                            </div>
+                            <div class="hidden flex flex-col gap-2 p-2 bg-green-50 rounded-lg" id="portfolio-previews"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-between pt-4 border-t border-[#E4E5E8]">
+                    <p class="text-xs text-[#767F8C]">By applying, you agree to our <a href="#" class="text-[#16a34a] hover:underline">Terms</a>.</p>
+                    <button id="submit-btn" type="submit" class="bg-[#16a34a] hover:bg-[#15803d] text-white font-semibold py-3 px-8 rounded-xl transition flex items-center gap-2 shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed">
+                        Submit application <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <p class="text-xs text-center mt-3 min-h-[1rem]" id="apply-message"></p>
+            </form>
+        </div>
+
+        <!-- Extra info / stats -->
+        <div class="mt-8 text-center text-sm text-[#767F8C]">
+            <span class="inline-flex items-center gap-2"><i class="fa-regular fa-clock text-[#16a34a]"></i> Most candidates hear back within 48 hours</span>
+        </div>
+    </main>
+    <script src="../config.js"></script>
+    <script src="../scripts/utils/toast.js"></script>
+    <script src="../scripts/Pending Application/fileUpload.js"></script>
+    <script src="../scripts/Pending Application/apply.js"></script>
+</body>
+</html>
