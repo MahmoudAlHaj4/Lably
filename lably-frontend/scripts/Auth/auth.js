@@ -59,6 +59,7 @@ const login = async() =>{
 
     console.log(data)
     if(res.ok) {
+        showToast('Success' , 'success')
         localStorage.setItem('token', data.token)
         localStorage.setItem('role', data.role)
 
