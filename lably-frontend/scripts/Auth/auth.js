@@ -102,24 +102,20 @@ submitBtn.addEventListener('submit', (e)=>{
 })
 
 const register = async () =>{
-    const emailValidation = registerEmail.value.trim()
-    const passwordValidation = registerPassword.value.trim()
+    const emailVal = registerEmail.value.trim()
+    const passwordVal = registerPassword.value.trim()
 
     regError.textContent = ''
-    regError.style.color = 'red'
-    if(!emailValidation) {
-        return regError.textContent = 'Email is required'
-    }
-    if(!passwordValidation) {
-        return regError.textContent = 'Password is required'
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if(!emailRegex.test(emailValidation)){
-        return regError.textContent = 'Please enter a valid email'
+     const error = validateFields([
+        { value: emailVal, message: 'Email is required' },
+        { value: emailRegex.test(emailVal) ? emailVal : '', message: 'Invalid email format' },
+        { value: passwordVal, message: 'Password is required' },
+        { value: passwordVal.length >= 8 ? passwordVal : '', message: 'Password must be at least 8 characters' },
+    ])
 
-    }
-    if(passwordValidation.length < 8){
-        return regError.textContent = 'Password must be at least 8 characters'
+    if(error){
+        showToast(error)
+        return
     }
 
     regBtn.disabled = true
