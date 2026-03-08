@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // ✅ added this
+  service: 'gmail', 
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_PASSWORD
@@ -12,7 +12,7 @@ const sendActivationEmail = async (toEmail, activationToken) => {
   const activationLink = `${process.env.FRONTEND_URL}/activate?token=${activationToken}`
 
   await transporter.sendMail({
-    from: `"Lably" <${process.env.GMAIL_USER}>`, // ✅ fixed: SMTP_USER → GMAIL_USER
+    from: `"Lably" <${process.env.GMAIL_USER}>`, 
     to: toEmail,
     subject: 'Activate your Lably account',
     html: `
