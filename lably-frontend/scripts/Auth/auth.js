@@ -144,10 +144,10 @@ const register = async () =>{
             document.querySelector('[data-tab="login"]').click()
         }, 2000)
     }else{
-        regError.textContent = data.message
+        showToast(data.message)
     }
     }catch (err) {
-        console.log(err)
+        showToast('Something went wrong')
     }finally {
 
         regBtn.disabled = false
