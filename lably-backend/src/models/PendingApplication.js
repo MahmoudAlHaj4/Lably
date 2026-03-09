@@ -49,9 +49,9 @@ class PendingApplication {
         return result.rows[0]
     }
 
-    static async approved(id){
-        const query = `UPDATE pending_applications SET 	application_status = $1 WHERE id = $2 RETURNING *`
-        const result = await pool.query(query, ['approved', id])
+    static async approved(applicationId , applicationData ={}){
+        const query = `UPDATE pending_applications SET 	application_status = $1, decision_notes = $2 WHERE id = $3 RETURNING *`
+        const result = await pool.query(query,['approved', applicationData.decision_notes || null, applicationId])
         return result.rows[0]
     }
 
