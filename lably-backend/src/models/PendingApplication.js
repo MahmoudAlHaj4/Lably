@@ -55,9 +55,9 @@ class PendingApplication {
         return result.rows[0]
     }
 
-    static async reject(applicationId) {
-        const query = `UPDATE pending_applications SET application_status = $1 WHERE id = $2 RETURNING *`
-        const result = await pool.query(query , ['rejected' , applicationId])
+    static async reject(applicationId, applicationData ={}) {
+        const query = `UPDATE pending_applications SET application_status = $1, decision_notes = $2 WHERE id = $3 RETURNING *`
+        const result = await pool.query(query , ['rejected' ,applicationData.decision_notes || null, applicationId])
         return result.rows[0]
     }
 }
