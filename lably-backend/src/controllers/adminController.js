@@ -79,6 +79,7 @@ async function getPendingApplication(req, res) {
 
     async function approvePendingApplication(req, res) {
         try{
+            const decision_notes = req.body?.decision_notes ?? null
             const id = req.params.id
             const application = await PendingApplication.getPendingApp(id)
             if(!application){
@@ -100,7 +101,9 @@ async function getPendingApplication(req, res) {
             })
 
             await User.setActivationToken(token, expiry , user.id)
-            const result = await PendingApplication.approved(id)
+            const result = await PendingApplication.approved(id, {
+                decision_notes: decision_notes
+            })
             await sendActivationEmail(application.email, token)
 
             return res.status(200).json({
