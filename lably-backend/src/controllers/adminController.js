@@ -118,6 +118,7 @@ async function getPendingApplication(req, res) {
 
 async function rejectPendingApplication(req,res) {
     try{ 
+        const decision_notes = req.body?.decision_notes ?? null
         const applicationId = req.params.id
         const application = await PendingApplication.getPendingApp(applicationId)
 
@@ -125,7 +126,9 @@ async function rejectPendingApplication(req,res) {
             return res.status(404).json({message : "Application Not found"})
         }
 
-        const data = await PendingApplication.reject(applicationId)
+        const data = await PendingApplication.reject(applicationId, {
+            decision_notes: decision_notes
+        })
 
         return res.status(200).json({message : "Application is rejected" , data : data})
     }catch(error) {
