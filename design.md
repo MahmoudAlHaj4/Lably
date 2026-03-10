@@ -392,3 +392,20 @@ User redirected to login page
 **Decision:** Nodemailer with Gmail SMTP, no SDK.
 **Trigger:** Sent automatically when admin approves a pending application.
 **Template:** Activation link with 48 hour expiry.
+
+
+### Delete Strategy
+**Decision:** Hard deletes for V1.
+**Reason:** Simple, no orphaned data with cascades in place. Soft deletes add complexity with no V1 benefit.
+**Revisit in V2:** Add `is_deleted` flag to users, jobs, and applications. Filter all queries accordingly.
+
+### Cascading Deletes
+**Decision:** ON DELETE CASCADE on all foreign keys referencing users and jobs.
+**Behavior:**
+- Delete user → deletes profile, experiences, applications automatically.
+- Delete job → deletes all applications for that job automatically.
+**Note:** pending_applications has no foreign key to users. If an approved user is deleted, their pending application row stays. Handle manually in controller or revisit in V2.
+
+### Admin Delete Scope
+**Decision:** Admin can delete users, jobs, and applications.
+**Note:** Deleting an employer also deletes all their posted jobs and cascades to applications.
