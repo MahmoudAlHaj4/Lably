@@ -107,6 +107,7 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 - AI-powered job recommendations and matching
 - Payment system and employer subscription tiers
 - Advanced analytics dashboard for employers
+- Soft deletes for users, jobs, and applications.
 
 ## Database Schema
 
