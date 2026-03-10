@@ -18,7 +18,7 @@ const validateForm = () => {
         { condition: emailVal && !emailRegex.test(emailVal), message: 'Invalid email format' },
         { condition: !phoneVal, message: 'Phone is required' },
         { condition: phoneVal && !phoneRegex.test(phoneVal), message: 'Invalid phone format' },
-        { condition: !userLocation.value.trim(), message: 'Address is required' },
+        
         { condition: !resume.files[0], message: 'Resume is required' },
     ]
 
