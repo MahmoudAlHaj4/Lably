@@ -79,7 +79,7 @@ const login = async() =>{
         }else if(data.role === 'job_seeker'){
             window.location.href = '../forgetPassword.html'
         }else if(data.role === 'admin'){
-            window.location.href = '../Admin/adminDashboard.html'
+            window.location.href = '../Admin/adminPendingDashboard.html'
         }
     }else{
         localStorage.removeItem('token')
