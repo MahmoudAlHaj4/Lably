@@ -30,6 +30,12 @@ CREATE TRIGGER users_updated_at
 BEFORE UPDATE ON users
 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
+
+-- Add new ENUMs
+CREATE TYPE organization_type AS ENUM ('dental_lab', 'dental_clinic');
+CREATE TYPE industry_type AS ENUM ('dental_tech', 'cadcam', 'prosthetics');
+CREATE TYPE team_size AS ENUM ('1-10', '11-50', '51-200', '200+');
+
 -- employer_profiles
 CREATE TABLE employer_profiles (
     id UUID PRIMARY KEY,
@@ -38,6 +44,19 @@ CREATE TABLE employer_profiles (
     company_description TEXT DEFAULT NULL,
     location VARCHAR(255) DEFAULT NULL,
     website VARCHAR(255) DEFAULT NULL,
+    logo_path VARCHAR(255) DEFAULT NULL,
+    banner_path VARCHAR(255) DEFAULT NULL,
+    organization_type organization_type DEFAULT NULL,
+    industry_type industry_type DEFAULT NULL,
+    team_size team_size DEFAULT NULL,
+    year_established INTEGER DEFAULT NULL,
+    company_vision TEXT DEFAULT NULL,
+    linkedin_url VARCHAR(255) DEFAULT NULL,
+    twitter_url VARCHAR(255) DEFAULT NULL,
+    facebook_url VARCHAR(255) DEFAULT NULL,
+    instagram_url VARCHAR(255) DEFAULT NULL,
+    contact_email VARCHAR(255) DEFAULT NULL,
+    contact_phone VARCHAR(255) DEFAULT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
