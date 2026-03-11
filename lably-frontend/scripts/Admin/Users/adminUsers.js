@@ -28,7 +28,17 @@ document.getElementById('usersTable').addEventListener('click', (e) => {
     openDeleteUserModal(btn.dataset.email, btn.dataset.id)
 })
 
-deleteBtn.addEventListener('click' , async () => {
-    await deleteUser(apiUrl, token , userId)
-    closeModal('deleteUserModal')
+deleteBtn.addEventListener('click', async () => {
+    try {
+        deleteBtn.disabled = true
+        deleteBtn.textContent = 'Deleting...'
+        await deleteUser(apiUrl, token, userId)
+        document.querySelector(`tr[data-id="${userId}"]`).remove()
+        closeModal('deleteUserModal')
+        showToast('User deleted successfully', 'success')
+    } catch (error) {
+        deleteBtn.disabled = false
+        deleteBtn.textContent = 'Yes, Delete'
+        showToast(error.message)
+    }
 })
