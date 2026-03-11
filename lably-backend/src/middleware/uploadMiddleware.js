@@ -55,4 +55,20 @@ const uploadToSupabase = async (file, bucket) => {
     return filename
 }
 
-module.exports = { upload, uploadToSupabase }
+
+const profileImageFilter = function(req, file, cb) {
+    const allowed = ['image/jpeg', 'image/png']
+    if(allowed.includes(file.mimetype)) {
+        cb(null, true)
+    } else {
+        cb(new Error('Only JPG and PNG allowed'), false)
+    }
+}
+
+const uploadProfileImages = multer({ 
+    storage, 
+    fileFilter: profileImageFilter, 
+    limits: { fileSize: 5 * 1024 * 1024 }
+})
+
+module.exports = { upload, uploadToSupabase, uploadProfileImages }
