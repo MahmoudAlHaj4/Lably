@@ -3,7 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lably — Admin · Users</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .sidebar-link { display: flex; align-items: center; gap: 12px; padding: 11px 16px; font-size: 14px; font-weight: 500; color: #767F8C; border-radius: 8px; cursor: pointer; transition: all .15s; text-decoration: none; }
+        .sidebar-link:hover { color: #0D1B2A; background: #F5F6F8; }
+        .sidebar-link.active { color: #2563eb; background: #eff6ff; }
+        
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(13,27,42,0.45); z-index: 100; align-items: center; justify-content: center; padding: 16px; }
+        .modal-overlay.open { display: flex; }
+
+
+        .modal-box { background: white; border-radius: 16px; border: 1px solid #E4E5E8; width: 100%; max-width: 480px; overflow: hidden; }
+
+        .delete-modal-box { background: white; border-radius: 16px; border: 1px solid #E4E5E8; width: 100%; max-width: 460px; overflow: hidden; }
+
+    </style>
 </head>
 <body>
     <h1>users</h1>
