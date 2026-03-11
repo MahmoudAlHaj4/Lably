@@ -67,11 +67,15 @@ function confirmReject() {
 
     closeModal('rejectModal');
 }
+function openDeleteUserModal(email, id) {
+    document.getElementById('deleteUserEmail').textContent = email;
+    openModal('deleteUserModal');
+}
 
 
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-        ['filesModal', 'notesModal', 'approveModal', 'rejectModal'].forEach(closeModal);
+        ['filesModal', 'notesModal', 'approveModal', 'rejectModal', 'deleteUserModal'].forEach(closeModal);
     }
 });
 
