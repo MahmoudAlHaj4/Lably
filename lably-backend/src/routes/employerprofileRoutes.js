@@ -14,8 +14,15 @@ const { authMiddleware } = require('../middleware/authMiddleware')
 const { createEmployerProfile, updateEmployerProfile, getEmployerProfile } = require('../controllers/employerProfileController')
 const router = express.Router()
 
-router.post('/profile', authMiddleware , createEmployerProfile)
-router.put('/profile', authMiddleware, updateEmployerProfile)
+const { uploadProfileImages } = require('../middleware/uploadMiddleware')
+
+router.post('/profile', authMiddleware, 
+    uploadProfileImages.fields([{ name: 'logo', maxCount: 1 }, { name: 'banner', maxCount: 1 }]), 
+    createEmployerProfile)
+
+router.put('/profile', authMiddleware, 
+    uploadProfileImages.fields([{ name: 'logo', maxCount: 1 }, { name: 'banner', maxCount: 1 }]),
+    updateEmployerProfile)
 router.get('/profile', authMiddleware , getEmployerProfile)
 
 module.exports = router
