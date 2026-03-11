@@ -38,69 +38,101 @@
  */
 
 
+const { uploadProfileImages, uploadToSupabase } = require('../middleware/uploadMiddleware')
 const EmployerProfile = require('../models/EmployerProfile')
-
 async function createEmployerProfile(req, res) {
-    try{
-        const { company_name , company_description , location , website} = req.body
+    try {
+        const {
+            company_name, company_description, location, website,
+            organization_type, industry_type, team_size, year_established,
+            company_vision, linkedin_url, twitter_url, facebook_url,
+            instagram_url, contact_email, contact_phone
+        } = req.body
+
         const userId = req.user.id
         const role = req.user.role
 
-        if(role !== 'employer'){
-            return res.status(403).json({message : "you are ot employer"})
+        if(role !== 'employer') {
+            return res.status(403).json({ message: 'You are not an employer' })
         }
-        
-        if(!company_name){
-            return res.status(400).json({message : "Compane Name is required"})
+
+        if(!company_name) {
+            return res.status(400).json({ message: 'Company name is required' })
         }
-                
+
         const checkProfile = await EmployerProfile.findByUserId(userId)
-
-        if(checkProfile){
-            return res.status(400).json({message: "Already have a profile "})
+        if(checkProfile) {
+            return res.status(400).json({ message: 'Already have a profile' })
         }
 
-        await EmployerProfile.create(userId , {
-            company_name : company_name,
-            company_description : company_description,
-            location: location,
-            website: website
+        let logo_path = null
+        let banner_path = null
+
+        if(req.files?.logo) {
+            logo_path = await uploadToSupabase(req.files.logo[0], 'logos')
+        }
+        if(req.files?.banner) {
+            banner_path = await uploadToSupabase(req.files.banner[0], 'banners')
+        }
+
+        await EmployerProfile.create(userId, {
+            company_name, company_description, location, website,
+            logo_path, banner_path, organization_type, industry_type,
+            team_size, year_established, company_vision,
+            linkedin_url, twitter_url, facebook_url, instagram_url,
+            contact_email, contact_phone
         })
 
-        return res.status(201).json({message : 'Success'})
-    }catch(error){
-        return res.status(500).json({message : error.message})
+        return res.status(201).json({ message: 'Success' })
+    } catch(error) {
+        return res.status(500).json({ message: error.message })
     }
 }
 
 async function updateEmployerProfile(req, res) {
-    try{
-        const {company_name , company_description , location , website} = req.body
+    try {
+        const {
+            company_name, company_description, location, website,
+            organization_type, industry_type, team_size, year_established,
+            company_vision, linkedin_url, twitter_url, facebook_url,
+            instagram_url, contact_email, contact_phone
+        } = req.body
+
         const role = req.user.role
         const userId = req.user.id
 
         if(role !== 'employer') {
-            return res.status(403).json({message: "You are not an employer"})
-        }
-         const checkProfile = await EmployerProfile.findByUserId(userId)
-
-        if(!checkProfile){
-            return res.status(404).json({message: "Not Found"})
+            return res.status(403).json({ message: 'You are not an employer' })
         }
 
-        await EmployerProfile.update(userId , {
-            company_name : company_name,
-            company_description: company_description,
-            location: location,
-            website: website
+        const checkProfile = await EmployerProfile.findByUserId(userId)
+        if(!checkProfile) {
+            return res.status(404).json({ message: 'Not found' })
+        }
+
+        let logo_path = checkProfile.logo_path
+        let banner_path = checkProfile.banner_path
+
+        if(req.files?.logo) {
+            logo_path = await uploadToSupabase(req.files.logo[0], 'logos')
+        }
+        if(req.files?.banner) {
+            banner_path = await uploadToSupabase(req.files.banner[0], 'banners')
+        }
+
+        await EmployerProfile.update(userId, {
+            company_name, company_description, location, website,
+            logo_path, banner_path, organization_type, industry_type,
+            team_size, year_established, company_vision,
+            linkedin_url, twitter_url, facebook_url, instagram_url,
+            contact_email, contact_phone
         })
 
-        return res.status(200).json({message : "Profile Updated successfully"})
-    }catch(error){
-        return res.status(500).json({message : error.message})
+        return res.status(200).json({ message: 'Profile updated successfully' })
+    } catch(error) {
+        return res.status(500).json({ message: error.message })
     }
 }
-
 async function getEmployerProfile(req, res) {
     try{
         const employerId = req.user.id
@@ -112,7 +144,7 @@ async function getEmployerProfile(req, res) {
             data: data
         })
     }catch(error){
-        return res.status(500).json({message: error.message})
+        return res.status(500).json({message: error.message , data: data})
     }
 }
 
