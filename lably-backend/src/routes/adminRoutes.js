@@ -12,12 +12,18 @@
 
 const express = require('express')
 const { authMiddleware, adminMiddleware } = require('../middleware/authMiddleware')
-const {getAllPendingApplications, getPendingApplication, approvePendingApplication, rejectPendingApplication} = require('../controllers/adminController')
+const {getAllPendingApplications, getPendingApplication, approvePendingApplication, rejectPendingApplication, getAllUsers, deleteUser, getAllJobs, deleteJob, getAllApplications, deleteApplication} = require('../controllers/adminController')
 const router = express.Router()
 
 router.get('/pending-applications', authMiddleware , adminMiddleware , getAllPendingApplications)
 router.get('/pending-application/:id', authMiddleware , adminMiddleware , getPendingApplication)
 router.put('/approve/:id', authMiddleware, adminMiddleware, approvePendingApplication)
 router.put('/reject/:id', authMiddleware , adminMiddleware ,rejectPendingApplication)
+router.get('/users', authMiddleware, adminMiddleware, getAllUsers)
+router.delete('/users/:id', authMiddleware, adminMiddleware, deleteUser)
+router.get('/jobs', authMiddleware, adminMiddleware, getAllJobs)
+router.delete('/jobs/:id', authMiddleware, adminMiddleware, deleteJob)
+router.get('/applications', authMiddleware, adminMiddleware, getAllApplications)
+router.delete('/applications/:id', authMiddleware, adminMiddleware, deleteApplication)
 
 module.exports = router
