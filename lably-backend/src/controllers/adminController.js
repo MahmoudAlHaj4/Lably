@@ -47,6 +47,7 @@ const User = require('../models/User')
 const { randomUUID } = require('crypto')
 const bcrypt = require('bcrypt')
 const { sendActivationEmail } = require('../services/emailService')
+const Admin = require('../models/Admin')
 
 async function getAllPendingApplications(req,res) {
     try{
@@ -136,4 +137,74 @@ async function rejectPendingApplication(req,res) {
     }
 }
 
-module.exports = {getAllPendingApplications, getPendingApplication, approvePendingApplication, rejectPendingApplication}
+async function getAllUsers(req, res) {
+    try {
+        const result = await Admin.getAllUsers()
+        // console.log(result)
+        return res.status(200).json({ message: 'success', data: result })
+    } catch(error) {
+        return res.status(500).json({ message: error.message })
+    }
+}
+
+async function deleteUser(req, res) {
+    try {
+        const user = await User.findById(req.params.id)
+        if (!user) return res.status(404).json({ message: 'User not found' })
+        await Admin.deleteUserById(req.params.id)
+        return res.status(200).json({ message: 'User deleted' })
+    } catch(error) {
+        return res.status(500).json({ message: error.message })
+    }
+}
+
+async function getAllJobs(req, res) {
+    try {
+        const result = await Admin.getAllJobs()
+        return res.status(200).json({ message: 'success', data: result })
+    } catch(error) {
+        return res.status(500).json({ message: error.message })
+    }
+}
+
+async function deleteJob(req, res) {
+    try {
+        const job = await Admin.deleteJobById(req.params.id)
+        if (!job) return res.status(404).json({ message: 'Job not found' })
+        return res.status(200).json({ message: 'Job deleted' })
+    } catch(error) {
+        return res.status(500).json({ message: error.message })
+    }
+}
+
+async function getAllApplications(req, res) {
+    try {
+        const result = await Admin.getAllApplications()
+        return res.status(200).json({ message: 'success', data: result })
+    } catch(error) {
+        return res.status(500).json({ message: error.message })
+    }
+}
+
+async function deleteApplication(req, res) {
+    try {
+        const app = await Admin.deleteApplicationById(req.params.id)
+        if (!app) return res.status(404).json({ message: 'Application not found' })
+        return res.status(200).json({ message: 'Application deleted' })
+    } catch(error) {
+        return res.status(500).json({ message: error.message })
+    }
+}
+
+module.exports = {
+getAllPendingApplications,
+getPendingApplication, 
+approvePendingApplication, 
+rejectPendingApplication,
+getAllUsers,
+deleteUser,
+getAllJobs,
+deleteJob,
+getAllApplications,
+deleteApplication
+}
