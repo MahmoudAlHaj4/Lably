@@ -71,11 +71,15 @@ function openDeleteUserModal(email, id) {
     document.getElementById('deleteUserEmail').textContent = email;
     openModal('deleteUserModal');
 }
+function openDeleteJobModal(jobTitle, id) {
+    document.getElementById('deleteJobTitle').textContent = jobTitle;
+    openModal('deleteJobModal');
+}
 
 
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-        ['filesModal', 'notesModal', 'approveModal', 'rejectModal', 'deleteUserModal'].forEach(closeModal);
+        ['filesModal', 'notesModal', 'approveModal', 'rejectModal', 'deleteUserModal', 'deleteJobModal'].forEach(closeModal);
     }
 });
 
