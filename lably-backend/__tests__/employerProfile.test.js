@@ -27,10 +27,10 @@ describe('EmployerProfile ',()=>{
         await pool.query('DELETE FROM users WHERE email = $1', ['employertest@test.com'])
     })
 
-    it("Should Create Employer profile" , async () => {
-        const res = await request.post(`/api/employer/profile`)
-        .set('Authorization' , `Bearer ${token}`)
-        .send({ company_name: 'Test Company' })
+    it("Should Create Employer profile", async () => {
+        const res = await request.post('/api/employer/profile')
+            .set('Authorization', `Bearer ${token}`)
+            .field('company_name', 'Test Company')
         expect(res.status).toBe(201)
     })
 
@@ -41,13 +41,10 @@ describe('EmployerProfile ',()=>{
         expect(res.status).toBe(200)
     })
 
-    it("Should Update Employer Profile" , async () => {
+    it("Should Update Employer Profile", async () => {
         const res = await request.put('/api/employer/profile')
-        .set('Authorization', `Bearer ${token}`)
-        .send({
-            company_name : "test update"
-        })
-
+            .set('Authorization', `Bearer ${token}`)
+            .field('company_name', 'test update')
         expect(res.status).toBe(200)
     })
 })
