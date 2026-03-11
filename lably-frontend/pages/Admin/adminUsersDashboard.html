@@ -25,7 +25,135 @@
 
     </style>
 </head>
-<body>
-    <h1>users</h1>
+<body class="bg-[#F5F6F8] text-[#0D1B2A]">
+
+    <header class="bg-white border-b border-[#E4E5E8] h-16 flex items-center justify-between px-6 sticky top-0 z-40">
+    <a href="../../index.html" class="flex items-center gap-2 no-underline">
+        <i class="fa-solid fa-tooth text-[#2563eb] text-xl"></i>
+        <span class="font-['DM_Serif_Display'] text-xl text-[#0D1B2A] tracking-tight">Lably</span>
+        <span class="ml-1 text-[10px] font-bold tracking-widest uppercase text-white bg-[#2563eb] px-2 py-0.5 rounded-full">Admin</span>
+    </a>
+    <div class="flex items-center gap-3">
+        <button class="relative w-9 h-9 rounded-lg border border-[#E4E5E8] flex items-center justify-center text-[#767F8C] hover:text-[#0D1B2A] bg-white transition">
+            <i class="fa-regular fa-bell text-sm"></i>
+            <span class="absolute -top-1 -right-1 w-[18px] h-[18px] bg-[#2563eb] text-white text-[10px] font-bold rounded-full flex items-center justify-center">5</span>
+        </button>
+        <div class="w-9 h-9 rounded-full bg-blue-100 border-2 border-blue-200 flex items-center justify-center text-[#2563eb] font-bold text-sm cursor-pointer select-none">A</div>
+    </div>
+</header>
+
+<div class="flex min-h-[calc(100vh-64px)]">
+
+
+    <aside class="w-[240px] shrink-0 bg-white border-r border-[#E4E5E8] flex flex-col justify-between sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
+        <div class="py-5 px-3">
+            <p class="text-[10px] font-bold text-[#b0b7c3] tracking-[.12em] uppercase px-3 mb-3">Admin Panel</p>
+            <nav class="space-y-0.5">
+                <a href="./adminOverviewDashboard.html" class="sidebar-link">
+                    <span class="icon-wrap"><i class="fa-solid fa-layer-group text-sm"></i></span> Overview
+                </a>
+                <a href="./adminPendingDashboard.html" class="sidebar-link ">
+                    <span class="icon-wrap"><i class="fa-regular fa-clock text-sm"></i></span>
+                    Pending Applications
+                    
+                </a>
+                <a href="./adminUsersDashboard.html" class="sidebar-link active">
+                    <span class="icon-wrap"><i class="fa-solid fa-users text-sm"></i></span> All Users
+                </a>
+                <a href="./adminJobsDashboard.html" class="sidebar-link">
+                    <span class="icon-wrap"><i class="fa-regular fa-rectangle-list text-sm"></i></span> All Jobs
+                </a>
+                <a href="./adminApplicationDashboard.html" class="sidebar-link">
+                    <span class="icon-wrap"><i class="fa-regular fa-file-lines text-sm"></i></span> All Applications
+                </a>
+            </nav>
+        </div>
+        <div class="px-3 pb-5 border-t border-[#F5F6F8] pt-4">
+            <a href="#" class="sidebar-link hover:text-blue-500">
+                <span class="icon-wrap"><i class="fa-solid fa-arrow-right-from-bracket text-sm"></i></span> Log-out
+            </a>
+        </div>
+    </aside>
+
+        <main class="flex-1 p-8">
+
+        <!-- Page header -->
+        <div class="mb-6 flex items-start justify-between">
+            <div>
+                <h1 class="text-xl font-semibold text-[#0D1B2A]">Users</h1>
+                <p class="text-sm text-[#767F8C] mt-0.5">Review Users and Delete records</p>
+            </div>
+            <!-- Filter pills -->
+            <div class="flex items-center gap-2">
+                <button onclick="filterTable('all')" id="filter-all" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#2563eb] text-[#2563eb] bg-blue-50 transition">All <span class="ml-1 text-[10px]"></span></button>
+                <button onclick="filterTable('pending')" id="filter-pending" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#E4E5E8] text-[#767F8C] hover:bg-[#F5F6F8] transition">Job Seekers <span class="ml-1 text-[10px]"></span></button>
+                <button onclick="filterTable('approved')" id="filter-approved" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#E4E5E8] text-[#767F8C] hover:bg-[#F5F6F8] transition">Employers <span class="ml-1 text-[10px]"></span></button>
+                <button onclick="filterTable('rejected')" id="filter-rejected" class="filter-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#E4E5E8] text-[#767F8C] hover:bg-[#F5F6F8] transition">Active <span class="ml-1 text-[10px]"></span></button>
+            </div>
+        </div>
+
+        <!-- Table card -->
+        <div class="bg-white rounded-xl border border-[#E4E5E8] overflow-visible">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-[#E4E5E8] bg-[#F5F6F8]">
+                        <!-- <th class="text-left text-[11px] font-semibold text-[#767F8C] uppercase tracking-wider px-6 py-3">User</th> -->
+                        <th class="text-left text-[11px] font-semibold text-[#767F8C] uppercase tracking-wider px-4 py-3">Email</th>
+                        <th class="text-left text-[11px] font-semibold text-[#767F8C] uppercase tracking-wider px-4 py-3">Role</th>
+                        <th class="text-left text-[11px] font-semibold text-[#767F8C] uppercase tracking-wider px-4 py-3">Status</th>
+                        <th class="text-left text-[11px] font-semibold text-[#767F8C] uppercase tracking-wider px-4 py-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTable">
+
+                </tbody>
+            </table>
+            <div class="flex items-center justify-between px-6 py-4 border-t border-[#E4E5E8]">
+            <p class="text-xs text-[#767F8C]">
+                Page <span id="currentPageLabel">1</span> of <span id="totalPagesLabel">1</span>
+            </p>
+            <div class="flex items-center gap-2">
+                <button id="prev" class="flex items-center gap-1.5 text-xs font-semibold border border-[#E4E5E8] text-[#767F8C] hover:bg-[#F5F6F8] px-3 py-1.5 rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-chevron-left text-[10px]"></i> Prev
+                </button>
+                <button id="next" class="flex items-center gap-1.5 text-xs font-semibold border border-[#E4E5E8] text-[#767F8C] hover:bg-[#F5F6F8] px-3 py-1.5 rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed">
+                    Next <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </button>
+            </div>
+        </div>
+        </div>
+
+    </main>
+
+    <div id="deleteUserModal" class="modal-overlay" onclick="closeOnOverlay(event,'deleteUserModal')">
+    <div class="delete-modal-box">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-[#E4E5E8]">
+            <h3 class="text-sm font-semibold text-[#0D1B2A]">Delete User</h3>
+            <button onclick="closeModal('deleteUserModal')" class="w-7 h-7 flex items-center justify-center rounded-lg border border-[#E4E5E8] hover:bg-[#F5F6F8] text-[#767F8C] transition">
+                <i class="fa-solid fa-xmark text-xs"></i>
+            </button>
+        </div>
+        <div class="px-6 py-5">
+            <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-4">
+                <i class="fa-regular fa-trash-can text-red-500 text-lg"></i>
+            </div>
+            <p class="text-sm font-semibold text-[#0D1B2A] mb-1">Delete <span id="deleteUserEmail" class="text-red-500"></span> ?</p>
+            <p class="text-xs text-[#767F8C] leading-relaxed">This will permanently delete the user and all their data. This action cannot be undone.</p>
+        </div>
+        <div class="px-6 pb-5 flex gap-3">
+            <button onclick="closeModal('deleteUserModal')" class="flex-1 text-sm font-semibold border border-[#E4E5E8] text-[#767F8C] py-2.5 rounded-xl hover:bg-[#F5F6F8] transition">Cancel</button>
+            <button id="delete-user-btn" class="flex-1 text-sm font-semibold bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-xl transition flex items-center justify-center gap-2">
+                <i class="fa-regular fa-trash-can text-xs"></i> Yes, Delete
+            </button>
+        </div>
+    </div>
+</div>
+
+</div>
+<script src="../../config.js"></script>
+<script src="../../scripts/Admin/adminUI.js"></script>
+<script src="../../scripts/Admin/Users/usersData.js"></script>
+<script src="../../scripts/Admin/Users/renderUsers.js"></script>
+<script src="../../scripts/Admin/Users/adminUsers.js"></script>
 </body>
 </html>
