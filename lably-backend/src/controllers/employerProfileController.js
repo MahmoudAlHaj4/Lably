@@ -38,7 +38,8 @@
  */
 
 
-const { uploadProfileImages, uploadToSupabase } = require('../middleware/uploadMiddleware')
+const { uploadToSupabase } = require('../middleware/uploadMiddleware')
+
 const EmployerProfile = require('../models/EmployerProfile')
 async function createEmployerProfile(req, res) {
     try {
