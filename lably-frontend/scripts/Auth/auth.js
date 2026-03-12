@@ -72,7 +72,7 @@ const login = async() =>{
             const ProfileData = await profile.json()
 
             if(ProfileData.data){
-                window.location.href = '../Employer/dashboard.html'
+                window.location.href = '../Employer/employerDashboard.html'
             }else{
                 window.location.href = '../Employer/setUpProfile.html'
             }
