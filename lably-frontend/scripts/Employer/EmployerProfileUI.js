@@ -44,24 +44,3 @@ function showSuccess() {
     document.getElementById('progressLabel').textContent = '100% Completed';
 }
 
-function execCmd(command) {
-    if (command === 'createLink') {
-        const url = prompt('Enter URL:');
-        if (url) document.execCommand('createLink', false, url);
-    } else {
-        document.execCommand(command, false, null);
-    }
-}
-
-function previewImg(event, previewId, placeholderId) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-        document.getElementById(placeholderId).classList.add('hidden');
-        const img = document.getElementById(previewId);
-        img.src = e.target.result;
-        img.classList.remove('hidden');
-    };
-    reader.readAsDataURL(file);
-}
