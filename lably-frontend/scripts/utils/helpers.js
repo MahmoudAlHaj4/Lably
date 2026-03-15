@@ -46,3 +46,22 @@ const execCmd = (cmd) => {
         document.execCommand(cmd, false, null)
     }
 }
+
+const setText = (id, value) => {
+    const el = document.getElementById(id)
+    console.log(id, value, el)
+    if (el) el.textContent = value
+}
+
+const showLoading = (container) => {
+    container.innerHTML = `
+        <tr>
+            <td colspan="6" class="px-6 py-12 text-center">
+                <div class="flex items-center justify-center gap-2 text-[#767F8C]">
+                    <i class="fa-solid fa-spinner animate-spin text-sm"></i>
+                    <span class="text-sm">Loading applications...</span>
+                </div>
+            </td>
+        </tr>
+    `
+}
