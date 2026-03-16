@@ -36,7 +36,7 @@ class Job {
     }
 
     static async getAllEmployerJobs(employerId) {
-        const query = `SELECT * FROM jobs WHERE employer_id = $1`
+        const query = `SELECT * FROM jobs WHERE employer_id = $1 ORDER BY created_at DESC`
         const result = await pool.query(query , [employerId])
 
         return result.rows
