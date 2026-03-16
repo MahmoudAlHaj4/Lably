@@ -58,7 +58,7 @@ async function getAllPendingApplications(req,res) {
         })
         
     }catch(error){
-        return res.status(500).json({message: error.message, data: data})
+        return res.status(500).json({message: error.message})
     }
 }
 
