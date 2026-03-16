@@ -37,7 +37,7 @@ class PendingApplication {
     }
 
     static async getAll(){
-        const query = `SELECT * FROM pending_applications ORDER BY created_at DESC`
+        const query = `SELECT * FROM pending_applications`
         const result = await pool.query(query)
 
         return result.rows
