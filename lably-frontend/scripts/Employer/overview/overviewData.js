@@ -58,7 +58,7 @@ const deleteAJob = async (apiUrl, token, id) => {
             headers: {'Authorization' : `Bearer ${token}`}
         })
 
-        const json = res.json()
+        const json = await res.json()
 
         const data = json.data
 
