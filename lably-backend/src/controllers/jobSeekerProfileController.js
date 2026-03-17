@@ -95,4 +95,19 @@ async function getProfile ( req, res) {
     }
 }
 
-module.exports = {createJobSeekerProfile, updateJobSeekerProfile , getProfile}
+async function getCandidateProfile(req, res) {
+    try {
+        const profileId = req.params.id
+        const data      = await JobSeekerProfile.findById(profileId)
+
+        if (!data) {
+            return res.status(404).json({ message: 'Profile not found' })
+        }
+
+        return res.status(200).json({ message: 'Success', data })
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+    }
+}
+
+module.exports = { createJobSeekerProfile, updateJobSeekerProfile, getProfile, getCandidateProfile }
