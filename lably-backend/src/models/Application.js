@@ -42,7 +42,7 @@ class Application {
     }
     
     static async getAllApplications(employerId) {
-        const query = `SELECT applications.id , applications.job_seeker_id , applications.job_id, applications.cover_letter , applications.resume_path, jobs.job_title, job_seekers_profiles.full_name
+        const query = `SELECT applications.id , applications.job_seeker_id , applications.job_id, applications.cover_letter , applications.resume_path, applications.applied_at, jobs.job_title, job_seekers_profiles.full_name
                         FROM applications
                         JOIN jobs ON applications.job_id = jobs.id
                         JOIN job_seekers_profiles ON applications.job_seeker_id = job_seekers_profiles.user_id
