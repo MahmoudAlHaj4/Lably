@@ -49,7 +49,6 @@ const execCmd = (cmd) => {
 
 const setText = (id, value) => {
     const el = document.getElementById(id)
-    console.log(id, value, el)
     if (el) el.textContent = value
 }
 
