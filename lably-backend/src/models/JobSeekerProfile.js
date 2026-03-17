@@ -64,6 +64,14 @@ class JobSeekerProfile {
 
         return { ...profileData, user_id: userId }
     }
+
+    static async findById(profileId) {
+        const query = `SELECT id, user_id, full_name, phone, address, about 
+                    FROM job_seekers_profiles 
+                    WHERE id = $1`
+        const result = await pool.query(query, [profileId])
+        return result.rows[0]
+    }
 }
 
 module.exports = JobSeekerProfile
