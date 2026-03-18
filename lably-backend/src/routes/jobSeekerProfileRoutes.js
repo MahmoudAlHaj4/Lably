@@ -14,12 +14,19 @@ const { authMiddleware } = require('../middleware/authMiddleware')
 const { createJobSeekerProfile, updateJobSeekerProfile, getProfile, getCandidateProfile } = require('../controllers/jobSeekerProfileController')
 const { jobSeekerMiddleware } = require('../middleware/jobSeekerMiddleware')
 const { employerMiddleware } = require('../middleware/employerMiddleware')
+const { validate } = require('../middleware/validationMiddleware')
+const { body } = require('express-validator')
 const router = express.Router()
 
+router.post('/profile', authMiddleware, [
+    body('full_name').trim().notEmpty().withMessage('Full name is required.')
+], validate, createJobSeekerProfile)
 
-router.post('/profile', authMiddleware , createJobSeekerProfile)
-router.put('/profile', authMiddleware ,jobSeekerMiddleware, updateJobSeekerProfile)
-router.get('/profile', authMiddleware ,jobSeekerMiddleware, getProfile)
+router.put('/profile', authMiddleware, jobSeekerMiddleware, [
+    body('full_name').optional().trim().notEmpty().withMessage('Full name cannot be empty.')
+], validate, updateJobSeekerProfile)
+
+router.get('/profile', authMiddleware, jobSeekerMiddleware, getProfile)
 router.get('/profile/:id', authMiddleware, employerMiddleware, getCandidateProfile)
 
 module.exports = router
