@@ -15,7 +15,7 @@ const { jobSeekerMiddleware } = require('../middleware/jobSeekerMiddleware')
 const { employerMiddleware } = require('../middleware/employerMiddleware')
 const router = express.Router() 
 
-router.post('/applications/:id', authMiddleware, jobSeekerMiddleware , apply)
+router.post('/applications/job/:id', authMiddleware, jobSeekerMiddleware , apply)
 router.get('/applications/:id', authMiddleware,employerMiddleware , getEmployerApplication)
 router.get('/applications', authMiddleware, employerMiddleware , getEmployerApplications)
 
