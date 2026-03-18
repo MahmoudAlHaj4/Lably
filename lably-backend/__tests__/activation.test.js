@@ -59,7 +59,7 @@ describe('Activation', ()=>{
     .send({password: "NewPassword123@", token: "invalid-token"})
 
     expect(res.status).toBe(400)
-    expect(res.body.message).toBe('Invalid token')
+    expect(res.body.message).toBe('This activation link is invalid. Please contact support.')
   })
 
   it('Should activate account successfully', async () => {
@@ -67,7 +67,7 @@ describe('Activation', ()=>{
     .send({password: "NewPassword123@", token: activationToken})
 
     expect(res.status).toBe(200)
-    expect(res.body.message).toBe('Account activated successfully')
+    expect(res.body.message).toBe('Your account has been activated. You can now log in.')
   })
 
   it('Should login after activation', async () => {
@@ -75,6 +75,6 @@ describe('Activation', ()=>{
     .send({email: 'activation@test.com', password: 'NewPassword123@'})
 
     expect(res.status).toBe(200)
-    expect(res.body.token).toBeDefined()
+    expect(res.body.data.token).toBeDefined()
     })
 })
