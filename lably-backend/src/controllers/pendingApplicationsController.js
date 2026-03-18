@@ -27,23 +27,22 @@ const PendingApplication = require('../models/PendingApplication')
 const { uploadToSupabase } = require('../middleware/uploadMiddleware')
 
 async function submitApplication(req, res) {
-    try{
-        const { email, full_name, phone , address} = req.body
+    try {
+        const { email, full_name, phone, address } = req.body
 
-        if(!email || !full_name){
-            return res.status(400).json({error: 'Missing required fields'})
+        if (!email || !full_name) {
+            return res.status(400).json({ message: 'Email and full name are required.' })
         }
-        if(!req.files || !req.files['resume']) {
-            return res.status(400).json({error: 'resume is required'})
+        if (!req.files || !req.files['resume']) {
+            return res.status(400).json({ message: 'Resume is required.' })
         }
-        
+
         const resume_path = await uploadToSupabase(req.files['resume'][0], 'resumes')
-        
+
         const portfolioPaths = req.files['portfolio']
-        ? await Promise.all(req.files['portfolio'].map(file => uploadToSupabase(file, 'portfolios')))
-        : []
-        
-        
+            ? await Promise.all(req.files['portfolio'].map(file => uploadToSupabase(file, 'portfolios')))
+            : []
+
         const cleanData = {
             email,
             full_name,
@@ -54,14 +53,15 @@ async function submitApplication(req, res) {
         }
 
         const result = await PendingApplication.create(cleanData)
-        res.status(201).json({
-            success: true,
-            message: 'Application submitted',
+
+        return res.status(201).json({
+            message: 'Your application has been submitted successfully. We will review it and get back to you.',
             data: result
         })
-    }catch(error) {
-        res.status(500).json({ error: error.message })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
-module.exports = {submitApplication}
+module.exports = { submitApplication }
