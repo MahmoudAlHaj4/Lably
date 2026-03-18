@@ -49,162 +49,153 @@ const bcrypt = require('bcrypt')
 const { sendActivationEmail } = require('../services/emailService')
 const Admin = require('../models/Admin')
 
-async function getAllPendingApplications(req,res) {
-    try{
+async function getAllPendingApplications(req, res) {
+    try {
         const result = await PendingApplication.getAll()
-
-        return res.status(200).json({message: "success",
-            data: result
-        })
-        
-    }catch(error){
-        return res.status(500).json({message: error.message})
+        return res.status(200).json({ message: 'Success.', data: result })
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function getPendingApplication(req, res) {
-
-    try{
-        const id = req.params.id
-        const result = await PendingApplication.getPendingApp(id)
-        return res.status(200).json({
-            message: 'Success',
-            data: result
-        })
-    }catch(error){
-        return res.status(500).json({message: error.message})
+    try {
+        const result = await PendingApplication.getPendingApp(req.params.id)
+        if (!result) {
+            return res.status(404).json({ message: 'Application not found.' })
+        }
+        return res.status(200).json({ message: 'Success.', data: result })
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
-    
 }
 
-
-    async function approvePendingApplication(req, res) {
-        try{
-            const decision_notes = req.body?.decision_notes ?? null
-            const id = req.params.id
-            const application = await PendingApplication.getPendingApp(id)
-            if(!application){
-                return res.status(404).json({message: 'application not found'})
-            }
-            if(application.application_status === 'approved'){
-                return res.status(400).json({message: 'application already approved'})
-            }
-
-            const token = randomUUID()
-            const expiry = new Date(Date.now() + + 48 * 60 * 60 * 1000)
-            const password = await bcrypt.hash(randomUUID() , 10)
-
-            const user = await User.createUser({
-                email: application.email,
-                password,
-                role: 'job_seeker',
-                is_active: false
-            })
-
-            await User.setActivationToken(token, expiry , user.id)
-            const result = await PendingApplication.approved(id, {
-                decision_notes: decision_notes
-            })
-            await sendActivationEmail(application.email, token)
-
-            return res.status(200).json({
-            message: 'Application approved, activation token generated',
-            data: result
-
-            })
-        }catch(error){
-            return res.status(500).json({message: error.message})
-        }
-    }
-
-async function rejectPendingApplication(req,res) {
-    try{ 
+async function approvePendingApplication(req, res) {
+    try {
         const decision_notes = req.body?.decision_notes ?? null
-        const applicationId = req.params.id
-        const application = await PendingApplication.getPendingApp(applicationId)
+        const id = req.params.id
 
-        if(!application){
-            return res.status(404).json({message : "Application Not found"})
+        const application = await PendingApplication.getPendingApp(id)
+        if (!application) {
+            return res.status(404).json({ message: 'Application not found.' })
+        }
+        if (application.application_status === 'approved') {
+            return res.status(409).json({ message: 'This application has already been approved.' })
         }
 
-        const data = await PendingApplication.reject(applicationId, {
-            decision_notes: decision_notes
+        const token = randomUUID()
+        const expiry = new Date(Date.now() + 48 * 60 * 60 * 1000)
+        const password = await bcrypt.hash(randomUUID(), 10)
+
+        const user = await User.createUser({
+            email: application.email,
+            password,
+            role: 'job_seeker',
+            is_active: false
         })
 
-        return res.status(200).json({message : "Application is rejected" , data : data})
-    }catch(error) {
-        return res.status(500).json({message : error.message})
+        await User.setActivationToken(token, expiry, user.id)
+        const result = await PendingApplication.approved(id, { decision_notes })
+        await sendActivationEmail(application.email, token)
+
+        return res.status(200).json({ message: 'Application approved. Activation email sent to the candidate.', data: result })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
+    }
+}
+
+async function rejectPendingApplication(req, res) {
+    try {
+        const decision_notes = req.body?.decision_notes ?? null
+        const applicationId = req.params.id
+
+        const application = await PendingApplication.getPendingApp(applicationId)
+        if (!application) {
+            return res.status(404).json({ message: 'Application not found.' })
+        }
+
+        const data = await PendingApplication.reject(applicationId, { decision_notes })
+        return res.status(200).json({ message: 'Application rejected.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function getAllUsers(req, res) {
     try {
         const result = await Admin.getAllUsers()
-        // console.log(result)
-        return res.status(200).json({ message: 'success', data: result })
-    } catch(error) {
-        return res.status(500).json({ message: error.message })
+        return res.status(200).json({ message: 'Success.', data: result })
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function deleteUser(req, res) {
     try {
         const user = await User.findById(req.params.id)
-        if (!user) return res.status(404).json({ message: 'User not found' })
+        if (!user) {
+            return res.status(404).json({ message: 'User not found.' })
+        }
         await Admin.deleteUserById(req.params.id)
-        return res.status(200).json({ message: 'User deleted' })
-    } catch(error) {
-        return res.status(500).json({ message: error.message })
+        return res.status(200).json({ message: 'User deleted successfully.' })
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function getAllJobs(req, res) {
     try {
         const result = await Admin.getAllJobs()
-        return res.status(200).json({ message: 'success', data: result })
-    } catch(error) {
-        return res.status(500).json({ message: error.message })
+        return res.status(200).json({ message: 'Success.', data: result })
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function deleteJob(req, res) {
     try {
         const job = await Admin.deleteJobById(req.params.id)
-        if (!job) return res.status(404).json({ message: 'Job not found' })
-        return res.status(200).json({ message: 'Job deleted' })
-    } catch(error) {
-        return res.status(500).json({ message: error.message })
+        if (!job) {
+            return res.status(404).json({ message: 'Job not found.' })
+        }
+        return res.status(200).json({ message: 'Job deleted successfully.' })
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function getAllApplications(req, res) {
     try {
         const result = await Admin.getAllApplications()
-        return res.status(200).json({ message: 'success', data: result })
-    } catch(error) {
-        return res.status(500).json({ message: error.message })
+        return res.status(200).json({ message: 'Success.', data: result })
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function deleteApplication(req, res) {
     try {
         const app = await Admin.deleteApplicationById(req.params.id)
-        if (!app) return res.status(404).json({ message: 'Application not found' })
-        return res.status(200).json({ message: 'Application deleted' })
-    } catch(error) {
-        return res.status(500).json({ message: error.message })
+        if (!app) {
+            return res.status(404).json({ message: 'Application not found.' })
+        }
+        return res.status(200).json({ message: 'Application deleted successfully.' })
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 module.exports = {
-getAllPendingApplications,
-getPendingApplication, 
-approvePendingApplication, 
-rejectPendingApplication,
-getAllUsers,
-deleteUser,
-getAllJobs,
-deleteJob,
-getAllApplications,
-deleteApplication
+    getAllPendingApplications,
+    getPendingApplication,
+    approvePendingApplication,
+    rejectPendingApplication,
+    getAllUsers,
+    deleteUser,
+    getAllJobs,
+    deleteJob,
+    getAllApplications,
+    deleteApplication
 }
