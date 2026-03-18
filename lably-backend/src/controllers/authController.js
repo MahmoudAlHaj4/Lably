@@ -37,113 +37,91 @@
  */
 
 const User = require('../models/User')
-const bcrypt  = require('bcrypt')
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 async function login(req, res) {
-    try{
-        const {email, password} = req.body
-
-        if(!email) {
-            return res.status(400).json({message: 'Email is required'})
-        }
-        if(!password) {
-            return res.status(400).json({message: 'Password is required'})
-        } 
+    try {
+        const { email, password } = req.body
 
         const user = await User.findByEmail(email)
-        
-        if(!user){
-            return res.status(401).json({message: 'Invalid credentials'})
+
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid credentials.' })
         }
-        if(!user.is_active) {
-            return res.status(403).json({ message: 'Account not activated' })
+        if (!user.is_active) {
+            return res.status(403).json({ message: 'Your account is not activated yet. Check your email for the activation link.' })
         }
+
         const isMatch = await bcrypt.compare(password, user.password)
-
-        if(!isMatch) {
-            return res.status(401).json({message: 'Invalid credentials'})
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid credentials.' })
         }
 
-        const token = jwt.sign({
-            id: user.id , role: user.role
-        },  process.env.JWT_SECRET,
-        { expiresIn: '7d' }
+        const token = jwt.sign(
+            { id: user.id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
         )
 
-        res.status(200).json({
-            message: 'Login successful',
-            token: token,
-            role: user.role
+        return res.status(200).json({
+            message: 'Login successful.',
+            data: { token, role: user.role }
         })
 
-    }catch(error) {
-        res.status(500).json({error: error.message})
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
-
 }
 
 async function activateAccount(req, res) {
-    try{
-        const {password , token} = req.body
+    try {
+        const { password, token } = req.body
 
-        if(!password) {
-            return res.status(400).json({message: 'Password is required'})
-        } 
         const checkToken = await User.findActivationToken(token)
-        if(!checkToken) {
-            return res.status(400).json({ message: 'Invalid token' })
+        if (!checkToken) {
+            return res.status(400).json({ message: 'This activation link is invalid. Please contact support.' })
         }
-
-        if(new Date() > new Date(checkToken.activation_token_expires)) {
-            return res.status(400).json({ message: 'Token expired' })
+        if (new Date() > new Date(checkToken.activation_token_expires)) {
+            return res.status(400).json({ message: 'This activation link has expired. Please contact support to request a new one.' })
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
+        await User.activateUser(checkToken.id, hashedPassword)
 
-         await User.activateUser(checkToken.id , hashedPassword)
-        return res.status(200).json({ message: 'Account activated successfully' })
+        return res.status(200).json({ message: 'Your account has been activated. You can now log in.' })
 
-    }catch(err) {
-        return res.status(500).json({message: err.message})
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
-
 }
 
+async function employerRegister(req, res) {
+    try {
+        const { email, password } = req.body
 
-async function employerRegister(req , res) {
-    try{
-        const {email , password} = req.body
-
-        if(!email || !email.trim()){
-            return res.status(400).json({message : "Email is required"})
-        }
         const checkEmail = await User.findByEmail(email)
-        if(checkEmail){
-            return res.status(400).json({message: "Email already Used"})
+        if (checkEmail) {
+            return res.status(409).json({ message: 'An account with this email already exists.' })
         }
 
-        if(!password || !password.trim()){
-            return res.status(400).json({message: "Password is required"})
-        }
-        const hashedPassword = await bcrypt.hash(password , 10)
+        const hashedPassword = await bcrypt.hash(password, 10)
         const user = await User.createUser({
-            email: email,
+            email,
             password: hashedPassword,
             role: 'employer',
             is_active: true
-            
         })
 
-        if(!user) {
-            return res.status(400).json({message: "Failed to register"})
+        if (!user) {
+            return res.status(400).json({ message: 'Registration failed. Please try again.' })
         }
 
-        return res.status(201).json({message: 'success'})
+        return res.status(201).json({ message: 'Account created successfully.' })
 
-    }catch(err) {
-        return res.status(500).json({message: err.message})
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
-    }
+}
 
-module.exports = {login , activateAccount , employerRegister}
+module.exports = { login, activateAccount, employerRegister }
