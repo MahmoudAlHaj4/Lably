@@ -49,99 +49,82 @@
 
 const Job = require('../models/Job')
 
+async function createJob(req, res) {
+    try {
+        const { job_title, description, requirements, location, job_type } = req.body
+        const employerId = req.user.id
 
-async function createJob(req, res){
-    try{
-        const {job_title, description, requirements , location , job_type} = req.body
-        const employerId = req.user.id 
+        const data = await Job.create(employerId, { job_title, description, requirements, location, job_type })
 
-        const data = await Job.create(employerId , {
-            job_title: job_title,
-            description: description, 
-            requirements: requirements,
-            location: location,
-            job_type : job_type
-        })
+        return res.status(201).json({ message: 'Job posted successfully.', data })
 
-        return res.status(201).json({
-            message: "success", 
-            data : data
-        })
-    }catch(error) {
-        return res.status(500).json({message: error.message})
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function getEmployerJobs(req, res) {
-    try{
-        const employerId = req.user.id 
+    try {
+        const employerId = req.user.id
         const data = await Job.getAllEmployerJobs(employerId)
 
-        return res.status(200).json({
-            message: "Success",
-            data : data
-        })
-    }catch(error) {
-        return res.status(500).json({message :error.message})
+        return res.status(200).json({ message: 'Success.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
-async function getJob (req, res) {
-    try{
+async function getJob(req, res) {
+    try {
         const jobId = req.params.id
-        
         const data = await Job.getOneJob(jobId)
 
-        return res.status(200).json({message: 'success' , data: data})
-    }catch(error) {
-        return res.status(500).json({message : error.message})
+        if (!data) {
+            return res.status(404).json({ message: 'Job not found.' })
+        }
+
+        return res.status(200).json({ message: 'Success.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function updateJob(req, res) {
-    try{
-        const {status, job_title, description, requirements, location, job_type} = req.body
+    try {
+        const { status, job_title, description, requirements, location, job_type } = req.body
         const jobId = req.params.id
 
-        const data = await Job.update(jobId , {
-            status : status,
-            job_title : job_title,
-            description: description,
-            requirements: requirements,
-            location: location,
-            job_type: job_type
-        })
+        const data = await Job.update(jobId, { status, job_title, description, requirements, location, job_type })
 
-        if(!data){
-            return res.status(404).json({message: "Job not found"})
+        if (!data) {
+            return res.status(404).json({ message: 'Job not found.' })
         }
-        return res.status(200).json({
-            message: "Success" ,
-            data: data
-        })
-    }catch(error){
-        return res.status(500).json({message: error.message})
+
+        return res.status(200).json({ message: 'Job updated successfully.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function deleteJob(req, res) {
-    try{
-        const jobId = req.params.id    
+    try {
+        const jobId = req.params.id
 
-        const is_found  = await Job.getOneJob(jobId)
-        if(!is_found) {
-            return res.status(404).json({message : 'Job Not found'})
+        const is_found = await Job.getOneJob(jobId)
+        if (!is_found) {
+            return res.status(404).json({ message: 'Job not found.' })
         }
 
-        const data = await Job.delete(jobId)
+        await Job.delete(jobId)
 
-        return res.status(200).json({
-            message : "Job deleted Successfully ",
-            data : data
-        })
-    }catch(error) {
-        return res.status(500).json({message: error.message})
+        return res.status(200).json({ message: 'Job deleted successfully.' })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
-module.exports = {createJob , getEmployerJobs, getJob, updateJob , deleteJob}
+module.exports = { createJob, getEmployerJobs, getJob, updateJob, deleteJob }
