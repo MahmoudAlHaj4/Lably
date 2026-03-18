@@ -36,11 +36,12 @@
 
 const Application = require("../models/Application")
 const Job = require('../models/Job')
+const {uploadToSupabase } = require('../middleware/uploadMiddleware')
 
 
 async function apply(req, res) {
     try{
-        const {cover_letter , resume_path} = req.body
+        const {cover_letter } = req.body
         const userId = req.user.id 
         const jobId =  req.params.id
 
@@ -53,6 +54,10 @@ async function apply(req, res) {
         if(!checkJob){
             return res.status(404).json({message: "Job Not found"})
         }
+        if (!req.file) {
+            return res.status(400).json({ message: "Resume is required" })
+        }
+        const resume_path = await uploadToSupabase(req.file, 'ApplicationsResumes')
 
         const data = await Application.create(userId, jobId , {
             cover_letter : cover_letter,
@@ -63,7 +68,7 @@ async function apply(req, res) {
             data: data
         })
     }catch(error){
-        if(error.code === 'ER_DUP_ENTRY'){
+        if(error.code === '23505'){
             return res.status(409).json({message : "You Already applied to this job"})
         }
        return res.status(500).json({message: error.message})
