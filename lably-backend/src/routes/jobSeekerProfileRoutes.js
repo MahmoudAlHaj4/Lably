@@ -11,13 +11,15 @@
 
 const express = require('express')
 const { authMiddleware } = require('../middleware/authMiddleware')
-const { createJobSeekerProfile, updateJobSeekerProfile, getProfile } = require('../controllers/jobSeekerProfileController')
+const { createJobSeekerProfile, updateJobSeekerProfile, getProfile, getCandidateProfile } = require('../controllers/jobSeekerProfileController')
 const { jobSeekerMiddleware } = require('../middleware/jobSeekerMiddleware')
+const { employerMiddleware } = require('../middleware/employerMiddleware')
 const router = express.Router()
 
 
 router.post('/profile', authMiddleware , createJobSeekerProfile)
 router.put('/profile', authMiddleware ,jobSeekerMiddleware, updateJobSeekerProfile)
 router.get('/profile', authMiddleware ,jobSeekerMiddleware, getProfile)
+router.get('/profile/:id', authMiddleware, employerMiddleware, getCandidateProfile)
 
 module.exports = router
