@@ -11,14 +11,22 @@
 const express = require('express')
 const { submitApplication } = require('../controllers/pendingApplicationsController')
 const { upload } = require('../middleware/uploadMiddleware')
+const { validate } = require('../middleware/validationMiddleware')
+const { body } = require('express-validator')
 const router = express.Router()
 
 router.post('/pending-applications', upload.fields([
-        { name: 'resume', maxCount: 1 },
-        { name: 'portfolio', maxCount: 5 }
-    ]), submitApplication)
+    { name: 'resume', maxCount: 1 },
+    { name: 'portfolio', maxCount: 5 }
+]), [
+    body('email').trim().isEmail().normalizeEmail().withMessage('Please enter a valid email address.'),
+    body('full_name').trim().notEmpty().withMessage('Full name is required.'),
+    body('phone').optional().trim(),
+    body('address').optional().trim()
+], validate, submitApplication)
+
 router.use((err, req, res, next) => {
-    res.status(400).json({ error: err.message })
+    res.status(400).json({ message: err.message })
 })
 
 module.exports = router
