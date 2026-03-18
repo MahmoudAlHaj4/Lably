@@ -13,9 +13,10 @@ const { authMiddleware } = require('../middleware/authMiddleware')
 const { apply, getEmployerApplication, getEmployerApplications } = require('../controllers/applicationController')
 const { jobSeekerMiddleware } = require('../middleware/jobSeekerMiddleware')
 const { employerMiddleware } = require('../middleware/employerMiddleware')
+const { upload } = require('../middleware/uploadMiddleware')
 const router = express.Router() 
 
-router.post('/applications/job/:id', authMiddleware, jobSeekerMiddleware , apply)
+router.post('/applications/job/:id', authMiddleware, jobSeekerMiddleware, upload.single('resume') , apply)
 router.get('/applications/:id', authMiddleware,employerMiddleware , getEmployerApplication)
 router.get('/applications', authMiddleware, employerMiddleware , getEmployerApplications)
 
