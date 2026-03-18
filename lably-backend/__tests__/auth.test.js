@@ -12,17 +12,17 @@ describe('Auth', ()=>{
         })
     })
 
-    afterAll(async()=>{
-        await pool.query('DELETE FROM users WHERE email = $1', ['test@gmail.com'])
-
+    afterAll(async () => {
+        await pool.query('DELETE FROM users WHERE email = $1', ['auth-test@gmail.com'])
     })
+
     it('Should login successfully' , async ()=>{
         const res = await request.post('/api/auth/login').send({
             email: "auth-test@gmail.com",
             password: "test123@"
         })
         expect(res.status).toBe(200)
-        expect(res.body.token).toBeDefined()
+        expect(res.body.data.token).toBeDefined()
     })
 
     it('Should Password Wrong', async()=>{
@@ -31,7 +31,7 @@ describe('Auth', ()=>{
             password: "test123"
         })
         expect(res.status).toBe(401)
-        expect(res.body.message).toBe('Invalid credentials')
+        expect(res.body.message).toBe('Invalid credentials.')
     })
 
     it('Should Email Wrong', async ()=>{
@@ -41,7 +41,7 @@ describe('Auth', ()=>{
         })
 
         expect(res.status).toBe(401)
-        expect(res.body.message).toBe("Invalid credentials")
+        expect(res.body.message).toBe("Invalid credentials.")
     })
 
     it('Should Email duplicate', async()=>{
@@ -51,7 +51,7 @@ describe('Auth', ()=>{
             password: "123456789"
         })
 
-        expect(res.status).toBe(400)
+        expect(res.status).toBe(409)
     })
 
     it('Should empty fields', async ()=>{
