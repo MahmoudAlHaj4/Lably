@@ -36,81 +36,68 @@
 
 const Application = require("../models/Application")
 const Job = require('../models/Job')
-const {uploadToSupabase } = require('../middleware/uploadMiddleware')
-
+const { uploadToSupabase } = require('../middleware/uploadMiddleware')
 
 async function apply(req, res) {
-    try{
-        const {cover_letter } = req.body
-        const userId = req.user.id 
-        const jobId =  req.params.id
-
-        if(!jobId) {
-            return res.status(404).json({message: "Job Not found"})
-        }
+    try {
+        const { cover_letter } = req.body
+        const userId = req.user.id
+        const jobId = req.params.id
 
         const checkJob = await Job.getOneJob(jobId)
+        if (!checkJob) {
+            return res.status(404).json({ message: 'Job not found.' })
+        }
 
-        if(!checkJob){
-            return res.status(404).json({message: "Job Not found"})
-        }
         if (!req.file) {
-            return res.status(400).json({ message: "Resume is required" })
+            return res.status(400).json({ message: 'Resume is required.' })
         }
+
         const resume_path = await uploadToSupabase(req.file, 'ApplicationsResumes')
 
-        const data = await Application.create(userId, jobId , {
-            cover_letter : cover_letter,
-            resume_path: resume_path
-        })
-          return res.status(201).json({
-            message: "Success",
-            data: data
-        })
-    }catch(error){
-        if(error.code === '23505'){
-            return res.status(409).json({message : "You Already applied to this job"})
+        const data = await Application.create(userId, jobId, { cover_letter, resume_path })
+
+        return res.status(201).json({ message: 'Application submitted successfully.', data })
+
+    } catch (error) {
+        if (error.code === '23505') {
+            return res.status(409).json({ message: 'You have already applied to this job.' })
         }
-       return res.status(500).json({message: error.message})
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
-async function getEmployerApplication (req, res) {
+async function getEmployerApplication(req, res) {
     try {
         const applicationId = req.params.id
         const employerId = req.user.id
 
         const data = await Application.getApplication(applicationId)
 
-        if(!data) {
-            return res.status(404).json({message : 'Application Not found'})
+        if (!data) {
+            return res.status(404).json({ message: 'Application not found.' })
         }
-        if(employerId !== data.employer_id) {
-            return res.status(403).json({message: "forbidden its not your application"})
+        if (employerId !== data.employer_id) {
+            return res.status(403).json({ message: 'Access denied. This application does not belong to your jobs.' })
         }
 
+        return res.status(200).json({ message: 'Success.', data })
 
-        return res.status(200).json({
-            message: "Success",
-            data: data
-        })
-    }catch(error) {
-        return res.status(500).json({message: error.message})
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function getEmployerApplications(req, res) {
-    try{
-        const employerId = req.user.id 
-
+    try {
+        const employerId = req.user.id
         const data = await Application.getAllApplications(employerId)
 
+        return res.status(200).json({ message: 'Success.', data })
 
-
-        return res.status(200).json({message : "Success", data: data})
-    }catch(error) {
-        return res.status(500).json({message: error.message})
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
-module.exports = {apply, getEmployerApplication, getEmployerApplications}
+module.exports = { apply, getEmployerApplication, getEmployerApplications }
