@@ -36,7 +36,11 @@ async function submitApplication(req, res) {
         if (!req.files || !req.files['resume']) {
             return res.status(400).json({ message: 'Resume is required.' })
         }
-
+        const existing = await PendingApplication.findByEmail(email)
+        if (existing) {
+            return res.status(409).json({ message: 'An application with this email has already been submitted.' })
+        }
+        
         const resume_path = await uploadToSupabase(req.files['resume'][0], 'resumes')
 
         const portfolioPaths = req.files['portfolio']
