@@ -14,10 +14,15 @@ const { apply, getEmployerApplication, getEmployerApplications } = require('../c
 const { jobSeekerMiddleware } = require('../middleware/jobSeekerMiddleware')
 const { employerMiddleware } = require('../middleware/employerMiddleware')
 const { upload } = require('../middleware/uploadMiddleware')
-const router = express.Router() 
+const { validate } = require('../middleware/validationMiddleware')
+const { body } = require('express-validator')
+const router = express.Router()
 
-router.post('/applications/job/:id', authMiddleware, jobSeekerMiddleware, upload.single('resume') , apply)
-router.get('/applications/:id', authMiddleware,employerMiddleware , getEmployerApplication)
-router.get('/applications', authMiddleware, employerMiddleware , getEmployerApplications)
+router.post('/applications/job/:id', authMiddleware, jobSeekerMiddleware, upload.single('resume'), [
+    body('cover_letter').optional().trim()
+], validate, apply)
+
+router.get('/applications/:id', authMiddleware, employerMiddleware, getEmployerApplication)
+router.get('/applications', authMiddleware, employerMiddleware, getEmployerApplications)
 
 module.exports = router
