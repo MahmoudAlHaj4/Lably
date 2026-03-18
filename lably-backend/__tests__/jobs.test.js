@@ -20,7 +20,7 @@ describe('Jobs', ()=>{
             password: "employer123"
         })
 
-        token = res.body.token
+        token = res.body.data.token
     })
 
     afterAll(async ()=>{
