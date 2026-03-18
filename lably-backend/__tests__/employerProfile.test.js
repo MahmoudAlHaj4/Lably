@@ -19,7 +19,7 @@ describe('EmployerProfile ',()=>{
             email: "employertest@test.com",
             password: "employer123"
         })
-        token = res.body.token
+        token = res.body.data.token
     }, 15000)
 
     afterAll(async () => {
