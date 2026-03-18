@@ -39,8 +39,8 @@
 
 
 const { uploadToSupabase } = require('../middleware/uploadMiddleware')
-
 const EmployerProfile = require('../models/EmployerProfile')
+
 async function createEmployerProfile(req, res) {
     try {
         const {
@@ -51,28 +51,19 @@ async function createEmployerProfile(req, res) {
         } = req.body
 
         const userId = req.user.id
-        const role = req.user.role
-
-        if(role !== 'employer') {
-            return res.status(403).json({ message: 'You are not an employer' })
-        }
-
-        if(!company_name) {
-            return res.status(400).json({ message: 'Company name is required' })
-        }
 
         const checkProfile = await EmployerProfile.findByUserId(userId)
-        if(checkProfile) {
-            return res.status(400).json({ message: 'Already have a profile' })
+        if (checkProfile) {
+            return res.status(409).json({ message: 'You already have a profile.' })
         }
 
         let logo_path = null
         let banner_path = null
 
-        if(req.files?.logo) {
+        if (req.files?.logo) {
             logo_path = await uploadToSupabase(req.files.logo[0], 'logos')
         }
-        if(req.files?.banner) {
+        if (req.files?.banner) {
             banner_path = await uploadToSupabase(req.files.banner[0], 'banners')
         }
 
@@ -84,10 +75,10 @@ async function createEmployerProfile(req, res) {
             contact_email, contact_phone
         })
 
-        return res.status(201).json({ message: 'Success' })
-    } catch(error) {
-         console.log('CREATE PROFILE ERROR:', error.message)
-        return res.status(500).json({ message: error.message })
+        return res.status(201).json({ message: 'Profile created successfully.' })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
@@ -100,25 +91,20 @@ async function updateEmployerProfile(req, res) {
             instagram_url, contact_email, contact_phone
         } = req.body
 
-        const role = req.user.role
         const userId = req.user.id
 
-        if(role !== 'employer') {
-            return res.status(403).json({ message: 'You are not an employer' })
-        }
-
         const checkProfile = await EmployerProfile.findByUserId(userId)
-        if(!checkProfile) {
-            return res.status(404).json({ message: 'Not found' })
+        if (!checkProfile) {
+            return res.status(404).json({ message: 'Profile not found.' })
         }
 
         let logo_path = checkProfile.logo_path
         let banner_path = checkProfile.banner_path
 
-        if(req.files?.logo) {
+        if (req.files?.logo) {
             logo_path = await uploadToSupabase(req.files.logo[0], 'logos')
         }
-        if(req.files?.banner) {
+        if (req.files?.banner) {
             banner_path = await uploadToSupabase(req.files.banner[0], 'banners')
         }
 
@@ -130,25 +116,23 @@ async function updateEmployerProfile(req, res) {
             contact_email, contact_phone
         })
 
-        return res.status(200).json({ message: 'Profile updated successfully' })
-    } catch(error) {
-        return res.status(500).json({ message: error.message })
+        return res.status(200).json({ message: 'Profile updated successfully.' })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
-async function getEmployerProfile(req, res) {
-    try{
-        const employerId = req.user.id
 
+async function getEmployerProfile(req, res) {
+    try {
+        const employerId = req.user.id
         const data = await EmployerProfile.findByUserId(employerId)
 
-        return res.status(200).json({
-            message: 'Success', 
-            data: data
-        })
-    }catch(error){
-        return res.status(500).json({message: error.message , data: data})
+        return res.status(200).json({ message: 'Success.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
-
-module.exports = {createEmployerProfile , updateEmployerProfile, getEmployerProfile}
+module.exports = { createEmployerProfile, updateEmployerProfile, getEmployerProfile }
