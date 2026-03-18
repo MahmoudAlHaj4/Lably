@@ -35,78 +35,63 @@
 const JobSeekerProfile = require('../models/JobSeekerProfile')
 
 async function createJobSeekerProfile(req, res) {
-    try{
-        const {full_name, phone, address, about} = req.body
+    try {
+        const { full_name, phone, address, about } = req.body
         const userId = req.user.id
 
         const checkProfile = await JobSeekerProfile.findByUserId(userId)
-
-        if(checkProfile) {
-            return res.status(400).json({ message: 'Profile already exists' })
+        if (checkProfile) {
+            return res.status(409).json({ message: 'You already have a profile.' })
         }
-        
-        const data = await JobSeekerProfile.create(userId , {
-            full_name : full_name,
-            phone: phone,
-            address: address,
-            about: about
-        }) 
-        return res.status(201).json({
-            message : 'Success',
-            data: data
 
-        })
-    }catch(error){
-        return res.status(500).json({message : error.message})
+        const data = await JobSeekerProfile.create(userId, { full_name, phone, address, about })
+
+        return res.status(201).json({ message: 'Profile created successfully.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function updateJobSeekerProfile(req, res) {
-    try{
-        const { full_name , phone , address ,about} = req.body
+    try {
+        const { full_name, phone, address, about } = req.body
         const userId = req.user.id
 
-        const data = await JobSeekerProfile.update(userId , {
-            full_name: full_name,
-            phone: phone,
-            address: address,
-            about: about
-        })
-        return res.status(200).json({message: 'success' , data: data})
-    }catch(error) {
-        return res.status(500).json({message : error.message})
+        const data = await JobSeekerProfile.update(userId, { full_name, phone, address, about })
+
+        return res.status(200).json({ message: 'Profile updated successfully.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
-   
 }
 
-async function getProfile ( req, res) {
-    try{ 
+async function getProfile(req, res) {
+    try {
         const userId = req.user.id
-
         const data = await JobSeekerProfile.findByUserId(userId)
-        return res.status(200).json({
-            message: 'Success',
-            data: data
-        })
-    }catch(error) {
-        return res.status(500).json({
-            message: error.message
-        })
+
+        return res.status(200).json({ message: 'Success.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function getCandidateProfile(req, res) {
     try {
         const profileId = req.params.id
-        const data      = await JobSeekerProfile.findById(profileId)
+        const data = await JobSeekerProfile.findById(profileId)
 
         if (!data) {
-            return res.status(404).json({ message: 'Profile not found' })
+            return res.status(404).json({ message: 'Profile not found.' })
         }
 
-        return res.status(200).json({ message: 'Success', data })
+        return res.status(200).json({ message: 'Success.', data })
+
     } catch (error) {
-        return res.status(500).json({ message: error.message })
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
