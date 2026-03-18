@@ -53,99 +53,86 @@
 const Experience = require('../models/Experience')
 const JobSeekerProfile = require('../models/JobSeekerProfile')
 
+async function addExperience(req, res) {
+    try {
+        const { company_name, job_title, start_date, end_date, description } = req.body
 
-async function addExperience (req, res) {
-    try{
-        const {company_name , job_title, start_date, end_date , description} = req.body
+        const data = await Experience.create(req.profile.id, { company_name, job_title, start_date, end_date, description })
 
-        const data = await Experience.create(req.profile.id, {
-            company_name: company_name,
-            job_title: job_title,
-            start_date: start_date,
-            end_date: end_date,
-            description: description
-        })
+        return res.status(201).json({ message: 'Experience added successfully.', data })
 
-        return res.status(201).json({message: 'success', data:data})
-    }catch(error) {
-        return res.status(500).json({message : error.message})
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
-async function getJobExperiences(req, res){
-    try{
-        const profileId = req.profile
-        const data = await Experience.getUserExperience(profileId.id)
+async function getJobExperiences(req, res) {
+    try {
+        const data = await Experience.getUserExperience(req.profile.id)
 
-        return res.status(200).json({message: "success", data: data})
-    }catch(error){
-        return res.status(500).json({message: error.message})
+        return res.status(200).json({ message: 'Success.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function UpdateJobExperience(req, res) {
-    try{
-        const {company_name , job_title, start_date, end_date , description} = req.body
+    try {
+        const { company_name, job_title, start_date, end_date, description } = req.body
         const experienceId = req.params.id
 
-        const data = await Experience.Update(experienceId , {
-                company_name: company_name,
-                job_title: job_title,
-                start_date: start_date,
-                end_date: end_date,
-                description: description
+        const data = await Experience.Update(experienceId, { company_name, job_title, start_date, end_date, description })
 
-            })
-
-        if(!data) {
-            return res.status(404).json({message: "Experience Not found"})
+        if (!data) {
+            return res.status(404).json({ message: 'Experience not found.' })
         }
 
-        return res.status(200).json({message: "Updated Success", data: data})
-    }catch(error){
-        return res.status(500).json({message: error.message})
+        return res.status(200).json({ message: 'Experience updated successfully.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
-async function  GetExperience(req, res) {
-    try{
-        const experienceId =req.params.id
+async function GetExperience(req, res) {
+    try {
+        const experienceId = req.params.id
         const userId = req.user.id
+
         const profile = await JobSeekerProfile.findByUserId(userId)
         const data = await Experience.getOneExperience(experienceId)
 
-        if(!data){
-            return res.status(404).json({message : "Not found"})
+        if (!data) {
+            return res.status(404).json({ message: 'Experience not found.' })
+        }
+        if (data.job_seeker_profile_id !== profile.id) {
+            return res.status(403).json({ message: 'Access denied. This experience does not belong to your profile.' })
         }
 
-        if(data.job_seeker_profile_id !== profile.id){
-            return res.status(403).json({message : "forbidden Its not your profile"})
-        }
+        return res.status(200).json({ message: 'Success.', data })
 
-        return res.status(200).json({
-            message: "Success",
-            data: data
-        })
-    }catch(error) {
-        return res.status(500).json({message: error.message})
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
 async function DeleteExperience(req, res) {
-    try{
+    try {
         const experienceId = req.params.id
-        const is_found = await Experience.getOneExperience(experienceId)
 
-        if(!is_found){
-            return res.status(404).json({message: "Experience Not Found"})
+        const is_found = await Experience.getOneExperience(experienceId)
+        if (!is_found) {
+            return res.status(404).json({ message: 'Experience not found.' })
         }
 
-        const data = await Experience.delete(experienceId)
+        await Experience.delete(experienceId)
 
-        return res.status(200).json({message: 'Successfully Deleted' , data : data.experienceId})
-    }catch(error){
-        return res.status(500).json({message: error.message})
+        return res.status(200).json({ message: 'Experience deleted successfully.' })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
-module.exports = {addExperience, getJobExperiences, UpdateJobExperience, GetExperience, DeleteExperience}
+module.exports = { addExperience, getJobExperiences, UpdateJobExperience, GetExperience, DeleteExperience }
