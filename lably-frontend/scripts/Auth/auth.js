@@ -55,18 +55,20 @@ const login = async() =>{
             body: JSON.stringify(credentials)
         })
 
-    const data = await res.json() 
+    const result = await res.json()
+    const token = result.data?.token
+    const role = result.data?.role
 
-    console.log(data)
+
     if(res.ok) {
         showToast('Success' , 'success')
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('role', data.role)
+        localStorage.setItem('token', token)
+        localStorage.setItem('role', role)
 
-        if(data.role === 'employer'){
+        if(role === 'employer'){
 
             const profile = await fetch(`${CONFIG.apiUrl}/api/employer/profile`, {
-                headers: { 'Authorization': `Bearer ${data.token}` }
+                headers: { 'Authorization': `Bearer ${token}` }
             })
 
             const ProfileData = await profile.json()
@@ -76,15 +78,15 @@ const login = async() =>{
             }else{
                 window.location.href = '../Employer/setUpProfile.html'
             }
-        }else if(data.role === 'job_seeker'){
-            window.location.href = '../forgetPassword.html'
-        }else if(data.role === 'admin'){
-            window.location.href = '../Admin/adminOverviewDashboard.html'
-        }
+            } else if(role === 'job_seeker'){
+                window.location.href = '../Job Seeker/jobs.html'
+            } else if(role === 'admin'){
+                window.location.href = '../Admin/adminOverviewDashboard.html'
+            }
     }else{
         localStorage.removeItem('token')
         localStorage.removeItem('role')
-        showToast(data.message)
+        showToast(result.message)
     }
     }catch(error){
         showToast('Something went wrong')
