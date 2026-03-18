@@ -47,7 +47,7 @@ describe('PendingApplication',()=>{
         .field({address: "any Address"})
         console.log(res.body)
         expect(res.status).toBe(201)
-        expect(res.body.message).toBe("Application submitted")
+        expect(res.body.message).toBe('Your application has been submitted successfully. We will review it and get back to you.')
         applicationId = res.body.data.id
     })
 
