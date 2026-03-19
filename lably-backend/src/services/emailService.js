@@ -5,7 +5,7 @@ const client = new BrevoClient({
 })
 
 const sendActivationEmail = async (toEmail, activationToken) => {
-  const activationLink = `${process.env.FRONTEND_URL}/activate?token=${activationToken}`
+  const activationLink = `${process.env.FRONTEND_URL}?token=${activationToken}`
 
   try {
     const response = await client.transactionalEmails.sendTransacEmail({
