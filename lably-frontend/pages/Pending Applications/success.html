@@ -6,15 +6,18 @@
     <title>Lably — Application Submitted</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'DM Sans', sans-serif; }
+        * { font-family: 'Urbanist', sans-serif; }
+
+        ::-webkit-scrollbar { display: none; }
+        * { scrollbar-width: none; -ms-overflow-style: none; }
 
         .step-pill {
             display: flex; align-items: center; gap: 10px;
-            background: #F5F6F8; border: 1px solid #E4E5E8;
+            background: #f7fafe; border: 1px solid #e5e7eb;
             border-radius: 40px; padding: 10px 18px 10px 10px;
         }
         .step-num {
@@ -24,88 +27,80 @@
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
-
         .step-connector {
-            width: 1px; height: 20px; background: #E4E5E8; margin: 0 auto;
+            width: 1px; height: 20px; background: #e5e7eb; margin: 0 auto;
         }
     </style>
 </head>
-<body class="bg-[#F5F6F8] text-[#0D1B2A] min-h-screen flex flex-col">
+<body class="bg-[#f7fafe] text-[#0D1B2A] min-h-screen flex flex-col">
 
-
-<header class="bg-white border-b border-[#E4E5E8] h-16 flex items-center justify-between px-6 sticky top-0 z-40">
+<!-- HEADER -->
+<header class="bg-white border-b border-gray-100 h-[70px] flex items-center justify-between px-[7%] sticky top-0 z-40">
     <a href="../../index.html" class="flex items-center gap-2 no-underline">
-        <i class="fa-solid fa-tooth text-[#16a34a] text-xl"></i>
-        <span class="font-['DM_Serif_Display'] text-xl text-[#0D1B2A] tracking-tight">Lably</span>
+        <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+        <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
     </a>
-    <div class="flex items-center gap-3">
-        <a href="../Auth/login.html" class="flex items-center gap-2 border border-[#E4E5E8] text-[#0D1B2A] text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#F5F6F8] transition no-underline">
-            <i class="fa-regular fa-user text-xs"></i> Sign In
-        </a>
-    </div>
+    <a href="../Auth/login.html" class="flex items-center gap-2 border-2 border-gray-200 text-[#0D1B2A] text-sm font-bold px-4 py-2 rounded-xl hover:border-[#16a34a] hover:text-[#16a34a] transition no-underline">
+        <i class="fa-regular fa-user text-xs"></i> Sign In
+    </a>
 </header>
 
-<!-- ── MAIN ── -->
+<!-- MAIN -->
 <main class="flex-1 flex items-center justify-center px-4 py-16">
     <div class="w-full max-w-lg">
 
-        <!-- Card -->
-        <div class="bg-white rounded-2xl border border-[#E4E5E8] shadow-sm overflow-hidden">
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
 
-            <!-- Green top accent bar -->
             <div class="h-1.5 w-full bg-gradient-to-r from-[#16a34a] via-[#22c55e] to-[#86efac]"></div>
 
             <div class="px-10 pt-10 pb-8 text-center">
 
-                <!-- Static check icon -->
+                <!-- Icon -->
                 <div class="inline-flex items-center justify-center mb-6">
                     <div class="w-20 h-20 rounded-full bg-[#F0FDF4] border-2 border-green-200 flex items-center justify-center">
                         <i class="fa-solid fa-check text-[#16a34a] text-3xl"></i>
                     </div>
                 </div>
 
-                <!-- Headline -->
                 <h1 class="font-['DM_Serif_Display'] text-[26px] text-[#0D1B2A] leading-snug mb-2">
                     Application Submitted!
                 </h1>
 
-                <!-- Sub copy -->
-                <p class="text-sm text-[#767F8C] leading-relaxed max-w-sm mx-auto mb-1">
+                <p class="text-sm text-gray-400 font-medium leading-relaxed max-w-sm mx-auto mb-1">
                     We've received your application and our team will carefully review it.
                 </p>
-                <p class="text-sm text-[#767F8C] leading-relaxed max-w-sm mx-auto">
+                <p class="text-sm text-gray-400 font-medium leading-relaxed max-w-sm mx-auto">
                     We'll be in touch with a decision — keep an eye on your inbox!
                 </p>
 
-                <!-- Divider -->
-                <div class="border-t border-[#F5F6F8] my-7"></div>
+                <div class="border-t border-gray-50 my-7"></div>
 
                 <!-- What happens next -->
                 <div class="text-left mb-7">
-                    <p class="text-xs font-bold text-[#b0b7c3] tracking-[.12em] uppercase mb-4">What happens next</p>
+                    <p class="text-xs font-bold text-gray-300 tracking-[.12em] uppercase mb-4">What happens next</p>
 
                     <div class="space-y-1">
                         <div class="step-pill">
                             <div class="step-num">1</div>
                             <div>
-                                <p class="text-sm font-semibold text-[#0D1B2A]">Application Review</p>
-                                <p class="text-xs text-[#767F8C]">Our team reviews your profile & documents</p>
+                                <p class="text-sm font-bold text-[#0D1B2A]">Application Review</p>
+                                <p class="text-xs text-gray-400 font-medium">Our team reviews your profile & documents</p>
                             </div>
                         </div>
                         <div class="step-connector"></div>
                         <div class="step-pill">
                             <div class="step-num">2</div>
                             <div>
-                                <p class="text-sm font-semibold text-[#0D1B2A]">Initial Contact</p>
-                                <p class="text-xs text-[#767F8C]">Shortlisted candidates hear back within 5–7 days</p>
+                                <p class="text-sm font-bold text-[#0D1B2A]">Initial Contact</p>
+                                <p class="text-xs text-gray-400 font-medium">Shortlisted candidates hear back within 5–7 days</p>
                             </div>
                         </div>
                         <div class="step-connector"></div>
                         <div class="step-pill">
                             <div class="step-num">3</div>
                             <div>
-                                <p class="text-sm font-semibold text-[#0D1B2A]">Final Decision</p>
-                                <p class="text-xs text-[#767F8C]">We'll notify you of the outcome by email</p>
+                                <p class="text-sm font-bold text-[#0D1B2A]">Final Decision</p>
+                                <p class="text-xs text-gray-400 font-medium">We'll notify you of the outcome by email</p>
                             </div>
                         </div>
                     </div>
@@ -114,17 +109,17 @@
                 <!-- Info note -->
                 <div class="flex items-start gap-3 bg-[#F0FDF4] border border-green-100 rounded-xl px-4 py-3 text-left mb-7">
                     <i class="fa-solid fa-circle-info text-[#16a34a] text-sm mt-0.5 shrink-0"></i>
-                    <p class="text-xs text-[#3f6b4a] leading-relaxed">
-                       Once your application is reviewed and approved, you'll receive an email with an activation link to set up your account and get started.
+                    <p class="text-xs text-[#3f6b4a] font-medium leading-relaxed">
+                        Once your application is reviewed and approved, you'll receive an email with an activation link to set up your account and get started.
                     </p>
                 </div>
 
-                <!-- CTA buttons -->
+                <!-- CTAs -->
                 <div class="flex flex-col sm:flex-row gap-3">
-                    <a href="../../index.html" class="flex-1 flex items-center justify-center gap-2 border border-[#E4E5E8] text-[#0D1B2A] text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-[#F5F6F8] transition no-underline">
+                    <a href="../../index.html" class="flex-1 flex items-center justify-center gap-2 border-2 border-gray-200 text-[#0D1B2A] text-sm font-bold px-4 py-2.5 rounded-xl hover:border-gray-300 transition no-underline">
                         <i class="fa-solid fa-house text-xs"></i> Go to Home
                     </a>
-                    <a href="../Auth/login.html" class="flex-1 flex items-center justify-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition no-underline">
+                    <a href="../Auth/login.html" class="flex-1 flex items-center justify-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white text-sm font-bold px-4 py-2.5 rounded-xl transition no-underline">
                         <i class="fa-regular fa-user text-xs"></i> Sign In
                     </a>
                 </div>
@@ -132,9 +127,8 @@
             </div>
         </div>
 
-        <!-- Small bottom note -->
-        <p class="text-center text-xs text-[#b0b7c3] mt-5">
-            Questions? <a href="mailto:support@lably.com" class="text-[#16a34a] hover:underline font-medium">support@lably.com</a>
+        <p class="text-center text-xs text-gray-300 font-medium mt-5">
+            Questions? <a href="mailto:support@lably.com" class="text-[#16a34a] hover:underline font-semibold">support@lably.com</a>
         </p>
 
     </div>
