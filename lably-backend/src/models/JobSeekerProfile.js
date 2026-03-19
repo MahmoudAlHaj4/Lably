@@ -16,7 +16,7 @@ const { randomUUID } = require('crypto')
 class JobSeekerProfile {
     static async create(userId , profileData){
         const id = randomUUID()
-        const query = `INSERT INTO job_seekers_profiles (id, user_id, full_name, phone, address, about, profile_image_path, job_title,  years_of_experience, linkedin_url) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`
+        const query = `INSERT INTO job_seekers_profiles (id, user_id, full_name, phone, address, about, profile_image_path, job_title,  years_of_experience) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`
 
         await pool.query(query, [
             id,
@@ -28,14 +28,13 @@ class JobSeekerProfile {
             profileData.profile_image_path || null,
              profileData.job_title || null,
             profileData.years_of_experience || null,
-            profileData.linkedin_url || null
         ])
 
         return {id, user_id: userId , ...profileData}
     }
 
     static async findByUserId(userId) {
-        const query = `SELECT id, user_id, full_name, phone,address, about, job_title, years_of_experience, linkedin_url  FROM job_seekers_profiles WHERE user_id= $1`
+        const query = `SELECT id, user_id, full_name, phone,address, about, job_title, years_of_experience  FROM job_seekers_profiles WHERE user_id= $1`
         const result = await pool.query(query , [userId])
         return result.rows[0]
     }
@@ -73,10 +72,6 @@ class JobSeekerProfile {
             values.push(profileData.years_of_experience)
             fields.push(`years_of_experience = $${values.length}`)
         }
-        if (profileData.linkedin_url) {
-            values.push(profileData.linkedin_url)
-            fields.push(`linkedin_url = $${values.length}`)
-        }
 
         values.push(userId)
         const query = `UPDATE job_seekers_profiles SET ${fields.join(', ')} WHERE user_id = $${values.length}`
@@ -87,7 +82,7 @@ class JobSeekerProfile {
     }
 
     static async findById(profileId) {
-        const query = `SELECT id, user_id, full_name, phone, address, about, job_title, years_of_experience, linkedin_url
+        const query = `SELECT id, user_id, full_name, phone, address, about, job_title, years_of_experience,
                     FROM job_seekers_profiles 
                     WHERE id = $1`
         const result = await pool.query(query, [profileId])
