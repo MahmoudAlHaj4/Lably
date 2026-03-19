@@ -140,6 +140,7 @@ const register = async () =>{
     if(res.ok){
         regError.style.color = 'green'
         regError.textContent = 'Account created Please Sign In'
+        showToast('Success')
         setTimeout(()=> {
             regError.style.color =''
             regError.textContent =''
