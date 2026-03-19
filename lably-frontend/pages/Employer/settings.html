@@ -6,31 +6,40 @@
   <title>Lably — Settings</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: 'DM Sans', sans-serif; }
+    * { font-family: 'Urbanist', sans-serif; }
 
-    /* ── Sidebar ── */
-    .sidebar-link { display: flex; align-items: center; gap: 12px; padding: 11px 16px; font-size: 14px; font-weight: 500; color: #767F8C; border-radius: 8px; cursor: pointer; transition: all .15s; text-decoration: none; }
-    .sidebar-link:hover { color: #0D1B2A; }
+    /* Hide scrollbar */
+    ::-webkit-scrollbar { display: none; }
+    * { scrollbar-width: none; -ms-overflow-style: none; }
+
+    .sidebar-link { display: flex; align-items: center; gap: 12px; padding: 10px 14px; font-size: 14px; font-weight: 600; color: #767F8C; border-radius: 10px; cursor: pointer; transition: all .15s; text-decoration: none; }
+    .sidebar-link:hover { color: #0D1B2A; background: #f7fafe; }
     .sidebar-link.active { color: #16a34a; background: #f0fdf4; }
     .sidebar-link .icon-wrap { width: 20px; display: flex; align-items: center; justify-content: center; }
+
+    /* Nav dropdown */
+    .dropdown-menu { display: none; position: absolute; right: 0; top: calc(100% + 8px); background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 6px; min-width: 200px; z-index: 99; box-shadow: 0 8px 24px rgba(0,0,0,0.09); }
+    .dropdown-menu.open { display: block; }
+    .drop-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; color: #0D1B2A; cursor: pointer; white-space: nowrap; text-decoration: none; }
+    .drop-item:hover { background: #f7fafe; }
+    .drop-item.red { color: #ef4444; }
+    .drop-item.red:hover { background: #fef2f2; }
 
     .tab-active   { color: #16a34a; border-bottom: 2px solid #16a34a; }
     .tab-inactive { color: #9ca3af; border-bottom: 2px solid transparent; }
     .tab-panel    { display: none; }
     .tab-panel.active { display: block; }
 
-
     .soft-input {
       width: 100%; padding: 11px 16px;
       border: 1px solid #e4e5e8; border-radius: 12px;
-      font-size: 14px; color: #0D1B2A;
-      background: #fff;
+      font-size: 14px; color: #0D1B2A; background: #fff;
       transition: border .2s, box-shadow .2s;
-      font-family: 'DM Sans', sans-serif; outline: none;
+      font-family: 'Urbanist', sans-serif; outline: none;
     }
     .soft-input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.08); }
     .soft-input::placeholder { color: #b0b7c3; }
@@ -41,133 +50,127 @@
       font-size: 14px; color: #0D1B2A;
       background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;
       transition: border .2s, box-shadow .2s;
-      font-family: 'DM Sans', sans-serif; outline: none; appearance: none;
+      font-family: 'Urbanist', sans-serif; outline: none; appearance: none;
     }
     .soft-select:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.08); }
 
-
-    .upload-zone {
-      background: #fff;
-      border: 2px dashed #d1d5db;
-      transition: all .2s;
-    }
+    .upload-zone { background: #fff; border: 2px dashed #d1d5db; transition: all .2s; }
     .upload-zone:hover { border-color: #16a34a; background: #f0fdf4; cursor: pointer; }
-
 
     [contenteditable][data-placeholder]:empty:before { content: attr(data-placeholder); color: #b0b7c3; pointer-events: none; }
     [contenteditable]:focus { outline: none; }
   </style>
 </head>
-<body class="bg-[#F5F6F8] text-[#0D1B2A]">
+<body class="bg-[#f7fafe] text-[#0D1B2A]">
 
-
-<header class="bg-white border-b border-[#E4E5E8] h-16 flex items-center justify-between px-6 sticky top-0 z-40">
-  <a href="../index.html" class="flex items-center gap-2 no-underline">
-    <i class="fa-solid fa-tooth text-[#16a34a] text-xl"></i>
-    <span class="font-['DM_Serif_Display'] text-xl text-[#0D1B2A] tracking-tight">Lably</span>
+<!-- NAV -->
+<header class="bg-white border-b border-gray-100 h-[70px] flex items-center justify-between px-[3%] sticky top-0 z-40">
+  <a href="../Employer/employerDashboard.html" class="flex items-center gap-2 no-underline">
+    <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+    <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
   </a>
-  <div class="flex items-center gap-3">
-    <button class="relative w-9 h-9 rounded-lg border border-[#E4E5E8] flex items-center justify-center text-[#767F8C] hover:text-[#0D1B2A] bg-white transition">
-      <i class="fa-regular fa-bell text-sm"></i>
-      <span class="absolute -top-1 -right-1 w-[18px] h-[18px] bg-[#16a34a] text-white text-[10px] font-bold rounded-full flex items-center justify-center">2</span>
+  <div class="relative">
+    <button onclick="toggleNavDd(event)" class="flex items-center gap-2.5 pl-1 pr-3 py-1 rounded-xl hover:bg-gray-50 border-2 border-transparent hover:border-gray-100 transition-all duration-200">
+      <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center shrink-0">
+        <span class="text-sm font-extrabold text-[#16a34a]">B</span>
+      </div>
+      <div class="text-left hidden sm:block">
+        <p class="text-sm font-extrabold text-[#0D1B2A] leading-none" id="company-name-nav">My Company</p>
+        <p class="text-xs text-gray-400 font-medium mt-0.5">Employer</p>
+      </div>
+      <i class="fa-solid fa-chevron-down text-gray-400 text-xs ml-1" id="nav-chevron"></i>
     </button>
-    <a href="./post-job.html" class="flex items-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white text-sm font-semibold px-4 py-2 rounded-lg transition no-underline">
-      <i class="fa-solid fa-plus text-xs"></i> Post A Job
-    </a>
-    <div class="w-9 h-9 rounded-full bg-green-100 border-2 border-green-200 flex items-center justify-center text-[#16a34a] font-bold text-sm cursor-pointer select-none">B</div>
+    <div id="nav-dropdown" class="dropdown-menu">
+      <div class="px-3 py-2.5 border-b border-gray-50 mb-1">
+        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Employer Account</p>
+      </div>
+      <a href="./employerDashboard.html" class="drop-item"><i class="fa-solid fa-layer-group text-gray-300 w-4 text-center"></i> Overview</a>
+      <a href="./postAJob.html" class="drop-item"><i class="fa-regular fa-plus-square text-gray-300 w-4 text-center"></i> Post a Job</a>
+      <a href="./employerJob.html" class="drop-item"><i class="fa-regular fa-rectangle-list text-gray-300 w-4 text-center"></i> My Jobs</a>
+      <a href="./applications.html" class="drop-item"><i class="fa-regular fa-file-lines text-gray-300 w-4 text-center"></i> Applications</a>
+      <div class="border-t border-gray-50 mt-1 pt-1">
+        <a href="#" class="drop-item red"><i class="fa-solid fa-right-from-bracket w-4 text-center"></i> Sign Out</a>
+      </div>
+    </div>
   </div>
 </header>
 
-<div class="flex min-h-[calc(100vh-64px)]">
+<div class="flex min-h-[calc(100vh-70px)]">
 
-  <!-- ── SIDEBAR ── -->
-  <aside class="w-[240px] shrink-0 bg-white border-r border-[#E4E5E8] flex flex-col justify-between sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
+  <!-- SIDEBAR -->
+  <aside class="w-[220px] shrink-0 bg-white border-r border-gray-100 flex flex-col justify-between sticky top-[70px] h-[calc(100vh-70px)] overflow-y-auto">
     <div class="py-5 px-3">
-      <p class="text-[10px] font-bold text-[#b0b7c3] tracking-[.12em] uppercase px-3 mb-3">Employers Dashboard</p>
+      <p class="text-[10px] font-bold text-gray-300 tracking-[.12em] uppercase px-3 mb-3">Dashboard</p>
       <nav class="space-y-0.5">
-        <a href="./employerDashboard.html" class="sidebar-link">
-          <span class="icon-wrap"><i class="fa-solid fa-layer-group text-sm"></i></span> Overview
-        </a>
-        <a href="./post-job.html" class="sidebar-link">
-          <span class="icon-wrap"><i class="fa-regular fa-plus-square text-sm"></i></span> Post a Job
-        </a>
-        <a href="./my-jobs.html" class="sidebar-link">
-          <span class="icon-wrap"><i class="fa-regular fa-rectangle-list text-sm"></i></span> My Jobs
-        </a>
-        <a href="./applications.html" class="sidebar-link">
-          <span class="icon-wrap"><i class="fa-regular fa-file-lines text-sm"></i></span> Applications
-        </a>
-        <a href="./employer-settings.html" class="sidebar-link active">
-          <span class="icon-wrap"><i class="fa-solid fa-gear text-sm"></i></span> Settings
-        </a>
+        <a href="./employerDashboard.html" class="sidebar-link"><span class="icon-wrap"><i class="fa-solid fa-layer-group text-sm"></i></span> Overview</a>
+        <a href="./postAJob.html" class="sidebar-link"><span class="icon-wrap"><i class="fa-regular fa-plus-square text-sm"></i></span> Post a Job</a>
+        <a href="./employerJob.html" class="sidebar-link"><span class="icon-wrap"><i class="fa-regular fa-rectangle-list text-sm"></i></span> My Jobs</a>
+        <a href="./applications.html" class="sidebar-link"><span class="icon-wrap"><i class="fa-regular fa-file-lines text-sm"></i></span> Applications</a>
+        <a href="./settings.html" class="sidebar-link active"><span class="icon-wrap"><i class="fa-solid fa-gear text-sm"></i></span> Settings</a>
       </nav>
     </div>
-    <div class="px-3 pb-5 border-t border-[#F5F6F8] pt-4">
-      <a href="#" class="sidebar-link text-[#767F8C] hover:text-red-500" id="logoutBtn">
-        <span class="icon-wrap"><i class="fa-solid fa-arrow-right-from-bracket text-sm"></i></span> Log-out
+    <div class="px-3 pb-5 border-t border-gray-50 pt-4">
+      <a href="#" class="sidebar-link hover:text-red-400 hover:bg-red-50" id="logoutBtn">
+        <span class="icon-wrap"><i class="fa-solid fa-arrow-right-from-bracket text-sm"></i></span> Log out
       </a>
     </div>
   </aside>
 
-  <!-- ── MAIN ── -->
-  <main class="flex-1 p-8 overflow-y-auto">
+  <!-- MAIN -->
+  <main class="flex-1 p-8">
 
-    <!-- Page header -->
-    <div class="mb-6">
-      <h1 class="text-xl font-semibold text-[#0D1B2A]">Company Settings</h1>
-      <p class="text-sm text-[#767F8C] mt-0.5">Update your company profile information</p>
+    <div class="mb-8">
+      <h1 class="text-2xl font-extrabold text-[#0D1B2A]">Company Settings</h1>
+      <p class="text-sm text-gray-400 font-medium mt-0.5">Update your company profile information</p>
     </div>
 
-    <!-- Settings card -->
-    <div class="bg-white rounded-xl border border-[#E4E5E8] overflow-hidden">
+    <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
 
       <!-- Tabs -->
-      <div class="border-b border-[#E4E5E8] px-6">
+      <div class="border-b border-gray-100 px-7">
         <nav class="flex gap-8">
-          <button onclick="switchTab(0)" id="tab-0" class="flex items-center gap-2 py-4 text-sm font-medium tab-active transition-all whitespace-nowrap">
+          <button onclick="switchTab(0)" id="tab-0" class="flex items-center gap-2 py-4 text-sm font-bold tab-active transition-all whitespace-nowrap">
             <i class="fa-regular fa-building"></i> Company Info
           </button>
-          <button onclick="switchTab(1)" id="tab-1" class="flex items-center gap-2 py-4 text-sm font-medium tab-inactive transition-all whitespace-nowrap">
+          <button onclick="switchTab(1)" id="tab-1" class="flex items-center gap-2 py-4 text-sm font-bold tab-inactive transition-all whitespace-nowrap">
             <i class="fa-regular fa-file-lines"></i> Founding Info
           </button>
-          <button onclick="switchTab(2)" id="tab-2" class="flex items-center gap-2 py-4 text-sm font-medium tab-inactive transition-all whitespace-nowrap">
+          <button onclick="switchTab(2)" id="tab-2" class="flex items-center gap-2 py-4 text-sm font-bold tab-inactive transition-all whitespace-nowrap">
             <i class="fa-solid fa-globe"></i> Social Media
           </button>
-          <button onclick="switchTab(3)" id="tab-3" class="flex items-center gap-2 py-4 text-sm font-medium tab-inactive transition-all whitespace-nowrap">
+          <button onclick="switchTab(3)" id="tab-3" class="flex items-center gap-2 py-4 text-sm font-bold tab-inactive transition-all whitespace-nowrap">
             <i class="fa-regular fa-envelope"></i> Contact
           </button>
         </nav>
       </div>
 
-      <!-- Tab panels -->
-      <div class="p-6">
+      <!-- Panels -->
+      <div class="p-7">
 
         <!-- TAB 0: Company Info -->
         <div id="panel-0" class="tab-panel active">
-          <h2 class="text-sm font-semibold text-[#0D1B2A] mb-4">Logo & Banner Image</h2>
+          <h2 class="text-sm font-extrabold text-[#0D1B2A] mb-4">Logo & Banner Image</h2>
           <div class="grid grid-cols-2 gap-4 mb-6">
-            <!-- Logo -->
             <div>
-              <p class="text-sm text-[#767F8C] mb-2">Company Logo</p>
+              <p class="text-sm text-gray-400 font-medium mb-2">Company Logo</p>
               <label class="upload-zone rounded-2xl flex flex-col items-center justify-center h-44 block overflow-hidden">
                 <input type="file" class="hidden" accept="image/*" onchange="previewImg(event,'logoPreview','logoPlaceholder')" id="logoInput"/>
                 <div id="logoPlaceholder" class="flex flex-col items-center gap-2 text-center px-4">
                   <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-300"></i>
-                  <p class="text-sm text-[#0D1B2A]"><span class="font-semibold">Browse photo</span> or drop here</p>
-                  <p class="text-xs text-[#767F8C]">A photo larger than 400px works best. Max 2 MB.</p>
+                  <p class="text-sm text-[#0D1B2A]"><span class="font-bold">Browse photo</span> or drop here</p>
+                  <p class="text-xs text-gray-400">A photo larger than 400px works best. Max 2 MB.</p>
                 </div>
                 <img id="logoPreview" class="hidden max-h-36 object-contain rounded-xl"/>
               </label>
             </div>
-            <!-- Banner -->
             <div>
-              <p class="text-sm text-[#767F8C] mb-2">Banner Image</p>
+              <p class="text-sm text-gray-400 font-medium mb-2">Banner Image</p>
               <label class="upload-zone rounded-2xl flex flex-col items-center justify-center h-44 block overflow-hidden">
                 <input id="bannerInput" type="file" class="hidden" accept="image/jpeg,image/png" onchange="previewImg(event,'bannerPreview','bannerPlaceholder')"/>
                 <div id="bannerPlaceholder" class="flex flex-col items-center gap-2 text-center px-4">
                   <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-300"></i>
-                  <p class="text-sm text-[#0D1B2A]"><span class="font-semibold">Browse photo</span> or drop here</p>
-                  <p class="text-xs text-[#767F8C]">Optimal 1520×400. JPEG, PNG. Max 5 MB.</p>
+                  <p class="text-sm text-[#0D1B2A]"><span class="font-bold">Browse photo</span> or drop here</p>
+                  <p class="text-xs text-gray-400">Optimal 1520×400. JPEG, PNG. Max 5 MB.</p>
                 </div>
                 <img id="bannerPreview" class="hidden max-h-36 w-full object-cover rounded-xl"/>
               </label>
@@ -175,22 +178,22 @@
           </div>
 
           <div class="mb-5">
-            <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Company Name</label>
+            <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Company Name</label>
             <input id="companyName" type="text" placeholder="e.g. Bright Smile Dental Lab" class="soft-input"/>
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">About Us</label>
+            <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">About Us</label>
             <div class="border border-[#e4e5e8] rounded-2xl overflow-hidden bg-white focus-within:border-[#16a34a] focus-within:ring-2 focus-within:ring-[#16a34a]/10 transition-all">
               <div id="aboutUs" contenteditable="true" data-placeholder="Write down about your company here..." class="min-h-[96px] px-4 py-3 text-sm text-[#0D1B2A]"></div>
-              <div class="flex items-center gap-1 px-3 py-2 border-t border-[#f0f0f0] bg-gray-50">
-                <button onclick="execCmd('bold')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-bold text-xs"></i></button>
-                <button onclick="execCmd('italic')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-italic text-xs"></i></button>
-                <button onclick="execCmd('underline')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-underline text-xs"></i></button>
-                <button onclick="execCmd('strikeThrough')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-strikethrough text-xs"></i></button>
+              <div class="flex items-center gap-1 px-3 py-2 border-t border-gray-50 bg-gray-50/60">
+                <button onclick="execCmd('bold')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-bold text-xs"></i></button>
+                <button onclick="execCmd('italic')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-italic text-xs"></i></button>
+                <button onclick="execCmd('underline')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-underline text-xs"></i></button>
+                <button onclick="execCmd('strikeThrough')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-strikethrough text-xs"></i></button>
                 <div class="w-px h-4 bg-gray-200 mx-1"></div>
-                <button onclick="execCmd('insertUnorderedList')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-list-ul text-xs"></i></button>
-                <button onclick="execCmd('insertOrderedList')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-list-ol text-xs"></i></button>
+                <button onclick="execCmd('insertUnorderedList')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-list-ul text-xs"></i></button>
+                <button onclick="execCmd('insertOrderedList')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-list-ol text-xs"></i></button>
               </div>
             </div>
           </div>
@@ -200,7 +203,7 @@
         <div id="panel-1" class="tab-panel">
           <div class="grid grid-cols-3 gap-4 mb-5">
             <div>
-              <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Organization Type</label>
+              <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Organization Type</label>
               <select class="soft-select" id="organizationType">
                 <option value="">Select...</option>
                 <option value="dental_lab">Dental Laboratory</option>
@@ -208,7 +211,7 @@
               </select>
             </div>
             <div>
-              <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Industry Type</label>
+              <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Industry Type</label>
               <select class="soft-select" id="industryType">
                 <option value="">Select...</option>
                 <option value="dental_tech">Dental Technology</option>
@@ -217,7 +220,7 @@
               </select>
             </div>
             <div>
-              <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Team Size</label>
+              <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Team Size</label>
               <select class="soft-select" id="teamSize">
                 <option value="">Select...</option>
                 <option value="1-10">1 - 10</option>
@@ -229,29 +232,29 @@
           </div>
           <div class="grid grid-cols-2 gap-4 mb-5">
             <div>
-              <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Year of Establishment</label>
+              <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Year of Establishment</label>
               <input type="number" class="soft-input" id="yearEstablished" placeholder="e.g. 2010"/>
             </div>
             <div>
-              <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Company Website</label>
+              <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Company Website</label>
               <div class="flex border border-[#e4e5e8] rounded-xl overflow-hidden bg-white focus-within:border-[#16a34a] focus-within:ring-2 focus-within:ring-[#16a34a]/10 transition-all">
                 <span class="px-3 flex items-center text-[#16a34a] border-r border-[#e4e5e8]"><i class="fa-solid fa-link text-sm"></i></span>
-                <input id="website" type="text" placeholder="https://yourcompany.com" class="flex-1 px-3 py-3 text-sm bg-transparent focus:outline-none text-[#0D1B2A] placeholder-[#b0b7c3]" style="font-family:'DM Sans',sans-serif"/>
+                <input id="website" type="text" placeholder="https://yourcompany.com" class="flex-1 px-3 py-3 text-sm bg-transparent focus:outline-none text-[#0D1B2A] placeholder-[#b0b7c3]"/>
               </div>
             </div>
           </div>
           <div>
-            <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Company Vision</label>
+            <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Company Vision</label>
             <div class="border border-[#e4e5e8] rounded-2xl overflow-hidden bg-white focus-within:border-[#16a34a] focus-within:ring-2 focus-within:ring-[#16a34a]/10 transition-all">
               <div id="companyVision" contenteditable="true" data-placeholder="Tell us about your company vision..." class="min-h-[96px] px-4 py-3 text-sm text-[#0D1B2A]"></div>
-              <div class="flex items-center gap-1 px-3 py-2 border-t border-[#f0f0f0] bg-gray-50">
-                <button onclick="execCmd('bold')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-bold text-xs"></i></button>
-                <button onclick="execCmd('italic')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-italic text-xs"></i></button>
-                <button onclick="execCmd('underline')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-underline text-xs"></i></button>
-                <button onclick="execCmd('strikeThrough')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-strikethrough text-xs"></i></button>
+              <div class="flex items-center gap-1 px-3 py-2 border-t border-gray-50 bg-gray-50/60">
+                <button onclick="execCmd('bold')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-bold text-xs"></i></button>
+                <button onclick="execCmd('italic')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-italic text-xs"></i></button>
+                <button onclick="execCmd('underline')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-underline text-xs"></i></button>
+                <button onclick="execCmd('strikeThrough')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-strikethrough text-xs"></i></button>
                 <div class="w-px h-4 bg-gray-200 mx-1"></div>
-                <button onclick="execCmd('insertUnorderedList')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-list-ul text-xs"></i></button>
-                <button onclick="execCmd('insertOrderedList')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-500"><i class="fa-solid fa-list-ol text-xs"></i></button>
+                <button onclick="execCmd('insertUnorderedList')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-list-ul text-xs"></i></button>
+                <button onclick="execCmd('insertOrderedList')" class="p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-list-ol text-xs"></i></button>
               </div>
             </div>
           </div>
@@ -263,30 +266,30 @@
             <div class="flex items-center border border-[#e4e5e8] rounded-xl overflow-hidden bg-white focus-within:border-[#16a34a] focus-within:ring-2 focus-within:ring-[#16a34a]/10 transition-all">
               <div class="flex items-center gap-2 px-4 py-3 border-r border-[#e4e5e8] bg-gray-50 min-w-[140px]">
                 <i class="fa-brands fa-linkedin text-[#0A66C2]"></i>
-                <span class="text-sm font-medium text-[#0D1B2A]">LinkedIn</span>
+                <span class="text-sm font-semibold text-[#0D1B2A]">LinkedIn</span>
               </div>
-              <input id="linkedinUrl" type="text" placeholder="linkedin.com/company/yourlab" class="flex-1 px-4 py-3 text-sm bg-transparent focus:outline-none placeholder-[#b0b7c3] text-[#0D1B2A]" style="font-family:'DM Sans',sans-serif"/>
+              <input id="linkedinUrl" type="text" placeholder="linkedin.com/company/yourlab" class="flex-1 px-4 py-3 text-sm bg-transparent focus:outline-none placeholder-[#b0b7c3] text-[#0D1B2A]"/>
             </div>
             <div class="flex items-center border border-[#e4e5e8] rounded-xl overflow-hidden bg-white focus-within:border-[#16a34a] focus-within:ring-2 focus-within:ring-[#16a34a]/10 transition-all">
               <div class="flex items-center gap-2 px-4 py-3 border-r border-[#e4e5e8] bg-gray-50 min-w-[140px]">
                 <i class="fa-brands fa-instagram text-[#E1306C]"></i>
-                <span class="text-sm font-medium text-[#0D1B2A]">Instagram</span>
+                <span class="text-sm font-semibold text-[#0D1B2A]">Instagram</span>
               </div>
-              <input id="instagramUrl" type="text" placeholder="instagram.com/yourlab" class="flex-1 px-4 py-3 text-sm bg-transparent focus:outline-none placeholder-[#b0b7c3] text-[#0D1B2A]" style="font-family:'DM Sans',sans-serif"/>
+              <input id="instagramUrl" type="text" placeholder="instagram.com/yourlab" class="flex-1 px-4 py-3 text-sm bg-transparent focus:outline-none placeholder-[#b0b7c3] text-[#0D1B2A]"/>
             </div>
             <div class="flex items-center border border-[#e4e5e8] rounded-xl overflow-hidden bg-white focus-within:border-[#16a34a] focus-within:ring-2 focus-within:ring-[#16a34a]/10 transition-all">
               <div class="flex items-center gap-2 px-4 py-3 border-r border-[#e4e5e8] bg-gray-50 min-w-[140px]">
                 <i class="fa-brands fa-facebook text-[#1877F2]"></i>
-                <span class="text-sm font-medium text-[#0D1B2A]">Facebook</span>
+                <span class="text-sm font-semibold text-[#0D1B2A]">Facebook</span>
               </div>
-              <input id="facebookUrl" type="text" placeholder="facebook.com/yourlab" class="flex-1 px-4 py-3 text-sm bg-transparent focus:outline-none placeholder-[#b0b7c3] text-[#0D1B2A]" style="font-family:'DM Sans',sans-serif"/>
+              <input id="facebookUrl" type="text" placeholder="facebook.com/yourlab" class="flex-1 px-4 py-3 text-sm bg-transparent focus:outline-none placeholder-[#b0b7c3] text-[#0D1B2A]"/>
             </div>
             <div class="flex items-center border border-[#e4e5e8] rounded-xl overflow-hidden bg-white focus-within:border-[#16a34a] focus-within:ring-2 focus-within:ring-[#16a34a]/10 transition-all">
               <div class="flex items-center gap-2 px-4 py-3 border-r border-[#e4e5e8] bg-gray-50 min-w-[140px]">
                 <i class="fa-brands fa-x-twitter text-[#0D1B2A]"></i>
-                <span class="text-sm font-medium text-[#0D1B2A]">Twitter / X</span>
+                <span class="text-sm font-semibold text-[#0D1B2A]">Twitter / X</span>
               </div>
-              <input id="twitterUrl" type="text" placeholder="twitter.com/yourlab" class="flex-1 px-4 py-3 text-sm bg-transparent focus:outline-none placeholder-[#b0b7c3] text-[#0D1B2A]" style="font-family:'DM Sans',sans-serif"/>
+              <input id="twitterUrl" type="text" placeholder="twitter.com/yourlab" class="flex-1 px-4 py-3 text-sm bg-transparent focus:outline-none placeholder-[#b0b7c3] text-[#0D1B2A]"/>
             </div>
           </div>
         </div>
@@ -295,25 +298,25 @@
         <div id="panel-3" class="tab-panel">
           <div class="space-y-5">
             <div>
-              <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Contact Email</label>
+              <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Contact Email</label>
               <input id="contactEmail" type="email" placeholder="contact@yourcompany.com" class="soft-input"/>
             </div>
             <div>
-              <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Phone Number</label>
+              <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Phone Number</label>
               <input id="contactPhone" type="tel" placeholder="+1 (555) 000-0000" class="soft-input"/>
             </div>
             <div>
-              <label class="block text-sm font-medium text-[#0D1B2A] mb-1.5">Location / Address</label>
+              <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Location / Address</label>
               <input id="address" type="text" placeholder="123 Main St, City, Country" class="soft-input"/>
             </div>
           </div>
         </div>
 
-        <!-- ── Save button row ── -->
-        <div class="flex items-center justify-between mt-8 pt-6 border-t border-[#F5F6F8]">
-          <p class="text-xs text-[#b0b7c3]" id="saveStatus"></p>
+        <!-- Save row -->
+        <div class="flex items-center justify-between mt-8 pt-6 border-t border-gray-50">
+          <p class="text-xs text-gray-300 font-medium" id="saveStatus"></p>
           <button id="saveBtn" onclick="saveSettings()"
-            class="flex items-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm">
+            class="flex items-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold px-6 py-2.5 rounded-xl transition text-sm">
             <i class="fa-solid fa-floppy-disk text-xs"></i>
             <span id="saveBtnText">Save Changes</span>
           </button>
@@ -329,7 +332,18 @@
 <script src="../../scripts/utils/toast.js"></script>
 <script src="../../scripts/utils/helpers.js"></script>
 <script src="../../scripts/Employer/settings.js"></script>
+<script>
+  function toggleNavDd(e) {
+    e.stopPropagation()
+    document.getElementById('nav-dropdown').classList.toggle('open')
+    document.getElementById('nav-chevron').classList.toggle('rotate-180')
+  }
+  document.addEventListener('click', () => {
+    document.getElementById('nav-dropdown').classList.remove('open')
+    document.getElementById('nav-chevron').classList.remove('rotate-180')
+  })
 
+  function execCmd(cmd) { document.execCommand(cmd, false, null) }
 </script>
 </body>
 </html>
