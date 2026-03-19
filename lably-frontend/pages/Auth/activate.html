@@ -6,11 +6,14 @@
     <title>Lably — Activate Your Account</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'DM Sans', sans-serif; }
+        * { font-family: 'Urbanist', sans-serif; }
+
+        ::-webkit-scrollbar { display: none; }
+        * { scrollbar-width: none; -ms-overflow-style: none; }
 
         .input-field {
             width: 100%;
@@ -18,7 +21,7 @@
             border-radius: 10px;
             padding: 10px 14px 10px 40px;
             font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Urbanist', sans-serif;
             color: #0D1B2A;
             background: #FAFAFA;
             outline: none;
@@ -34,173 +37,111 @@
             box-shadow: 0 0 0 3px rgba(239,68,68,0.08);
         }
 
-        .input-wrapper {
-            position: relative;
-        }
+        .input-wrapper { position: relative; }
         .input-icon {
-            position: absolute;
-            left: 13px;
-            top: 50%;
+            position: absolute; left: 13px; top: 50%;
             transform: translateY(-50%);
-            color: #b0b7c3;
-            font-size: 13px;
-            pointer-events: none;
+            color: #b0b7c3; font-size: 13px; pointer-events: none;
         }
         .toggle-password {
-            position: absolute;
-            right: 13px;
-            top: 50%;
+            position: absolute; right: 13px; top: 50%;
             transform: translateY(-50%);
-            color: #b0b7c3;
-            font-size: 13px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-            transition: color 0.2s;
+            color: #b0b7c3; font-size: 13px; cursor: pointer;
+            background: none; border: none; padding: 0; transition: color 0.2s;
         }
         .toggle-password:hover { color: #16a34a; }
 
-        .strength-bar {
-            height: 4px;
-            border-radius: 2px;
-            background: #E4E5E8;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-        .strength-fill {
-            height: 100%;
-            border-radius: 2px;
-            transition: width 0.4s ease, background-color 0.4s ease;
-            width: 0%;
-        }
+        .strength-bar { height: 4px; border-radius: 2px; background: #E4E5E8; overflow: hidden; transition: all 0.3s; }
+        .strength-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease, background-color 0.4s ease; width: 0%; }
 
         .btn-primary {
-            width: 100%;
-            background: #16a34a;
-            color: white;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 11px 24px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            font-family: 'DM Sans', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            width: 100%; background: #16a34a; color: white;
+            font-size: 14px; font-weight: 700;
+            padding: 11px 24px; border-radius: 10px; border: none;
+            cursor: pointer; transition: background 0.2s, transform 0.1s;
+            font-family: 'Urbanist', sans-serif;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        
         .btn-primary:hover { background: #15803d; }
         .btn-primary:active { transform: scale(0.99); }
         .btn-primary:disabled { background: #86efac; cursor: not-allowed; }
 
-        /* Token error state */
-        #error-state { display: none; }
+        #error-state   { display: none; }
         #success-state { display: none; }
-        #form-state { display: block; }
+        #form-state    { display: block; }
     </style>
 </head>
-<body class="bg-[#F5F6F8] text-[#0D1B2A] min-h-screen flex flex-col">
+<body class="bg-[#f7fafe] text-[#0D1B2A] min-h-screen flex flex-col">
 
 <!-- HEADER -->
-<header class="bg-white border-b border-[#E4E5E8] h-16 flex items-center justify-between px-6 sticky top-0 z-40">
+<header class="bg-white border-b border-gray-100 h-[70px] flex items-center justify-between px-[7%] sticky top-0 z-40">
     <a href="../../index.html" class="flex items-center gap-2 no-underline">
-        <i class="fa-solid fa-tooth text-[#16a34a] text-xl"></i>
-        <span class="font-['DM_Serif_Display'] text-xl text-[#0D1B2A] tracking-tight">Lably</span>
+        <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+        <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
     </a>
-    <div class="flex items-center gap-3">
-        <a href="../Auth/login.html" class="flex items-center gap-2 border border-[#E4E5E8] text-[#0D1B2A] text-sm font-semibold px-4 py-2 rounded-lg hover:bg-[#F5F6F8] transition no-underline">
-            <i class="fa-regular fa-user text-xs"></i> Sign In
-        </a>
-    </div>
+    <a href="../Auth/login.html" class="flex items-center gap-2 border-2 border-gray-200 text-[#0D1B2A] text-sm font-bold px-4 py-2 rounded-xl hover:border-[#16a34a] hover:text-[#16a34a] transition no-underline">
+        <i class="fa-regular fa-user text-xs"></i> Sign In
+    </a>
 </header>
 
 <!-- MAIN -->
 <main class="flex-1 flex items-center justify-center px-4 py-16">
     <div class="w-full max-w-lg">
 
-        <!-- ── FORM STATE ── -->
+        <!-- FORM STATE -->
         <div id="form-state">
-            <div class="bg-white rounded-2xl border border-[#E4E5E8] shadow-sm overflow-hidden">
-
-                <!-- Green top accent bar -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                 <div class="h-1.5 w-full bg-gradient-to-r from-[#16a34a] via-[#22c55e] to-[#86efac]"></div>
-
                 <div class="px-10 pt-10 pb-8">
 
-                    <!-- Icon -->
                     <div class="flex justify-center mb-6">
                         <div class="w-20 h-20 rounded-full bg-[#F0FDF4] border-2 border-green-200 flex items-center justify-center">
                             <i class="fa-solid fa-lock-open text-[#16a34a] text-3xl"></i>
                         </div>
                     </div>
 
-                    <!-- Headline -->
                     <div class="text-center mb-7">
                         <h1 class="font-['DM_Serif_Display'] text-[26px] text-[#0D1B2A] leading-snug mb-2">
                             Activate Your Account
                         </h1>
-                        <p class="text-sm text-[#767F8C] leading-relaxed max-w-sm mx-auto">
+                        <p class="text-sm text-gray-400 font-medium leading-relaxed max-w-sm mx-auto">
                             You're almost there! Set a secure password to complete your account setup.
                         </p>
                     </div>
 
-                    <!-- Divider -->
-                    <div class="border-t border-[#F5F6F8] mb-7"></div>
+                    <div class="border-t border-gray-50 mb-7"></div>
 
-                    <!-- Form -->
                     <div class="space-y-5">
 
-                        <!-- Password field -->
+                        <!-- Password -->
                         <div>
-                            <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">
-                                New Password
-                            </label>
+                            <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">New Password</label>
                             <div class="input-wrapper">
                                 <i class="fa-solid fa-lock input-icon"></i>
-                                <input type="password" id="password" class="input-field" placeholder="Create a strong password"  />
-                                <!-- <button class="toggle-password" onclick="toggleVisibility('password', 'eye1')" type="button">
-                                    <i class="fa-regular fa-eye" id="eye1"></i>
-                                </button> -->
+                                <input type="password" id="password" class="input-field" placeholder="Create a strong password"/>
                             </div>
-
-                            <!-- Strength bar -->
                             <div class="mt-2 space-y-1.5">
-                                <div class="flex gap-1.5">
-                                    <div class="strength-bar flex-1"><div class="strength-fill" id="bar1"></div></div>
-                                    <div class="strength-bar flex-1"><div class="strength-fill" id="bar2"></div></div>
-                                    <div class="strength-bar flex-1"><div class="strength-fill" id="bar3"></div></div>
-                                    <div class="strength-bar flex-1"><div class="strength-fill" id="bar4"></div></div>
-                                </div>
-                                <p class="text-xs text-[#b0b7c3]" id="strength-label">Use 8+ characters with letters, numbers & symbols</p>
+
+                                <p class="text-xs text-gray-300 font-medium" id="strength-label">Use 8+ characters with letters, numbers & symbols</p>
                             </div>
                         </div>
 
                         <!-- Confirm password -->
                         <div>
-                            <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">
-                                Confirm Password
-                            </label>
+                            <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Confirm Password</label>
                             <div class="input-wrapper">
                                 <i class="fa-solid fa-lock input-icon"></i>
-                                <input type="password" id="confirm-password" class="input-field" placeholder="Re-enter your password" />
-                                <!-- <button class="toggle-password" onclick="toggleVisibility('confirm-password', 'eye2')" type="button">
-                                    <i class="fa-regular fa-eye" id="eye2"></i>
-                                </button> -->
+                                <input type="password" id="confirm-password" class="input-field" placeholder="Re-enter your password"/>
                             </div>
                             <p class="text-xs mt-1.5 hidden" id="match-msg"></p>
                         </div>
 
-                        <!-- Error message -->
+                        <!-- Error -->
                         <div id="form-error" class="hidden flex items-start gap-3 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
                             <i class="fa-solid fa-circle-exclamation text-red-500 text-sm mt-0.5 shrink-0"></i>
-                            <p class="text-xs text-red-600" id="form-error-msg">Something went wrong.</p>
+                            <p class="text-xs text-red-600 font-medium" id="form-error-msg">Something went wrong.</p>
                         </div>
 
-                        <!-- Submit -->
                         <button class="btn-primary" id="submit-btn">
                             <i class="fa-solid fa-check text-sm"></i>
                             Activate Account
@@ -208,10 +149,9 @@
 
                     </div>
 
-                    <!-- Info note -->
                     <div class="flex items-start gap-3 bg-[#F0FDF4] border border-green-100 rounded-xl px-4 py-3 text-left mt-6">
                         <i class="fa-solid fa-circle-info text-[#16a34a] text-sm mt-0.5 shrink-0"></i>
-                        <p class="text-xs text-[#3f6b4a] leading-relaxed">
+                        <p class="text-xs text-[#3f6b4a] leading-relaxed font-medium">
                             Your activation link is valid for <strong>48 hours</strong>. After activating, you can sign in with your email and new password.
                         </p>
                     </div>
@@ -220,9 +160,9 @@
             </div>
         </div>
 
-        <!-- ── SUCCESS STATE ── -->
+        <!-- SUCCESS STATE -->
         <div id="success-state">
-            <div class="bg-white rounded-2xl border border-[#E4E5E8] shadow-sm overflow-hidden">
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                 <div class="h-1.5 w-full bg-gradient-to-r from-[#16a34a] via-[#22c55e] to-[#86efac]"></div>
                 <div class="px-10 pt-10 pb-8 text-center">
                     <div class="inline-flex items-center justify-center mb-6">
@@ -230,23 +170,21 @@
                             <i class="fa-solid fa-check text-[#16a34a] text-3xl"></i>
                         </div>
                     </div>
-                    <h1 class="font-['DM_Serif_Display'] text-[26px] text-[#0D1B2A] leading-snug mb-2">
-                        Account Activated!
-                    </h1>
-                    <p class="text-sm text-[#767F8C] leading-relaxed max-w-sm mx-auto mb-7">
+                    <h1 class="font-['DM_Serif_Display'] text-[26px] text-[#0D1B2A] leading-snug mb-2">Account Activated!</h1>
+                    <p class="text-sm text-gray-400 font-medium leading-relaxed max-w-sm mx-auto mb-7">
                         Your password has been set successfully. You can now sign in to your Lably account.
                     </p>
-                    <div class="border-t border-[#F5F6F8] mb-7"></div>
-                    <a href="../Auth/login.html" class="inline-flex items-center justify-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white text-sm font-semibold px-6 py-2.5 rounded-xl transition no-underline w-full">
+                    <div class="border-t border-gray-50 mb-7"></div>
+                    <a href="../Auth/login.html" class="inline-flex items-center justify-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white text-sm font-bold px-6 py-2.5 rounded-xl transition no-underline w-full">
                         <i class="fa-regular fa-user text-xs"></i> Sign In to Your Account
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- ── ERROR STATE (invalid/expired token) ── -->
+        <!-- ERROR STATE -->
         <div id="error-state">
-            <div class="bg-white rounded-2xl border border-[#E4E5E8] shadow-sm overflow-hidden">
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                 <div class="h-1.5 w-full bg-gradient-to-r from-red-400 via-red-500 to-red-300"></div>
                 <div class="px-10 pt-10 pb-8 text-center">
                     <div class="inline-flex items-center justify-center mb-6">
@@ -254,27 +192,25 @@
                             <i class="fa-solid fa-link-slash text-red-400 text-3xl"></i>
                         </div>
                     </div>
-                    <h1 class="font-['DM_Serif_Display'] text-[26px] text-[#0D1B2A] leading-snug mb-2">
-                        Link Expired or Invalid
-                    </h1>
-                    <p class="text-sm text-[#767F8C] leading-relaxed max-w-sm mx-auto mb-7">
+                    <h1 class="font-['DM_Serif_Display'] text-[26px] text-[#0D1B2A] leading-snug mb-2">Link Expired or Invalid</h1>
+                    <p class="text-sm text-gray-400 font-medium leading-relaxed max-w-sm mx-auto mb-7">
                         This activation link is no longer valid. It may have expired or already been used.
                     </p>
-                    <div class="border-t border-[#F5F6F8] mb-7"></div>
-                    <a href="mailto:support@lably.com" class="inline-flex items-center justify-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white text-sm font-semibold px-6 py-2.5 rounded-xl transition no-underline w-full">
+                    <div class="border-t border-gray-50 mb-7"></div>
+                    <a href="mailto:support@lably.com" class="inline-flex items-center justify-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white text-sm font-bold px-6 py-2.5 rounded-xl transition no-underline w-full">
                         <i class="fa-solid fa-envelope text-xs"></i> Contact Support
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Small bottom note -->
-        <p class="text-center text-xs text-[#b0b7c3] mt-5">
-            Questions? <a href="mailto:support@lably.com" class="text-[#16a34a] hover:underline font-medium">support@lably.com</a>
+        <p class="text-center text-xs text-gray-300 font-medium mt-5">
+            Questions? <a href="mailto:support@lably.com" class="text-[#16a34a] hover:underline font-semibold">support@lably.com</a>
         </p>
 
     </div>
 </main>
+
 <script src="../../config.js"></script>
 <script src="../../scripts/utils/toast.js"></script>
 <script src="../../scripts/Auth/activate.js"></script>
