@@ -36,7 +36,7 @@ const JobSeekerProfile = require('../models/JobSeekerProfile')
 
 async function createJobSeekerProfile(req, res) {
     try {
-        const { full_name, phone, address, about, job_title, years_of_experience, linkedin_url } = req.body
+        const { full_name, phone, address, about, job_title, years_of_experience } = req.body
         const userId = req.user.id
 
         const checkProfile = await JobSeekerProfile.findByUserId(userId)
@@ -48,7 +48,7 @@ async function createJobSeekerProfile(req, res) {
             profile_image_path = await uploadToSupabase(req.file, 'avatars')
         }
 
-        const data = await JobSeekerProfile.create(userId, { full_name, phone, address, about, profile_image_path: profile_image_path || null , job_title, years_of_experience, linkedin_url})
+        const data = await JobSeekerProfile.create(userId, { full_name, phone, address, about, profile_image_path: profile_image_path || null , job_title, years_of_experience})
 
         return res.status(201).json({ message: 'Profile created successfully.', data })
 
@@ -59,7 +59,7 @@ async function createJobSeekerProfile(req, res) {
 
 async function updateJobSeekerProfile(req, res) {
     try {
-        const { full_name, phone, address, about, job_title, years_of_experience, linkedin_url  } = req.body
+        const { full_name, phone, address, about, job_title, years_of_experience  } = req.body
         const userId = req.user.id
 
          let profile_image_path
@@ -67,7 +67,7 @@ async function updateJobSeekerProfile(req, res) {
             profile_image_path = await uploadToSupabase(req.file, 'avatars')
         }
 
-        const data = await JobSeekerProfile.update(userId, { full_name, phone, address, about, job_title, years_of_experience, linkedin_url , ...(profile_image_path && { profile_image_path }) })
+        const data = await JobSeekerProfile.update(userId, { full_name, phone, address, about, job_title, years_of_experience , ...(profile_image_path && { profile_image_path }) })
 
         return res.status(200).json({ message: 'Profile updated successfully.', data })
 
