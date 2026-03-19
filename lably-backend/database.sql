@@ -73,6 +73,9 @@ CREATE TABLE job_seekers_profiles (
     phone VARCHAR(50) DEFAULT NULL,
     address VARCHAR(255) DEFAULT NULL,
     about TEXT DEFAULT NULL,
+    job_title VARCHAR(100) DEFAULT NULL,
+    years_of_experience VARCHAR(20) DEFAULT NULL,
+    profile_image_path VARCHAR(255) DEFAULT NULL,
     verified_at TIMESTAMP DEFAULT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
