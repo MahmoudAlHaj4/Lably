@@ -43,8 +43,12 @@ async function createJobSeekerProfile(req, res) {
         if (checkProfile) {
             return res.status(409).json({ message: 'You already have a profile.' })
         }
+        let profile_image_path
+        if (req.file) {
+            profile_image_path = await uploadToSupabase(req.file, 'avatars')
+        }
 
-        const data = await JobSeekerProfile.create(userId, { full_name, phone, address, about })
+        const data = await JobSeekerProfile.create(userId, { full_name, phone, address, about, profile_image_path: profile_image_path || null })
 
         return res.status(201).json({ message: 'Profile created successfully.', data })
 
@@ -58,7 +62,12 @@ async function updateJobSeekerProfile(req, res) {
         const { full_name, phone, address, about } = req.body
         const userId = req.user.id
 
-        const data = await JobSeekerProfile.update(userId, { full_name, phone, address, about })
+         let profile_image_path
+        if (req.file) {
+            profile_image_path = await uploadToSupabase(req.file, 'avatars')
+        }
+
+        const data = await JobSeekerProfile.update(userId, { full_name, phone, address, about,  ...(profile_image_path && { profile_image_path }) })
 
         return res.status(200).json({ message: 'Profile updated successfully.', data })
 
