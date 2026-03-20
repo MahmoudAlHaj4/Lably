@@ -16,7 +16,7 @@ const { randomUUID } = require('crypto')
 class JobSeekerProfile {
     static async create(userId , profileData){
         const id = randomUUID()
-        const query = `INSERT INTO job_seekers_profiles (id, user_id, full_name, phone, address, about, profile_image_path, job_title,  years_of_experience) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`
+        const query = `INSERT INTO job_seekers_profiles (id, user_id, full_name, phone, address, about, profile_image_path, job_title,  years_of_experience) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`
 
         await pool.query(query, [
             id,
