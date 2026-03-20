@@ -145,11 +145,9 @@ const register = async () =>{
         regError.style.color = 'green'
         regError.textContent = 'Account created Please Sign In'
         showToast('Success')
-        setTimeout(()=> {
-            regError.style.color =''
-            regError.textContent =''
-            document.querySelector('[data-tab="login"]').click()
-        }, 2000)
+        regError.style.color =''
+        regError.textContent =''
+        document.querySelector('[data-tab="login"]').click()
     }else{
         showToast(data.message)
     }
