@@ -30,7 +30,42 @@ const updateProgress = (currentTab) => {
     document.getElementById('progressLabel').textContent = pct + '% Completed'
 }
 
+const validateTab = (tabIndex) => {
+    let isValid = true
+
+    const markError = (id) => {
+        const el = document.getElementById(id)
+        if (!el) return
+        el.classList.add('border-red-400')
+        el.addEventListener('input', () => el.classList.remove('border-red-400'), { once: true })
+    }
+
+    if (tabIndex === 0) {
+        const required = ['fullName', 'jobTitle', 'yearsOfExperience']
+        required.forEach(id => {
+            if (!getVal(id).trim()) {
+                markError(id)
+                isValid = false
+            }
+        })
+    }
+
+    if (tabIndex === 2) {
+        const required = ['phone', 'address']
+        required.forEach(id => {
+            if (!getVal(id).trim()) {
+                markError(id)
+                isValid = false
+            }
+        })
+    }
+
+    if (!isValid) showToast('Please fill in all required fields.')
+    return isValid
+}
+
 const nextTab = () => {
+    if(!validateTab(currentTab)) return
     if (currentTab < totalTabs - 1) {
         switchProfileTab(currentTab + 1) 
     }else{
