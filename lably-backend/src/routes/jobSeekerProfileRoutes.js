@@ -28,6 +28,6 @@ router.put('/profile', authMiddleware, jobSeekerMiddleware, uploadProfileImages.
 ], validate, updateJobSeekerProfile)
 
 router.get('/profile', authMiddleware, jobSeekerMiddleware, getProfile)
-router.get('/profile/:id', authMiddleware, employerMiddleware, getCandidateProfile)
+router.get('/profile/:id', authMiddleware, getCandidateProfile)
 
 module.exports = router
