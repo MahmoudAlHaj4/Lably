@@ -12,21 +12,20 @@ const validateForm = () => {
     const emailVal = email.value.trim()
     const phoneVal = phone.value.trim()
 
-    const rules = [
-        { condition: !fullName.value.trim(), message: 'Full name is required' },
-        { condition: !emailVal, message: 'Email is required' },
-        { condition: emailVal && !emailRegex.test(emailVal), message: 'Invalid email format' },
-        { condition: !phoneVal, message: 'Phone is required' },
-        { condition: phoneVal && !phoneRegex.test(phoneVal), message: 'Invalid phone format' },
-        
-        { condition: !resume.files[0], message: 'Resume is required' },
-    ]
+    const markError = (el) => {
+        el.classList.add('border-red-400')
+        el.addEventListener('input', () => el.classList.remove('border-red-400'), { once: true })
+    }
 
-    const errors = rules
-        .filter(rule => rule.condition)
-        .map(rule => rule.message)
+    const errors = []
 
-    if(errors.length > 0) showToast(errors[0])
+    if (!fullName.value.trim()) { markError(fullName); errors.push('Full name is required') }
+    if (!emailVal) { markError(email); errors.push('Email is required') }
+    else if (!emailRegex.test(emailVal)) { markError(email); errors.push('Invalid email format') }
+    if (!phoneVal) { markError(phone); errors.push('Phone is required') }
+    else if (!phoneRegex.test(phoneVal)) { markError(phone); errors.push('Invalid phone format') }
+
+    if (errors.length > 0) showToast(errors[0])
     return errors.length === 0
 }
 
