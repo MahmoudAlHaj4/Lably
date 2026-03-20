@@ -32,6 +32,7 @@
  * 3. Return 200 with profile data.
  */
 
+const { uploadToSupabase } = require('../middleware/uploadMiddleware')
 const JobSeekerProfile = require('../models/JobSeekerProfile')
 
 async function createJobSeekerProfile(req, res) {
@@ -53,7 +54,8 @@ async function createJobSeekerProfile(req, res) {
         return res.status(201).json({ message: 'Profile created successfully.', data })
 
     } catch (error) {
-        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
+        return res.status(500).json({message: error.message})
+        // return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
 
@@ -72,7 +74,7 @@ async function updateJobSeekerProfile(req, res) {
         return res.status(200).json({ message: 'Profile updated successfully.', data })
 
     } catch (error) {
-        return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
+        return res.status(500).json({ message: 'Something went wrong. Please try k later.' })
     }
 }
 
