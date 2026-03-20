@@ -92,7 +92,7 @@ async function getProfile(req, res) {
 async function getCandidateProfile(req, res) {
     try {
         const profileId = req.params.id
-        const data = await JobSeekerProfile.findById(profileId)
+        const data = await JobSeekerProfile.findByUserId(profileId)
 
         if (!data) {
             return res.status(404).json({ message: 'Profile not found.' })
