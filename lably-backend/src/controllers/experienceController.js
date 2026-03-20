@@ -82,7 +82,7 @@ async function UpdateJobExperience(req, res) {
         const { company_name, job_title, start_date, end_date, description } = req.body
         const experienceId = req.params.id
 
-        const data = await Experience.Update(experienceId, { company_name, job_title, start_date, end_date, description })
+        const data = await Experience.update(experienceId, { company_name, job_title, start_date, end_date, description })
 
         if (!data) {
             return res.status(404).json({ message: 'Experience not found.' })
