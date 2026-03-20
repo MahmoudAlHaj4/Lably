@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lably — Profile Setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { font-family: 'Urbanist', sans-serif; }
+
+    ::-webkit-scrollbar { display: none; }
+    * { scrollbar-width: none; -ms-overflow-style: none; }
+
+    .tab-active   { color: #16a34a; border-bottom: 2px solid #16a34a; }
+    .tab-inactive { color: #9ca3af; border-bottom: 2px solid transparent; }
+
+    .upload-zone {
+      background: rgba(255,255,255,0.7);
+      border: 2px dashed #d1d5db;
+      transition: all .2s;
+    }
+    .upload-zone:hover { border-color: #16a34a; background: #f0fdf4; cursor: pointer; }
+
+    .soft-input {
+      width: 100%; padding: 11px 16px;
+      border: 1px solid #e4e5e8; border-radius: 12px;
+      font-size: 14px; color: #0D1B2A;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(6px);
+      transition: border .2s, box-shadow .2s;
+      font-family: 'Urbanist', sans-serif; outline: none;
+    }
+    .soft-input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.08); }
+    .soft-input::placeholder { color: #b0b7c3; }
+
+    .soft-select {
+      width: 100%; padding: 11px 16px;
+      border: 1px solid #e4e5e8; border-radius: 12px;
+      font-size: 14px; color: #0D1B2A;
+      background: rgba(255,255,255,0.7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;
+      backdrop-filter: blur(6px);
+      transition: border .2s, box-shadow .2s;
+      font-family: 'Urbanist', sans-serif; outline: none; appearance: none;
+    }
+    .soft-select:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.08); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    [contenteditable][data-placeholder]:empty:before { content: attr(data-placeholder); color: #b0b7c3; pointer-events: none; }
+    [contenteditable]:focus { outline: none; }
+
+    #successScreen { display: none; }
+
+    @keyframes checkPop {
+      0%   { transform: scale(0.5); opacity: 0; }
+      70%  { transform: scale(1.15); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .check-pop { animation: checkPop .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+
+    .exp-card {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid #e4e5e8;
+      border-radius: 16px;
+      padding: 18px 20px;
+      position: relative;
+      transition: box-shadow .2s;
+    }
+    .exp-card:hover { box-shadow: 0 4px 16px rgba(22,163,74,.08); }
+  </style>
+</head>
+<body class="bg-[#f7fafe] text-[#0D1B2A] min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="relative z-10 px-[7%] h-[70px] flex items-center justify-between border-b border-gray-100 bg-white">
+    <div class="flex items-center gap-2">
+      <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+      <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
+    </div>
+    <div class="text-right">
+      <div class="flex items-center justify-end gap-3 mb-1.5">
+        <span class="text-sm font-medium text-gray-400">Setup Progress</span>
+        <span id="progressLabel" class="text-sm font-bold text-[#16a34a]">33% Completed</span>
+      </div>
+      <div class="w-56 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+        <div id="progressBar" class="h-full bg-[#16a34a] rounded-full transition-all duration-500" style="width:33%"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SETUP FORM -->
+  <main id="setupForm" class="relative z-10 flex-1 max-w-4xl mx-auto w-full px-4 py-10">
+
+    <!-- Tabs -->
+    <div class="border-b border-gray-200 mb-8">
+      <nav class="flex justify-center gap-10">
+        <button id="tab-0" class="flex items-center gap-2 pb-3 text-sm font-bold tab-active transition-all whitespace-nowrap">
+          <i class="fa-regular fa-user"></i> Personal Info
+        </button>
+        <button id="tab-1" class="flex items-center gap-2 pb-3 text-sm font-bold tab-inactive transition-all whitespace-nowrap">
+          <i class="fa-solid fa-briefcase"></i> Experience
+        </button>
+        <button id="tab-2" class="flex items-center gap-2 pb-3 text-sm font-bold tab-inactive transition-all whitespace-nowrap">
+          <i class="fa-regular fa-envelope"></i> Contact
+        </button>
+      </nav>
+    </div>
+
+    <!-- TAB 0: Personal Info -->
+    <div id="panel-0" class="tab-panel active">
+
+      <h2 class="text-sm font-extrabold text-[#0D1B2A] mb-5">Profile Photo</h2>
+      <div class="flex items-start gap-6 mb-7">
+        <label class="upload-zone rounded-2xl flex flex-col items-center justify-center w-40 h-40 shrink-0 block">
+          <input type="file" id="avatarInput" class="hidden" accept="image/*"/>
+          <div id="avatarPlaceholder" class="flex flex-col items-center gap-2 text-center px-3">
+            <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-300"></i>
+            <p class="text-xs text-[#0D1B2A]"><span class="font-bold">Browse photo</span> or drop here</p>
+            <p class="text-xs text-gray-400">Max 2 MB.</p>
+          </div>
+          <img id="avatarPreview" class="hidden w-36 h-36 object-cover rounded-xl"/>
+        </label>
+        <div class="flex-1 space-y-1 pt-1">
+          <p class="text-sm font-semibold text-[#0D1B2A]">Upload a professional photo</p>
+          <p class="text-xs text-gray-400 leading-relaxed">A clear headshot helps employers recognise you. Use a photo with a neutral background and good lighting. JPEG or PNG, at least 300×300 px.</p>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Full Name</label>
+        <input id="fullName" type="text" placeholder="e.g. Sarah Mitchell" class="soft-input"/>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mb-5">
+        <div>
+          <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Job Title / Role</label>
+          <select id="jobTitle" class="soft-select">
+            <option value="">Select your role...</option>
+            <option value="dental_technician">Dental Technician</option>
+            <option value="cadcam_specialist">CAD/CAM Specialist</option>
+            <option value="lab_technician">Dental Lab Technician</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Years of Experience</label>
+          <select id="yearsOfExperience" class="soft-select">
+            <option value="">Select...</option>
+            <option value="0-1">Less than 1 year</option>
+            <option value="1-3">1 – 3 years</option>
+            <option value="3-5">3 – 5 years</option>
+            <option value="5-10">5 – 10 years</option>
+            <option value="10+">10+ years</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">About Me</label>
+        <div class="border border-[#e4e5e8] rounded-2xl overflow-hidden bg-white/70 backdrop-blur-sm focus-within:border-[#16a34a] focus-within:ring-2 focus-within:ring-[#16a34a]/10 transition-all">
+          <div id="aboutMe" contenteditable="true" data-placeholder="Tell employers a little about yourself — your background, what you specialise in, and what you're looking for..." class="min-h-[96px] px-4 py-3 text-sm text-[#0D1B2A]"></div>
+          <div class="flex items-center gap-1 px-3 py-2 border-t border-gray-50 bg-gray-50/80">
+            <button data-cmd="bold" class="richtext-btn p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-bold text-xs"></i></button>
+            <button data-cmd="italic" class="richtext-btn p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-italic text-xs"></i></button>
+            <button data-cmd="underline" class="richtext-btn p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-underline text-xs"></i></button>
+            <button data-cmd="strikeThrough" class="richtext-btn p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-strikethrough text-xs"></i></button>
+            <div class="w-px h-4 bg-gray-200 mx-1"></div>
+            <button data-cmd="insertUnorderedList" class="richtext-btn p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-list-ul text-xs"></i></button>
+            <button data-cmd="insertOrderedList" class="richtext-btn p-1.5 rounded-lg hover:bg-gray-200 transition-colors text-gray-400"><i class="fa-solid fa-list-ol text-xs"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 1: Experience -->
+    <div id="panel-1" class="tab-panel">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="text-sm font-extrabold text-[#0D1B2A]">Work Experience</h2>
+          <p class="text-xs text-gray-400 mt-0.5">Add your relevant work history. You can add multiple positions.</p>
+        </div>
+        <button id="addExpBtn" class="flex items-center gap-2 text-sm font-bold text-[#16a34a] border border-[#16a34a] px-4 py-2 rounded-xl hover:bg-green-50 transition">
+          <i class="fa-solid fa-plus text-xs"></i> Add Experience
+        </button>
+      </div>
+
+      <div id="experienceList" class="space-y-4"></div>
+
+      <div id="expEmptyState" class="flex flex-col items-center justify-center py-14 text-center">
+        <div class="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center mb-4">
+          <i class="fa-solid fa-briefcase text-gray-300 text-xl"></i>
+        </div>
+        <p class="text-sm font-semibold text-[#0D1B2A] mb-1">No experience added yet</p>
+        <p class="text-xs text-gray-400">Click "Add Experience" to add your first position.</p>
+      </div>
+    </div>
+
+    <!-- TAB 2: Contact -->
+    <div id="panel-2" class="tab-panel">
+      <div class="space-y-5">
+        <div>
+          <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Phone Number</label>
+          <input id="phone" type="tel" placeholder="+1 (555) 000-0000" class="soft-input"/>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Address</label>
+          <input id="address" type="text" placeholder="123 Main St, City, Country" class="soft-input"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex items-center gap-3 mt-8">
+      <button id="prevBtn" class="hidden px-6 py-3 rounded-xl border-2 border-gray-200 text-sm font-bold text-[#0D1B2A] hover:border-gray-300 transition bg-white/70">
+        Previous
+      </button>
+      <button id="nextBtn" class="flex items-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold px-6 py-3 rounded-xl transition text-sm">
+        <span id="btnText">Save & Next</span>
+        <i id="btnIcon" class="fa-solid fa-arrow-right text-xs"></i>
+      </button>
+    </div>
+  </main>
+
+  <!-- SUCCESS SCREEN -->
+  <div id="successScreen" class="relative z-10 flex-1 flex-col items-center justify-center text-center px-4 py-20">
+    <div class="check-pop w-24 h-24 rounded-full bg-green-50 flex items-center justify-center mb-6 mx-auto">
+      <svg class="w-10 h-10 text-[#16a34a]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M2 12l6 6L22 4"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M2 12l3 3" opacity=".4"/>
+      </svg>
+    </div>
+    <h2 class="text-2xl font-extrabold text-[#0D1B2A] mb-3">🎉 Your profile is ready!</h2>
+    <p class="text-sm text-gray-400 font-medium max-w-md mx-auto mb-8">Your profile is now live on Lably. Start browsing verified dental lab and clinic job listings and apply in one click.</p>
+    <div class="flex items-center justify-center gap-3">
+      <a href="./jobs.html" class="flex items-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold px-6 py-3 rounded-xl transition text-sm no-underline">
+        Browse Jobs
+      </a>
+    </div>
+  </div>
+
+  <footer class="relative z-10 border-t border-gray-100 py-4 text-center text-xs text-gray-400 bg-white">
+    © 2026 Lably - Dental Technology Job Board. All rights reserved.
+  </footer>
+
+  <script src="../../config.js"></script>
+  <script src="../../scripts/utils/authGuard.js"></script>
+  <script src="../../scripts/utils/toast.js"></script>
+  <script src="../../scripts/utils/helpers.js"></script>
+  <script src="../../scripts/Job Seeker/profile/setupUI.js"></script>
+  <script src="../../scripts/Job Seeker/profile/profileData.js"></script>
+  <script src="../../scripts/Job Seeker/profile/renderExperience.js"></script>
+  <script src="../../scripts/Job Seeker/profile/setUpProfile.js"></script>
+</body>
+</html>
