@@ -27,6 +27,14 @@ const collectExperiences = () => {
 }
 
 const submitProfile = async () => {
+        const btn = document.getElementById('nextBtn')
+    const btnText = document.getElementById('btnText')
+    const btnIcon = document.getElementById('btnIcon')
+    btn.disabled = true
+    btnText.textContent = 'Saving...'
+    btnIcon.className = 'fa-solid fa-spinner fa-spin text-xs'
+    btn.classList.add('opacity-70', 'cursor-not-allowed')
+
     const profileData = collectProfileData()
     const experiences = collectExperiences()
 
@@ -64,5 +72,9 @@ const submitProfile = async () => {
 
     } catch (err) {
         showToast('Something went wrong. Please try again.')
+        btn.disabled = false
+        btnText.textContent = 'Save Profile'
+        btnIcon.className = 'fa-solid fa-check text-xs'
+        btn.classList.remove('opacity-70', 'cursor-not-allowed')
     }
 }
