@@ -21,6 +21,28 @@ const validateFields = (fields) => {
     return null
 }
 
+const redirectByRole = async (role, token) => {
+    const headers = { 'Authorization': `Bearer ${token}` }
+
+    if (role === 'employer') {
+        const res = await fetch(`${CONFIG.apiUrl}/api/employer/profile`, { headers })
+        const { data } = await res.json()
+        window.location.href = data
+            ? '../Employer/employerDashboard.html'
+            : '../Employer/setUpProfile.html'
+
+    } else if (role === 'job_seeker') {
+        const res = await fetch(`${CONFIG.apiUrl}/api/job-seeker/profile`, { headers })
+        const { data } = await res.json()
+        window.location.href = data
+            ? '../Job Seeker/jobs.html'
+            : '../Job Seeker/setUpProfile.html'
+
+    } else if (role === 'admin') {
+        window.location.href = '../Admin/adminOverviewDashboard.html'
+    }
+}
+
 
 const login = async() =>{
 
@@ -64,25 +86,7 @@ const login = async() =>{
         showToast('Success' , 'success')
         localStorage.setItem('token', token)
         localStorage.setItem('role', role)
-
-        if(role === 'employer'){
-
-            const profile = await fetch(`${CONFIG.apiUrl}/api/employer/profile`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            })
-
-            const ProfileData = await profile.json()
-
-            if(ProfileData.data){
-                window.location.href = '../Employer/employerDashboard.html'
-            }else{
-                window.location.href = '../Employer/setUpProfile.html'
-            }
-            } else if(role === 'job_seeker'){
-                window.location.href = '../Job Seeker/jobs.html'
-            } else if(role === 'admin'){
-                window.location.href = '../Admin/adminOverviewDashboard.html'
-            }
+        redirectByRole(role, token)
     }else{
         localStorage.removeItem('token')
         localStorage.removeItem('role')
