@@ -34,7 +34,7 @@ class JobSeekerProfile {
     }
 
     static async findByUserId(userId) {
-        const query = `SELECT id, user_id, full_name, phone,address, about, job_title, years_of_experience  FROM job_seekers_profiles WHERE user_id= $1`
+        const query = `SELECT id, user_id, full_name, phone,address, about, job_title, years_of_experience, profile_image_path FROM job_seekers_profiles WHERE user_id= $1`
         const result = await pool.query(query , [userId])
         return result.rows[0]
     }
