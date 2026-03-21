@@ -70,6 +70,12 @@ class Job {
 
         return {jobId}
     }
+
+    static async getJobs() {
+        const query = `SELECT * FROM jobs WHERE status = 'active' ORDER BY created_at DESC`
+        const result = await pool.query(query)
+        return result.rows
+    }
 }
 
 module.exports = Job
