@@ -324,6 +324,8 @@ lably-frontend/
 3. POST /api/jobs
 4. PUT /api/jobs/:id
 5. DELETE /api/jobs/:id
+6. GET /api/guest/jobs
+7. GET /api/seeker/jobs
 
 ### Applications
 1. GET /api/applications 
