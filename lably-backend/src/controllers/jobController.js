@@ -127,4 +127,15 @@ async function deleteJob(req, res) {
     }
 }
 
-module.exports = { createJob, getEmployerJobs, getJob, updateJob, deleteJob }
+
+async function getAllJobs(req, res) {
+    try{
+        const data = await Job.getJobs()
+        return res.status(200).json({ message: 'Success.', data })
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong. Please try again later.' }) 
+    }
+}
+
+module.exports = { createJob, getEmployerJobs, getJob, updateJob, deleteJob, getAllJobs }
