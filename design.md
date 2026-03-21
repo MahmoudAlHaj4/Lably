@@ -130,6 +130,9 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 - address: VARCAHR(255)
 - about: TEXT
 - verified_at: TIMESTAMP (NULL - set when approved)
+- job_title: VARCHAR(100)
+- years_of_experience: VARCHAR(20)
+- profile_image_path: VARCHAR(255)
 - created_at: TIMESTAMP
 - updated_at: TIMESTAMP
 
