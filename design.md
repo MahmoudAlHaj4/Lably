@@ -405,9 +405,10 @@ User redirected to login page
 
 
 ### Email Service
-**Decision:** Nodemailer with Gmail SMTP, no SDK.
+**Decision:** Nodemailer with Brevo SMTP, no SDK.
 **Trigger:** Sent automatically when admin approves a pending application.
 **Template:** Activation link with 48 hour expiry.
+**Reason:** Render blocks Gmail SMTP, Brevo works reliably on hosted environments.
 
 
 ### Delete Strategy
