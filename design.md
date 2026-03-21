@@ -171,6 +171,19 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 - company_description: TEXT
 - location: VARCHAR(255) (or separate city/state/country?)
 - website: VARCHAR(255) (optional - company website)
+- logo_path: VARCHAR(255)
+- banner_path: VARCHAR(255)
+- organization_type: ENUM('dental_lab', 'dental_clinic')
+- industry_type: ENUM('dental_tech', 'cadcam', 'prosthetics')
+- team_size: ENUM('1-10', '11-50', '51-200', '200+')
+- year_established: INTEGER
+- company_vision: TEXT
+- linkedin_url: VARCHAR(255)
+- twitter_url: VARCHAR(255)
+- facebook_url: VARCHAR(255)
+- instagram_url: VARCHAR(255)
+- contact_email: VARCHAR(255)
+- contact_phone: VARCHAR(255)
 - created_at: TIMESTAMP
 - updated_at: TIMESTAMP
 
