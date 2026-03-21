@@ -23,7 +23,12 @@ router.post('/profile', authMiddleware, uploadProfileImages.single('profile_imag
     body('full_name').trim().notEmpty().withMessage('Full name is required.')
 ], validate, createJobSeekerProfile)
 
-router.put('/profile', authMiddleware, jobSeekerMiddleware, uploadProfileImages.single('profile_image'), [
+router.put('/profile', authMiddleware, jobSeekerMiddleware, (req, res, next) => {
+    uploadProfileImages.single('profile_image')(req, res, (err) => {
+        if (err) return res.status(400).json({ message: err.message })
+        next()
+    })
+}, [
     body('full_name').optional().trim().notEmpty().withMessage('Full name cannot be empty.')
 ], validate, updateJobSeekerProfile)
 
