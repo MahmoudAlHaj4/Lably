@@ -387,9 +387,8 @@ User redirected to login page
 **Note:** Origin will be moved to environment variable before deployment.
 
 ### Input Sanitization
-**Decision:** Dropped for V1.
-**Reason:** Backend already built with 27 routes, not worth retrofitting at this stage.
-**Revisit in V2:** Add express-validator to all routes as a dedicated hardening pass.
+**Decision:** Added express-validator to all routes.
+**Reason:** Input sanitization is a fundamental security practice and should not be skipped regardless of project stage.
 
 ### CI/CD Pipeline
 **Decision:** GitHub Actions for CI, auto-deploy to Render on success.
