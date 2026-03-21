@@ -72,7 +72,12 @@ class Job {
     }
 
     static async getJobs() {
-        const query = `SELECT * FROM jobs WHERE status = 'active' ORDER BY created_at DESC`
+        const query = `
+            SELECT jobs.*, employer_profiles.company_name, employer_profiles.logo_path
+            FROM jobs 
+            LEFT JOIN employer_profiles ON jobs.employer_id = employer_profiles.user_id
+            WHERE jobs.status = 'active' 
+            ORDER BY jobs.created_at DESC`
         const result = await pool.query(query)
         return result.rows
     }
