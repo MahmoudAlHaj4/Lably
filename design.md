@@ -426,3 +426,8 @@ User redirected to login page
 ### Admin Delete Scope
 **Decision:** Admin can delete users, jobs, and applications.
 **Note:** Deleting an employer also deletes all their posted jobs and cascades to applications.
+
+### Enhanced Employer and Job Seeker Profiles Fields
+
+**Decision:** Added richer fields to both employer and job seeker profiles.
+**Reason:** minimum profile looks unprofessional. Standard job boards provide rich profile pages for both employers and candidates.
