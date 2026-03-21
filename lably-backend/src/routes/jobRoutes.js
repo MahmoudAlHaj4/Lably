@@ -12,10 +12,11 @@
 
 const express = require('express')
 const { authMiddleware } = require('../middleware/authMiddleware')
-const { createJob, getEmployerJobs, getJob, updateJob, deleteJob } = require('../controllers/jobController')
+const { createJob, getEmployerJobs, getJob, updateJob, deleteJob, getAllJobs } = require('../controllers/jobController')
 const { employerMiddleware } = require('../middleware/employerMiddleware')
 const { validate } = require('../middleware/validationMiddleware')
 const { body } = require('express-validator')
+const { jobSeekerMiddleware } = require('../middleware/jobSeekerMiddleware')
 const router = express.Router()
 
 router.post('/jobs', authMiddleware, employerMiddleware, [
@@ -34,5 +35,8 @@ router.put('/jobs/:id', authMiddleware, employerMiddleware, [
 ], validate, updateJob)
 
 router.delete('/jobs/:id', authMiddleware, employerMiddleware, deleteJob)
+
+router.get('/guest/jobs' , getAllJobs)
+router.get('/seeker/jobs', authMiddleware, jobSeekerMiddleware, getAllJobs)
 
 module.exports = router
