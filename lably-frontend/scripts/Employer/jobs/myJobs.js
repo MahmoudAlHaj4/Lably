@@ -62,8 +62,8 @@ const editJob = (jobId) => {
     setVal('edit-location',        job.location    || '')
     setSelect('edit-job-type',     job.job_type    || '')
     setSelect('edit-status',       job.status      || '')
-    setRich('edit-job-description', job.description  || '')
-    setRich('edit-requirements',    job.requirements || '')
+    setVal('edit-job-description', job.description  || '')
+    setVal('edit-requirements',    job.requirements || '')
     document.getElementById('saveEditBtn').dataset.id = jobId
 
     openModal('edit-modal')
