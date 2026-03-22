@@ -209,7 +209,7 @@ Three roles cover all essential V1 use cases while keeping auth logic straightfo
 1. **Single users Table:** All users share common fields so one table avoids duplicating auth logic. Role-specific data lives in separate profile tables.
 2. **Separate Profile Tables:** job_seeker_profiles and employer_profiles keep the users table focused on authentication. A shared table would result in many irrelevant NULL columns per user.
 3. **Separate pending_applications Table:** — Verification is a one-time workflow with its own tracking needs (decision notes, file paths, review timestamps). Mixing it into job_seeker_profiles would clutter the public-facing profile table.
-4. **UUIDs over Auto-Increment IDs:** Prevents enumeration attacks where someone could guess valid IDs by incrementing integers (e.g. /users/1, /users/2). Trade-off is slightly more storage and marginally slower indexing, which is acceptable.
+4. **UUIDs over Auto-Increment IDs:** Prevents enumeration attacks where someone could guess valid IDs by incrementing integers (e.g. /users/1, /users/2). Trade-off is slightly more storage and marginally slower indexing.
 5. **Separate experiences Table:** Job seekers can have 5–10+ experiences, each needing structured data. A separate table makes it easy to add, edit, or delete individual entries. Storing as JSON would make querying and validation significantly harder.
 6. **Activation Tokens in users Table:** Token fields are NULL until needed and cleared after use. A separate tokens table adds complexity with no V1 benefit. Can be refactored in V2 if more token types are needed.
 
@@ -254,7 +254,7 @@ A real DB catches actual constraint violations, duplicate entries, and failures.
 - Activation token is fetched directly from the database after approval instead of from the API response.
 
 ### Cleanup Strategy
-Every test file runs `beforeAll` and `afterAll` cleanup against the test email to ensure a fresh state before each run and no leftover data after — protecting against false failures from crashed previous runs
+Every test file runs `beforeAll` and `afterAll` cleanup against the test email to ensure a fresh state before each run and no leftover data, protecting against false failures from crashed previous runs
 
 ## Architecture
 
@@ -270,6 +270,7 @@ lably-backend/
 │   └── utils/
 ├── uploads/
 ├── server.js
+├── app.js
 ├── .env
 └── package.json
 ```
@@ -282,6 +283,7 @@ lably-frontend/
 ├── css/
 ├── js/
 │   ├── auth/
+│   ├── Guest/
 │   ├── jobSeeker/
 │   ├── employer/
 │   ├── admin/
