@@ -94,7 +94,7 @@ const createCard = (job) => {
             <i class="fa-regular fa-calendar text-gray-300"></i> ${date}
         </div>
         <div class="flex items-center justify-between pt-4 border-t border-gray-50">
-            <a href="./jobDetail.html?id=${job.id}" class="px-6 py-2.5 rounded-xl border-2 border-gray-200 text-sm font-bold text-[#0D1B2A] hover:border-[#16a34a] hover:text-[#16a34a] transition no-underline">
+            <a href="./jobDetails.html?id=${job.id}" class="px-6 py-2.5 rounded-xl border-2 border-gray-200 text-sm font-bold text-[#0D1B2A] hover:border-[#16a34a] hover:text-[#16a34a] transition no-underline">
                 Apply Now
             </a>
         </div>
