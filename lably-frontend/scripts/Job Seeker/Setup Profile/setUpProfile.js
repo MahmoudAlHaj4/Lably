@@ -12,9 +12,7 @@ document.getElementById('prevBtn').addEventListener('click', prevTab)
 document.getElementById('avatarInput').addEventListener('change', (e) => {
     previewImg(e, 'avatarPreview', 'avatarPlaceholder')
 })
-document.querySelectorAll('.richtext-btn').forEach(btn => {
-    btn.addEventListener('click', () => execCmd(btn.dataset.cmd))
-})
+
 
 
 document.getElementById('addExpBtn').addEventListener('click', addExperience)
