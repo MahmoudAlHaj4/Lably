@@ -82,8 +82,8 @@ document.getElementById('saveEditBtn').addEventListener('click', async () => {
         location:    getVal('edit-location'),
         job_type:    getVal('edit-job-type'),
         status:      getVal('edit-status'),
-        description:  getRich('edit-job-description'),
-        requirements: getRich('edit-requirements'),
+        description:  getVal('edit-job-description'),
+        requirements: getVal('edit-requirements'),
     }
 
     try {
