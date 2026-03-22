@@ -42,13 +42,20 @@ class Job {
         return result.rows
     }
 
-    static async getOneJob(jobId){
-        const query = `SELECT * FROM jobs WHERE id =$1 `
+    static async getOneJob(jobId) {
+        const query = `
+            SELECT jobs.*,
+                employer_profiles.company_name,
+                employer_profiles.company_description,
+                employer_profiles.location      AS employer_location,
+                employer_profiles.website,
+                employer_profiles.logo_path
+            FROM jobs
+            LEFT JOIN employer_profiles ON jobs.employer_id = employer_profiles.user_id
+            WHERE jobs.id = $1`
         const result = await pool.query(query, [jobId])
-
         return result.rows[0]
     }
-
     static async update (jobId , jobData) {
         const query = `UPDATE jobs SET status = $1 , job_title = $2 , description = $3, requirements = $4, location = $5, job_type = $6 WHERE id =$7 `
         await pool.query(query , [
