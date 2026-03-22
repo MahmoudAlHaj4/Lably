@@ -6,7 +6,7 @@ const collectProfileData = () => {
         full_name: getVal('fullName'),
         job_title: getVal('jobTitle'),
         years_of_experience: getVal('yearsOfExperience'),
-        about: getRich('aboutMe'),
+        about: getVal('aboutMe'),
         phone: getVal('phone'),
         address: getVal('address')
     }
