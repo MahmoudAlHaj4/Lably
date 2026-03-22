@@ -13,8 +13,8 @@ const postJob = async () => {
             job_title:    getVal('jobTitle'),
             job_type:     getVal('jobType'),
             location:     getVal('location'),
-            description:  getRich('description'),
-            requirements: getRich('requirements'),
+            description:  getVal('description'),
+            requirements: getVal('requirements'),
         }
 
         const res = await fetch(`${apiUrl}/api/jobs`, {
