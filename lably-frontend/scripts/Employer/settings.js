@@ -13,13 +13,13 @@ const loadProfile = async () => {
         if (!data) return
 
         setVal('companyName', data.company_name)
-        setRich('aboutUs',    data.company_description)
+        setVal('aboutUs',    data.company_description)
         setSelect('organizationType', data.organization_type)
         setSelect('industryType',     data.industry_type)
         setSelect('teamSize',         data.team_size)
         setVal('yearEstablished',     data.year_established)
         setVal('website',             data.website)
-        setRich('companyVision',      data.company_vision)
+        setVal('companyVision',      data.company_vision)
         setVal('linkedinUrl',  data.linkedin_url)
         setVal('instagramUrl', data.instagram_url)
         setVal('facebookUrl',  data.facebook_url)
@@ -54,8 +54,8 @@ const saveSettings = async () => {
         const formData = new FormData()
 
         formData.append('company_name',        getVal('companyName'))
-        formData.append('company_description', getRich('aboutUs'))
-        formData.append('company_vision',      getRich('companyVision'))
+        formData.append('company_description', getVal('aboutUs'))
+        formData.append('company_vision',      getVal('companyVision'))
         formData.append('organization_type',   getVal('organizationType'))
         formData.append('industry_type',       getVal('industryType'))
         formData.append('team_size',           getVal('teamSize'))
