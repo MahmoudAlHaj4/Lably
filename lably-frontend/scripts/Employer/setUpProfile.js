@@ -26,7 +26,7 @@ const checkExistingProfile = async () => {
         })
         const data = await res.json()
         if(res.ok && data.data) {
-            window.location.href = './dashboard.html'
+            window.location.href = '../../pages/employerDashboard.html'
         }
     } catch(error) {
         console.log(error)
