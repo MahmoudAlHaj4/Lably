@@ -98,5 +98,5 @@ BREVO_API_KEY=
 
 ### 4. Start the Server
 ```bash
-npm start
+node server.js
 ```
