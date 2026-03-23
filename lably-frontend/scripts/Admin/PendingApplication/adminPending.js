@@ -1,4 +1,4 @@
-authGuard(['employer'])
+authGuard(['admin'])
 const applicationsTable = document.getElementById('applicationsTable')
 const rejectBtn = document.getElementById('reject-btn')
 const approveBtn = document.getElementById('approve-btn')

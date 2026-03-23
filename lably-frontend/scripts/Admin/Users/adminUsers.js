@@ -1,4 +1,4 @@
-authGuard(['employer'])
+authGuard(['admin'])
 const usersTable = document.getElementById('usersTable')
 const deleteBtn = document.getElementById('delete-user-btn')
 
