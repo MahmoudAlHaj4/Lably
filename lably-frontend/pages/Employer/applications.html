@@ -26,16 +26,14 @@
     .drop-item.red { color: #ef4444; }
     .drop-item.red:hover { background: #fef2f2; }
 
-    /* View transitions */
     @keyframes fadeSlideIn  { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
     @keyframes fadeSlideOut { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
     .view-enter  { animation: fadeSlideIn  0.25s ease both; }
     .view-back   { animation: fadeSlideOut 0.25s ease both; }
 
-    /* Modal animations */
-    @keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideUp  { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-    @keyframes fadeOut  { from { opacity: 1; } to { opacity: 0; } }
+    @keyframes fadeIn    { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp   { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes fadeOut   { from { opacity: 1; } to { opacity: 0; } }
     @keyframes slideDown { from { opacity: 1; transform: translateY(0) scale(1); } to { opacity: 0; transform: translateY(24px) scale(0.98); } }
     .modal-backdrop { animation: fadeIn 0.2s ease both; }
     .modal-backdrop.closing { animation: fadeOut 0.2s ease both; }
@@ -45,19 +43,31 @@
 </head>
 <body class="bg-[#f7fafe] text-[#0D1B2A]">
 
-<!-- NAV -->
+<!-- Sidebar overlay (mobile) -->
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/30 z-30 hidden"></div>
+
+<!-- ═══════════ HEADER ═══════════ -->
 <header class="bg-white border-b border-gray-100 h-[70px] flex items-center justify-between px-[3%] sticky top-0 z-40">
-  <a href="../Employer/employerDashboard.html" class="flex items-center gap-2 no-underline">
-    <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
-    <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
-  </a>
+  <div class="flex items-center gap-3">
+    <button id="sidebarToggle" class="flex lg:hidden items-center justify-center w-9 h-9 rounded-xl hover:bg-gray-50 transition">
+      <i class="fa-solid fa-bars text-[#0D1B2A]"></i>
+    </button>
+    <a href="../Employer/employerDashboard.html" class="flex items-center gap-2 no-underline">
+      <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+      <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
+    </a>
+  </div>
+
   <div class="relative">
-    <button data-action="toggle-nav"class="flex items-center gap-2.5 pl-1 pr-3 py-1 rounded-xl hover:bg-gray-50 border-2 border-transparent hover:border-gray-100 transition-all duration-200">
-      <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center shrink-0">
-        <span class="text-sm font-extrabold text-[#16a34a]">B</span>
+    <button data-action="toggle-nav" class="flex items-center gap-2.5 pl-1 pr-3 py-1 rounded-xl hover:bg-gray-50 border-2 border-transparent hover:border-gray-100 transition-all duration-200">
+      <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center shrink-0 overflow-hidden">
+        <span class="text-sm font-extrabold text-[#16a34a]" id="nav-initials"></span>
+        <img id="nav-avatar" src="" class="hidden w-full h-full object-cover rounded-xl"/>
       </div>
       <div class="text-left hidden sm:block">
-        <p class="text-sm font-extrabold text-[#0D1B2A] leading-none" id="company-name-nav">My Company</p>
+        <p class="text-sm font-extrabold text-[#0D1B2A] leading-none" id="company-name-nav">
+          <span class="inline-block h-3.5 w-24 bg-gray-200 rounded animate-pulse"></span>
+        </p>
         <p class="text-xs text-gray-400 font-medium mt-0.5">Employer</p>
       </div>
       <i class="fa-solid fa-chevron-down text-gray-400 text-xs ml-1" id="nav-chevron"></i>
@@ -71,7 +81,7 @@
       <a href="./employerJob.html" class="drop-item"><i class="fa-regular fa-rectangle-list text-gray-300 w-4 text-center"></i> My Jobs</a>
       <a href="./applications.html" class="drop-item"><i class="fa-regular fa-file-lines text-gray-300 w-4 text-center"></i> Applications</a>
       <div class="border-t border-gray-50 mt-1 pt-1">
-        <a href="#" class="drop-item red"><i class="fa-solid fa-right-from-bracket w-4 text-center"></i> Sign Out</a>
+        <a href="#" id="signOutDropdown" class="drop-item red"><i class="fa-solid fa-right-from-bracket w-4 text-center"></i> Sign Out</a>
       </div>
     </div>
   </div>
@@ -79,8 +89,8 @@
 
 <div class="flex min-h-[calc(100vh-70px)]">
 
-  <!-- SIDEBAR -->
-  <aside class="w-[220px] shrink-0 bg-white border-r border-gray-100 flex flex-col justify-between sticky top-[70px] h-[calc(100vh-70px)] overflow-y-auto">
+  <!-- ═══════════ SIDEBAR ═══════════ -->
+  <aside id="sidebar" class="fixed lg:sticky top-[70px] z-30 w-[220px] shrink-0 bg-white border-r border-gray-100 flex flex-col justify-between h-[calc(100vh-70px)] overflow-y-auto -translate-x-full lg:translate-x-0 transition-transform duration-300">
     <div class="py-5 px-3">
       <p class="text-[10px] font-bold text-gray-300 tracking-[.12em] uppercase px-3 mb-3">Dashboard</p>
       <nav class="space-y-0.5">
@@ -98,21 +108,16 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
-  <main class="flex-1 p-8">
+  <!-- ═══════════ MAIN ═══════════ -->
+  <main class="flex-1 p-4 lg:p-8 min-w-0">
 
     <!-- ═══ VIEW 1: JOBS LIST ═══ -->
     <div id="view-jobs">
-
       <div class="mb-8">
         <h1 class="text-2xl font-extrabold text-[#0D1B2A]">Applications</h1>
         <p class="text-sm text-gray-400 font-medium mt-0.5">Select a job to view its applications</p>
       </div>
-
-      <!-- Jobs grid -->
       <div id="jobs-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
-
-      <!-- Empty state -->
       <div id="jobs-empty" class="hidden flex-col items-center justify-center py-20 text-center">
         <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center mb-4">
           <i class="fa-regular fa-briefcase text-2xl text-gray-300"></i>
@@ -123,13 +128,10 @@
           <i class="fa-solid fa-plus text-[10px]"></i> Post a Job
         </a>
       </div>
-
     </div>
 
     <!-- ═══ VIEW 2: APPLICATIONS FOR A JOB ═══ -->
     <div id="view-apps" class="hidden">
-
-      <!-- Header with back button -->
       <div class="flex items-center gap-4 mb-8">
         <button data-action="back" class="w-9 h-9 rounded-xl border-2 border-gray-200 flex items-center justify-center text-gray-400 hover:border-[#16a34a] hover:text-[#16a34a] transition shrink-0">
           <i class="fa-solid fa-arrow-left text-xs"></i>
@@ -140,20 +142,26 @@
         </div>
       </div>
 
-      <!-- Applications table -->
       <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-        <table class="w-full">
-          <thead>
-            <tr class="border-b border-gray-50 bg-gray-50/60">
-              <th class="text-left text-xs font-bold text-gray-400 uppercase tracking-widest px-7 py-4">Candidate</th>
-              <th class="text-left text-xs font-bold text-gray-400 uppercase tracking-widest px-4 py-4">Date Applied</th>
-              <th class="text-left text-xs font-bold text-gray-400 uppercase tracking-widest px-4 py-4">Cover Letter</th>
-              <th class="text-left text-xs font-bold text-gray-400 uppercase tracking-widest px-4 py-4">Resume</th>
-              <th class="text-left text-xs font-bold text-gray-400 uppercase tracking-widest px-4 py-4">Details</th>
-            </tr>
-          </thead>
-          <tbody id="applications-table-body"></tbody>
-        </table>
+
+        <!-- Desktop table -->
+        <div class="hidden md:block overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b border-gray-50 bg-gray-50/60">
+                <th class="text-left text-xs font-bold text-gray-400 uppercase tracking-widest px-7 py-4">Candidate</th>
+                <th class="text-left text-xs font-bold text-gray-400 uppercase tracking-widest px-4 py-4">Date Applied</th>
+                <th class="text-left text-xs font-bold text-gray-400 uppercase tracking-widest px-4 py-4">Cover Letter</th>
+                <th class="text-left text-xs font-bold text-gray-400 uppercase tracking-widest px-4 py-4">Resume</th>
+                <th class="text-left text-xs font-bold text-gray-400 uppercase tracking-widest px-4 py-4">Details</th>
+              </tr>
+            </thead>
+            <tbody id="applications-table-body"></tbody>
+          </table>
+        </div>
+
+        <!-- Mobile cards -->
+        <div id="applications-cards-body" class="md:hidden divide-y divide-gray-50"></div>
 
         <!-- Empty -->
         <div id="apps-empty" class="hidden flex-col items-center justify-center py-16 text-center">
@@ -169,17 +177,16 @@
           <p id="pagination-info" class="text-xs text-gray-400 font-medium"></p>
           <div class="flex items-center gap-1" id="pagination-controls"></div>
         </div>
-      </div>
 
+      </div>
     </div>
 
   </main>
 </div>
 
-<!-- VIEW APPLICATION MODAL -->
+<!-- ═══════════ VIEW APPLICATION MODAL ═══════════ -->
 <div id="view-modal" class="modal-backdrop hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center px-4">
   <div class="modal-box bg-white rounded-2xl p-8 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto">
-
     <div class="flex items-start justify-between mb-6">
       <div class="flex items-center gap-4">
         <div class="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center shrink-0">
@@ -194,8 +201,6 @@
         <i class="fa-solid fa-xmark text-sm"></i>
       </button>
     </div>
-
-    <!-- Meta -->
     <div class="bg-[#f7fafe] rounded-2xl p-5 mb-6 space-y-3">
       <div class="flex items-center justify-between">
         <span class="text-sm text-gray-400 font-medium">Applied For</span>
@@ -207,14 +212,10 @@
         <span id="modal-date" class="text-sm font-bold text-[#0D1B2A]"></span>
       </div>
     </div>
-
-    <!-- Cover letter -->
     <div class="mb-6">
       <h3 class="text-sm font-extrabold text-[#0D1B2A] mb-3">Cover Letter</h3>
       <div id="modal-cover-letter" class="bg-[#f7fafe] border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-500 font-medium leading-relaxed"></div>
     </div>
-
-    <!-- Resume -->
     <div class="mb-7">
       <h3 class="text-sm font-extrabold text-[#0D1B2A] mb-3">Resume</h3>
       <div class="flex items-center gap-4 bg-[#f7fafe] border border-gray-200 rounded-xl px-4 py-4">
@@ -230,34 +231,25 @@
         </a>
       </div>
     </div>
-
     <a id="modal-profile-link" href="#" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-gray-200 text-sm font-bold text-[#0D1B2A] hover:border-[#16a34a] hover:text-[#16a34a] transition no-underline hidden">
       <i class="fa-solid fa-user text-xs"></i> View Full Profile
     </a>
-
   </div>
 </div>
 
-<!-- PROFILE MODAL -->
+<!-- ═══════════ PROFILE MODAL ═══════════ -->
 <div id="profile-modal" class="modal-backdrop hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center px-4">
   <div class="modal-box bg-white rounded-2xl p-8 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto">
-
-    <!-- Header -->
     <div class="flex items-start justify-between mb-6">
       <h2 class="text-lg font-extrabold text-[#0D1B2A]">Candidate Profile</h2>
-      <button data-action="close-modal" data-target="profile-modal"
-              class="w-9 h-9 rounded-xl border-2 border-gray-200 flex items-center justify-center text-gray-400 hover:border-gray-300 transition shrink-0">
+      <button data-action="close-modal" data-target="profile-modal" class="w-9 h-9 rounded-xl border-2 border-gray-200 flex items-center justify-center text-gray-400 hover:border-gray-300 transition shrink-0">
         <i class="fa-solid fa-xmark text-sm"></i>
       </button>
     </div>
-
-    <!-- Loading state -->
     <div id="profile-modal-loading" class="flex flex-col items-center justify-center py-16">
       <div class="w-10 h-10 border-4 border-green-100 border-t-[#16a34a] rounded-full animate-spin mb-4"></div>
       <p class="text-sm text-gray-400 font-medium">Loading profile...</p>
     </div>
-
-    <!-- Error state -->
     <div id="profile-modal-error" class="hidden flex-col items-center justify-center py-16 text-center">
       <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mb-4">
         <i class="fa-solid fa-triangle-exclamation text-red-400 text-2xl"></i>
@@ -265,11 +257,7 @@
       <p class="text-sm font-bold text-[#0D1B2A] mb-1">Profile not found</p>
       <p class="text-xs text-gray-400 font-medium">This candidate hasn't set up their profile yet</p>
     </div>
-
-    <!-- Content -->
     <div id="profile-modal-content" class="hidden">
-
-      <!-- Avatar + name -->
       <div class="flex items-center gap-4 mb-6">
         <div id="profile-avatar-wrap" class="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center shrink-0 overflow-hidden">
           <span id="profile-initials" class="text-xl font-extrabold text-[#16a34a]"></span>
@@ -279,8 +267,6 @@
           <p id="profile-address" class="text-sm text-gray-400 font-medium mt-0.5"></p>
         </div>
       </div>
-
-      <!-- Info cards -->
       <div class="bg-[#f7fafe] rounded-2xl p-5 mb-6 space-y-3">
         <div class="flex items-center justify-between">
           <span class="text-sm text-gray-400 font-medium flex items-center gap-2">
@@ -296,13 +282,10 @@
           <span id="profile-address-val" class="text-sm font-bold text-[#0D1B2A]"></span>
         </div>
       </div>
-
-      <!-- About -->
       <div id="profile-about-wrap" class="mb-6">
         <h3 class="text-sm font-extrabold text-[#0D1B2A] mb-3">About</h3>
         <div id="profile-about" class="bg-[#f7fafe] border border-gray-200 rounded-xl px-4 py-4 text-sm text-gray-500 font-medium leading-relaxed"></div>
       </div>
-
     </div>
   </div>
 </div>
