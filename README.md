@@ -50,3 +50,53 @@ Integration tests using **Jest** and **Supertest** against a real PostgreSQL dat
 ```bash
 npm test
 ```
+
+## Setup & Installation
+
+### Prerequisites
+- Node.js
+- PostgreSQL
+- Supabase account
+- Brevo account
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/MahmoudAlHaj4/Lably.git
+cd Lably
+```
+
+### 2. Install Dependencies
+```bash
+cd lably-backend
+npm install
+```
+
+### 3. Configure Environment Variables
+Create a `.env` file in the `lably-backend` directory and fill in the following:
+```env
+DB_HOST=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+PORT=
+JWT_SECRET=
+
+DATABASE_URL=
+
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+
+FRONTEND_URL=
+
+BREVO_HOST=
+BREVO_PORT=
+BREVO_USER=
+BREVO_PASS=
+BREVO_SENDER=
+BREVO_API_KEY=
+```
+
+### 4. Start the Server
+```bash
+npm start
+```
