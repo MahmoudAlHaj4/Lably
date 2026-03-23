@@ -25,4 +25,4 @@ For full system design, database decisions, API details, and architecture notes,
 
 | Employer | Admin |
 |---|---|
-| ![Employer](./assets/screenshots/employer.png) | ![Admin](./assets/screenshots/admin.png) |
+| ![Employer](./assets/employer.png) | ![Admin](./assets/admin.png) |
