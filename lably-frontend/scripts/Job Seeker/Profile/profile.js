@@ -1,3 +1,5 @@
+authGuard(['job_seeker'])
+
 const apiUrl = CONFIG.apiUrl
 const token = localStorage.getItem('token')
 let expToEdit = null
