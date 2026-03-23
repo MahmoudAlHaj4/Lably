@@ -40,3 +40,17 @@ const getCandidateProfile = async (apiUrl, token, profileId) => {
         showToast(json.message)
     }
 }
+
+const getprofile = async (apiUrl, token) => {
+    try {
+        const res = await fetch(`${apiUrl}/api/employer/profile`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+        const json = await res.json()
+        console.log(json.data)
+        if (res.ok) return json.data
+        return null
+    } catch (error) {
+        throw error
+    }
+}
