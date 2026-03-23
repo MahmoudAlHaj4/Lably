@@ -117,16 +117,18 @@ const viewProfile = async (seekerId) => {
 const loadData = async () => {
     renderJobsSkeleton()
     try {
-        const [jobs, apps] = await Promise.all([
+        const [jobs, apps, profile] = await Promise.all([
             getEmployerJobs(apiUrl, token),
-            getEmployerApplications(apiUrl, token)
+            getEmployerApplications(apiUrl, token),
+            getprofile(apiUrl, token)
         ])
 
         allJobs         = jobs || []
         allApplications = apps || []
-        console.log(allApplications)
 
         renderJobsGrid(allJobs, allApplications)
+        renderNav(profile)
+
         const jobParam = new URLSearchParams(window.location.search).get('job')
         if (jobParam) openAppsView(jobParam)
 
