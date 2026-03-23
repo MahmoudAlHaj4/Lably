@@ -56,3 +56,17 @@ document.addEventListener('click', (e) => {
     if (action === 'toggle-nav')   toggleNavDd(e)
     if (action === 'close-modal')  closeModal(target)
 })
+
+  const sidebarToggle  = document.getElementById('sidebarToggle')
+  const sidebar        = document.getElementById('sidebar')
+  const sidebarOverlay = document.getElementById('sidebarOverlay')
+
+  sidebarToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('-translate-x-full')
+    sidebarOverlay.classList.toggle('hidden')
+  })
+
+  sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.add('-translate-x-full')
+    sidebarOverlay.classList.add('hidden')
+  })
