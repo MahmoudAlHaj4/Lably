@@ -1,4 +1,4 @@
-authGuard(['employer'])
+authGuard(['admin'])
 const token = localStorage.getItem('token')
 const apiUrl = CONFIG.apiUrl
 
