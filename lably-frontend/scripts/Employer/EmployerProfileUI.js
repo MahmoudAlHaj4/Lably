@@ -44,3 +44,29 @@ function showSuccess() {
     document.getElementById('progressLabel').textContent = '100% Completed';
 }
 
+const sidebarToggle  = document.getElementById('sidebarToggle')
+const sidebar        = document.getElementById('sidebar')
+const sidebarOverlay = document.getElementById('sidebarOverlay')
+
+sidebarToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('-translate-x-full')
+    sidebarOverlay.classList.toggle('hidden')
+})
+
+sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.add('-translate-x-full')
+    sidebarOverlay.classList.add('hidden')
+})
+
+
+function toggleNavDd(e) {
+    e.stopPropagation()
+    document.getElementById('nav-dropdown').classList.toggle('open')
+    document.getElementById('nav-chevron').classList.toggle('rotate-180')
+}
+
+document.addEventListener('click', () => {
+    document.getElementById('nav-dropdown').classList.remove('open')
+    document.getElementById('nav-chevron').classList.remove('rotate-180')
+})
+
