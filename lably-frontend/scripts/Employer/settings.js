@@ -29,6 +29,17 @@ const loadProfile = async () => {
         setVal('contactPhone', data.contact_phone)
         setVal('address',      data.location)
 
+        document.getElementById('company-name-nav').textContent = data.company_name
+        document.getElementById('nav-initials').textContent = data.company_name?.[0]?.toUpperCase() || 'E'
+
+        if (data.logo_path) {
+            const url = `${CONFIG.supabaseUrl}/storage/v1/object/public/logos/${data.logo_path}`
+            const avatar = document.getElementById('nav-avatar')
+            avatar.src = url
+            avatar.classList.remove('hidden')
+            document.getElementById('nav-initials').classList.add('hidden')
+        }
+
         if (data.logo_path) {
            showCurrentImage('logoPreview',   'logoPlaceholder',   data.logo_path,   'logos')  
         }  
@@ -134,3 +145,29 @@ function switchTab(index) {
 
 
 loadProfile()
+
+  const sidebarToggle  = document.getElementById('sidebarToggle')
+  const sidebar        = document.getElementById('sidebar')
+  const sidebarOverlay = document.getElementById('sidebarOverlay')
+
+  sidebarToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('-translate-x-full')
+    sidebarOverlay.classList.toggle('hidden')
+  })
+
+  sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.add('-translate-x-full')
+    sidebarOverlay.classList.add('hidden')
+  })
+
+
+  function toggleNavDd(e) {
+    e.stopPropagation()
+    document.getElementById('nav-dropdown').classList.toggle('open')
+    document.getElementById('nav-chevron').classList.toggle('rotate-180')
+  }
+
+  document.addEventListener('click', () => {
+    document.getElementById('nav-dropdown').classList.remove('open')
+    document.getElementById('nav-chevron').classList.remove('rotate-180')
+  })
