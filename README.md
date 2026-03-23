@@ -7,8 +7,11 @@ Lably is a specialized job board for the dental technology industry. It connects
 
 #### ER Diagram
 
-![Lably ER Diagram](./assets/er-diagram.png)
+![Lably ER Diagram](./assets/er-diagram.jpg)
 
 #### System Flowchart
 
 ![System Flowchart](./assets/flowchart.png)
+
+
+For full system design, database decisions, API details, and architecture notes, see [DESIGN.md](./design.md).
