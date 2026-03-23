@@ -20,6 +20,7 @@ const loadState = async () => {
         renderFilledJobs(jobs)
         renderCompanyName(name)
         displayRecentJobs(jobs)
+        renderNav(name)
     }catch(error) {
         console.log(error)
         clearAllSkeletons()

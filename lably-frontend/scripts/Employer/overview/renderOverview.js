@@ -13,6 +13,19 @@ const renderCompanyName = (profile) => {
     setText('company-name', profile.company_name)
 }
 
+const renderNav = (profile) => {
+    document.getElementById('company-name-nav').textContent = profile.company_name
+    document.getElementById('nav-initials').textContent = profile.company_name?.[0]?.toUpperCase() || 'E'
+
+    if (profile.logo_path) {
+        const url = `${CONFIG.supabaseUrl}/storage/v1/object/public/logos/${profile.logo_path}`
+        const avatar = document.getElementById('nav-avatar')
+        avatar.src = url
+        avatar.classList.remove('hidden')
+        document.getElementById('nav-initials').classList.add('hidden')
+    }
+}
+
 const displayRecentJobs = (jobs) => {
     const tbody = document.getElementById('jobs-table-body');
     const emptyDiv = document.getElementById('jobs-empty');
