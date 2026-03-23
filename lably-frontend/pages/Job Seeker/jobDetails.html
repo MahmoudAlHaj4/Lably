@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details — Lably</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { font-family: 'Urbanist', sans-serif; }
+        body { background-color: #f7fafe; overflow-x: hidden; }
+
+        ::-webkit-scrollbar { display: none; }
+        * { scrollbar-width: none; -ms-overflow-style: none; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .modal-box { animation: slideUp 0.3s ease both; }
+
+        @keyframes shimmer {
+            0%   { background-position: -400px 0; }
+            100% { background-position:  400px 0; }
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 400px 100%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="text-[#0D1B2A]">
+
+    <!-- ═══════════ NAV ═══════════ -->
+    <nav class="relative sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 px-[7%] h-[70px] flex items-center justify-between">
+        <a href="../../index.html" class="flex items-center gap-2 no-underline">
+            <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+            <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
+        </a>
+
+        <div class="flex items-center gap-4">
+            <div class="relative">
+                <button id="avatarBtn"
+                        class="flex items-center gap-2.5 pl-1 pr-3 py-1 rounded-xl hover:bg-gray-50 border-2 border-transparent hover:border-gray-100 transition-all duration-200">
+                    <div class="relative w-9 h-9 shrink-0">
+                        <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center overflow-hidden">
+                            <span class="text-sm font-extrabold text-[#16a34a]" id="navInitials"></span>
+                            <img id="navAvatar" src="" class="hidden w-full h-full object-cover rounded-xl"/>
+                        </div>
+                        <div id="navBtnSkeleton" class="skeleton absolute inset-0 rounded-xl"></div>
+                    </div>
+                    <div class="text-left hidden sm:block">
+                        <div id="navNameSkeleton" class="skeleton h-3.5 w-20 rounded mb-1"></div>
+                        <p class="text-sm font-extrabold text-[#0D1B2A] leading-none hidden" id="navName"></p>
+                        <p class="text-xs text-gray-400 font-medium mt-0.5">Job Seeker</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-gray-400 text-xs ml-1" id="chevron"></i>
+                </button>
+
+                <div id="dropdown"
+                     class="hidden absolute right-0 top-[calc(100%+8px)] w-52 bg-white border border-gray-100 rounded-2xl shadow-lg shadow-gray-100 overflow-hidden z-50">
+                    <div class="px-4 py-3 border-b border-gray-50">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="relative w-9 h-9 shrink-0">
+                                <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center overflow-hidden">
+                                    <span class="text-sm font-extrabold text-[#16a34a]" id="dropdownInitials"></span>
+                                    <img id="dropdownAvatar" src="" class="hidden w-full h-full object-cover rounded-xl"/>
+                                </div>
+                                <div id="navAvatarSkeleton" class="skeleton absolute inset-0 rounded-xl"></div>
+                            </div>
+                            <div>
+                                <div id="dropdownNameSkeleton" class="skeleton h-3.5 w-24 rounded mb-1.5"></div>
+                                <p class="text-sm font-extrabold text-[#0D1B2A] hidden" id="dropdownName"></p>
+                            </div>
+                        </div>
+                        <span class="inline-flex items-center gap-1 mt-1 px-2 py-0.5 bg-green-50 border border-green-100 text-[#16a34a] text-xs font-bold rounded-lg">
+                            <i class="fa-solid fa-circle-check text-[10px]"></i> Verified
+                        </span>
+                    </div>
+                    <div class="py-2">
+                        <a href="./profile.html" class="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-[#0D1B2A] hover:bg-gray-50 transition no-underline">
+                            <i class="fa-solid fa-user text-gray-300 w-4 text-center"></i> My Profile
+                        </a>
+                        <a href="./jobs.html" class="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-[#0D1B2A] hover:bg-gray-50 transition no-underline">
+                            <i class="fa-solid fa-briefcase text-gray-300 w-4 text-center"></i> Browse Jobs
+                        </a>
+                    </div>
+                    <div class="border-t border-gray-50 py-2">
+                        <button id="signOutBtn" class="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-semibold text-red-400 hover:bg-red-50 transition">
+                            <i class="fa-solid fa-right-from-bracket w-4 text-center"></i> Sign Out
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="px-[7%] py-10 flex flex-col xl:flex-row gap-8">
+
+        <!-- ══ LEFT ══ -->
+        <div class="flex-1 min-w-0 flex flex-col gap-6">
+
+            <!-- Back button -->
+            <a href="./jobs.html" class="flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-[#16a34a] transition no-underline w-fit">
+                <i class="fa-solid fa-arrow-left text-xs"></i> Back to Jobs
+            </a>
+
+            <!-- ══ Job header card ══ -->
+            <div class="bg-white rounded-2xl border border-gray-100 p-8">
+
+                <!-- Skeleton -->
+                <div id="jobSkeleton">
+                    <div class="flex gap-5 mb-6">
+                        <div class="skeleton w-16 h-16 rounded-2xl shrink-0"></div>
+                        <div class="flex-1 space-y-2 pt-1">
+                            <div class="skeleton h-6 w-48 rounded-lg"></div>
+                            <div class="skeleton h-4 w-32 rounded"></div>
+                        </div>
+                    </div>
+                    <div class="flex gap-6 pb-6 border-b border-gray-100 mb-6">
+                        <div class="skeleton h-4 w-24 rounded"></div>
+                        <div class="skeleton h-4 w-20 rounded"></div>
+                        <div class="skeleton h-4 w-28 rounded"></div>
+                    </div>
+                    <div class="mb-8 space-y-2">
+                        <div class="skeleton h-5 w-32 rounded mb-4"></div>
+                        <div class="skeleton h-4 w-full rounded"></div>
+                        <div class="skeleton h-4 w-4/5 rounded"></div>
+                        <div class="skeleton h-4 w-3/5 rounded"></div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="skeleton h-5 w-28 rounded mb-4"></div>
+                        <div class="skeleton h-4 w-full rounded"></div>
+                        <div class="skeleton h-4 w-4/5 rounded"></div>
+                        <div class="skeleton h-4 w-2/3 rounded"></div>
+                    </div>
+                </div>
+
+                <!-- Real content -->
+                <div id="jobContent" class="hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-5 mb-6">
+                        <div class="w-16 h-16 rounded-2xl bg-green-100 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex flex-wrap items-center gap-2 mb-1">
+                                <h1 id="job-title" class="text-2xl font-extrabold text-[#0D1B2A]"></h1>
+                                <span id="job-status" class="px-2.5 py-1 bg-green-50 text-[#16a34a] text-xs font-bold rounded-lg border border-green-100"></span>
+                            </div>
+                            <p id="job-company-name" class="text-base text-gray-400 font-semibold"></p>
+                        </div>
+                    </div>
+
+                    <!-- Meta row -->
+                    <div class="flex flex-wrap gap-4 pb-6 border-b border-gray-100 mb-6">
+                        <div class="flex items-center gap-2 text-sm text-gray-500 font-medium">
+                            <i class="fa-solid fa-location-dot text-gray-300"></i>
+                            <span id="job-location"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-500 font-medium">
+                            <i class="fa-solid fa-building text-gray-300"></i>
+                            <span id="job-type"></span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-500 font-medium">
+                            <i class="fa-regular fa-calendar text-gray-300"></i>
+                            <span id="job-posted-at"></span>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-8">
+                        <h2 class="text-lg font-extrabold text-[#0D1B2A] mb-4">Job Description</h2>
+                        <div id="job-description" class="text-sm text-gray-500 leading-relaxed space-y-3 font-medium"></div>
+                    </div>
+
+                    <!-- Requirements -->
+                    <div>
+                        <h2 class="text-lg font-extrabold text-[#0D1B2A] mb-4">Requirements</h2>
+                        <ul id="job-requirements" class="space-y-3"></ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ══ RIGHT: Sidebar ══ -->
+        <div class="w-full xl:w-80 shrink-0 flex flex-col gap-5">
+
+            <!-- Apply card -->
+            <div class="bg-white rounded-2xl border border-gray-100 p-7">
+                <h2 class="text-lg font-extrabold text-[#0D1B2A] mb-2">Ready to apply?</h2>
+                <p class="text-sm text-gray-400 font-medium leading-relaxed mb-6">
+                    Your verified profile will be shared with the employer along with your resume and cover letter.
+                </p>
+                <button id="applyBtn"
+                        class="w-full py-3.5 rounded-xl bg-[#16a34a] text-white text-sm font-bold hover:bg-[#15803d] transition shadow-sm shadow-green-200">
+                    Apply Now
+                </button>
+            </div>
+
+            <!-- Employer info card -->
+            <div class="bg-white rounded-2xl border border-gray-100 p-7">
+                <h2 class="text-base font-extrabold text-[#0D1B2A] mb-5">About the Employer</h2>
+
+                <!-- Skeleton -->
+                <div id="employerSkeleton">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="skeleton w-11 h-11 rounded-xl shrink-0"></div>
+                        <div class="space-y-2">
+                            <div class="skeleton h-4 w-32 rounded"></div>
+                            <div class="skeleton h-3 w-20 rounded"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                        <div class="skeleton h-3.5 w-full rounded"></div>
+                        <div class="skeleton h-3.5 w-4/5 rounded"></div>
+                    </div>
+                    <div class="skeleton h-4 w-28 rounded"></div>
+                </div>
+
+                <!-- Real content -->
+                <div id="employerContent" class="hidden">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-11 h-11 rounded-xl bg-green-100 flex items-center justify-center shrink-0 overflow-hidden">
+                            <span id="employer-logo">
+                                <i class="fa-solid fa-building text-[#16a34a]"></i>
+                            </span>
+                        </div>
+                        <div>
+                            <p id="employer-name" class="text-sm font-extrabold text-[#0D1B2A]"></p>
+                            <p id="employer-location" class="text-xs text-gray-400 font-medium"></p>
+                        </div>
+                    </div>
+                    <p id="employer-description" class="text-sm text-gray-500 font-medium leading-relaxed mb-4"></p>
+                    <a id="employer-website" href="#" class="flex items-center gap-1.5 text-sm font-bold text-[#16a34a] hover:underline hidden">
+                        <i class="fa-solid fa-globe text-xs"></i>
+                        <span id="employer-website-text"></span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Job Summary card -->
+            <div class="bg-white rounded-2xl border border-gray-100 p-7">
+                <h2 class="text-base font-extrabold text-[#0D1B2A] mb-5">Job Summary</h2>
+
+                <!-- Skeleton -->
+                <div id="summarySkeleton" class="space-y-4">
+                    <div class="flex justify-between">
+                        <div class="skeleton h-4 w-24 rounded"></div>
+                        <div class="skeleton h-4 w-16 rounded"></div>
+                    </div>
+                    <div class="w-full h-px bg-gray-50"></div>
+                    <div class="flex justify-between">
+                        <div class="skeleton h-4 w-20 rounded"></div>
+                        <div class="skeleton h-4 w-24 rounded"></div>
+                    </div>
+                    <div class="w-full h-px bg-gray-50"></div>
+                    <div class="flex justify-between">
+                        <div class="skeleton h-4 w-16 rounded"></div>
+                        <div class="skeleton h-4 w-28 rounded"></div>
+                    </div>
+                    <div class="w-full h-px bg-gray-50"></div>
+                    <div class="flex justify-between">
+                        <div class="skeleton h-4 w-14 rounded"></div>
+                        <div class="skeleton h-6 w-16 rounded-lg"></div>
+                    </div>
+                </div>
+
+                <!-- Real content -->
+                <div id="summaryContent" class="hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400 font-medium">Location Type</span>
+                        <span id="summary-job-type" class="text-sm font-bold text-[#0D1B2A]"></span>
+                    </div>
+                    <div class="w-full h-px bg-gray-50"></div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400 font-medium">Location</span>
+                        <span id="summary-location" class="text-sm font-bold text-[#0D1B2A]"></span>
+                    </div>
+                    <div class="w-full h-px bg-gray-50"></div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400 font-medium">Posted</span>
+                        <span id="summary-posted-at" class="text-sm font-bold text-[#0D1B2A]"></span>
+                    </div>
+                    <div class="w-full h-px bg-gray-50"></div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-400 font-medium">Status</span>
+                        <span id="summary-status" class="px-2.5 py-1 bg-green-50 text-[#16a34a] text-xs font-bold rounded-lg"></span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ═══════════ APPLY MODAL ═══════════ -->
+    <div id="applyModal"
+         class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden items-center justify-center px-4">
+
+        <div class="modal-box bg-white rounded-3xl p-8 w-full max-w-lg shadow-2xl">
+
+            <div class="flex items-start justify-between mb-6">
+                <div>
+                    <h2 class="text-xl font-extrabold text-[#0D1B2A]">Apply for this Job</h2>
+                    <p id="modal-job-subtitle" class="text-sm text-gray-400 font-medium mt-1"></p>
+                </div>
+                <button id="closeModalBtn" class="w-9 h-9 rounded-xl border-2 border-gray-200 flex items-center justify-center text-gray-400 hover:border-gray-300 hover:text-[#0D1B2A] transition shrink-0">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Cover letter -->
+            <div class="mb-5">
+                <label class="block text-sm font-bold text-[#0D1B2A] mb-2">
+                    Cover Letter <span class="text-gray-400 font-medium">(optional)</span>
+                </label>
+                <textarea id="coverLetterInput" rows="5" placeholder="Introduce yourself and explain why you're a great fit..."
+                          class="w-full bg-[#f7fafe] border border-gray-200 rounded-xl px-4 py-3 text-sm font-medium text-[#0D1B2A] placeholder-gray-400 outline-none focus:border-[#16a34a] transition resize-none"></textarea>
+            </div>
+            
+            <!-- Resume upload -->
+            <div class="mb-7">
+                <label class="block text-sm font-bold text-[#0D1B2A] mb-2">
+                    Resume <span class="text-[#16a34a]">*</span>
+                </label>
+                <div id="uploadBox" onclick="document.getElementById('resumeInput').click()"
+                    class="flex flex-col items-center justify-center gap-2 w-full border-2 border-dashed border-gray-200 rounded-xl px-4 py-6 cursor-pointer hover:border-[#16a34a] transition group">
+
+                    <!-- Default: upload prompt -->
+                    <div id="uploadPrompt" class="flex flex-col items-center gap-2">
+                        <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center group-hover:bg-green-200 transition">
+                            <i class="fa-solid fa-cloud-arrow-up text-[#16a34a]"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-500">Click to upload your resume</p>
+                        <p class="text-xs text-gray-400 font-medium">PDF only · Max 5MB</p>
+                    </div>
+
+                    <!-- Selected: file info (hidden by default) -->
+                    <div id="uploadSelected" class="hidden w-full flex items-center gap-3 px-2">
+                        <i class="fa-solid fa-file-pdf text-[#16a34a] text-xl shrink-0"></i>
+                        <span id="resumeFileName" class="text-sm font-bold text-[#0D1B2A] truncate flex-1"></span>
+                        <button type="button" id="removeFileBtn"
+                            onclick="event.stopPropagation()"
+                            class="w-7 h-7 rounded-lg border-2 border-gray-200 flex items-center justify-center text-gray-400 hover:border-red-300 hover:text-red-400 transition shrink-0">
+                            <i class="fa-solid fa-xmark text-xs"></i>
+                        </button>
+                    </div>
+
+                    <input id="resumeInput" type="file" accept=".pdf" class="hidden">
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-3">
+                <button id="cancelModalBtn"
+                        class="flex-1 py-3 rounded-xl border-2 border-gray-200 text-sm font-bold text-[#0D1B2A] hover:border-gray-300 transition">
+                    Cancel
+                </button>
+                <button id="submitApplicationBtn"
+                        class="flex-1 py-3 rounded-xl bg-[#16a34a] text-white text-sm font-bold hover:bg-[#15803d] transition shadow-sm shadow-green-200">
+                    Submit Application
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../../config.js"></script>
+    <script src="../../scripts/utils/authGuard.js"></script>
+    <script src="../../scripts/utils/toast.js"></script>
+    <script src="../../scripts/utils/helpers.js"></script>
+    <script src="../../scripts/Job Seeker/Apply/applyUI.js"></script>
+    <script src="../../scripts/Job Seeker/Apply/renderApply.js"></script>
+    <script src="../../scripts/Job Seeker/Apply/apply.js"></script>
+</body>
+</html>
