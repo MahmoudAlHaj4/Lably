@@ -12,21 +12,14 @@
   <style>
     * { font-family: 'Urbanist', sans-serif; }
 
-    /* Hide scrollbar */
     ::-webkit-scrollbar { display: none; }
     * { scrollbar-width: none; -ms-overflow-style: none; }
 
-    .sidebar-link {
-        display: flex; align-items: center; gap: 12px;
-        padding: 10px 14px; font-size: 14px; font-weight: 600;
-        color: #767F8C; border-radius: 10px; cursor: pointer;
-        transition: all .15s; text-decoration: none;
-    }
+    .sidebar-link { display: flex; align-items: center; gap: 12px; padding: 10px 14px; font-size: 14px; font-weight: 600; color: #767F8C; border-radius: 10px; cursor: pointer; transition: all .15s; text-decoration: none; }
     .sidebar-link:hover { color: #0D1B2A; background: #f7fafe; }
     .sidebar-link.active { color: #16a34a; background: #f0fdf4; }
     .sidebar-link .icon-wrap { width: 20px; display: flex; align-items: center; justify-content: center; }
 
-    /* Dropdown */
     .dropdown-menu { display: none; position: absolute; right: 0; top: calc(100% + 8px); background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 6px; min-width: 200px; z-index: 99; box-shadow: 0 8px 24px rgba(0,0,0,0.09); }
     .dropdown-menu.open { display: block; }
     .drop-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; color: #0D1B2A; cursor: pointer; white-space: nowrap; text-decoration: none; }
@@ -34,47 +27,41 @@
     .drop-item.red { color: #ef4444; }
     .drop-item.red:hover { background: #fef2f2; }
 
-    .soft-input {
-      width: 100%; padding: 11px 16px;
-      border: 1px solid #e4e5e8; border-radius: 12px;
-      font-size: 14px; color: #0D1B2A; background: #fff;
-      transition: border .2s, box-shadow .2s;
-      font-family: 'Urbanist', sans-serif; outline: none;
-    }
+    .soft-input { width: 100%; padding: 11px 16px; border: 1px solid #e4e5e8; border-radius: 12px; font-size: 14px; color: #0D1B2A; background: #fff; transition: border .2s, box-shadow .2s; font-family: 'Urbanist', sans-serif; outline: none; }
     .soft-input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.08); }
     .soft-input::placeholder { color: #b0b7c3; }
 
-    .soft-select {
-      width: 100%; padding: 11px 16px;
-      border: 1px solid #e4e5e8; border-radius: 12px;
-      font-size: 14px; color: #0D1B2A;
-      background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;
-      transition: border .2s, box-shadow .2s;
-      font-family: 'Urbanist', sans-serif; outline: none; appearance: none;
-    }
+    .soft-select { width: 100%; padding: 11px 16px; border: 1px solid #e4e5e8; border-radius: 12px; font-size: 14px; color: #0D1B2A; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center; transition: border .2s, box-shadow .2s; font-family: 'Urbanist', sans-serif; outline: none; appearance: none; }
     .soft-select:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.08); }
-
-    [contenteditable][data-placeholder]:empty:before { content: attr(data-placeholder); color: #b0b7c3; pointer-events: none; }
-    [contenteditable]:focus { outline: none; }
   </style>
 </head>
 <body class="bg-[#f7fafe] text-[#0D1B2A]">
 
-<!-- ── TOP NAVBAR ── -->
+<!-- Sidebar overlay (mobile) -->
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/30 z-30 hidden"></div>
+
+<!-- ═══════════ HEADER ═══════════ -->
 <header class="bg-white border-b border-gray-100 h-[70px] flex items-center justify-between px-[3%] sticky top-0 z-40">
-  <a href="../Employer/employerDashboard.html" class="flex items-center gap-2 no-underline">
-    <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
-    <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
-  </a>
+  <div class="flex items-center gap-3">
+    <button id="sidebarToggle" class="flex lg:hidden items-center justify-center w-9 h-9 rounded-xl hover:bg-gray-50 transition">
+      <i class="fa-solid fa-bars text-[#0D1B2A]"></i>
+    </button>
+    <a href="../Employer/employerDashboard.html" class="flex items-center gap-2 no-underline">
+      <i class="fa-solid fa-tooth text-[#16a34a] text-2xl"></i>
+      <span class="font-['DM_Serif_Display'] text-2xl text-[#0D1B2A] tracking-tight">Lably</span>
+    </a>
+  </div>
 
   <div class="relative">
-    <button onclick="toggleNavDd(event)"
-            class="flex items-center gap-2.5 pl-1 pr-3 py-1 rounded-xl hover:bg-gray-50 border-2 border-transparent hover:border-gray-100 transition-all duration-200">
-      <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center shrink-0">
-        <span class="text-sm font-extrabold text-[#16a34a]">B</span>
+    <button onclick="toggleNavDd(event)" class="flex items-center gap-2.5 pl-1 pr-3 py-1 rounded-xl hover:bg-gray-50 border-2 border-transparent hover:border-gray-100 transition-all duration-200">
+      <div class="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center shrink-0 overflow-hidden">
+        <span class="text-sm font-extrabold text-[#16a34a]" id="nav-initials"></span>
+        <img id="nav-avatar" src="" class="hidden w-full h-full object-cover rounded-xl"/>
       </div>
       <div class="text-left hidden sm:block">
-        <p class="text-sm font-extrabold text-[#0D1B2A] leading-none" id="company-name-nav">My Company</p>
+        <p class="text-sm font-extrabold text-[#0D1B2A] leading-none" id="company-name-nav">
+          <span class="inline-block h-3.5 w-24 bg-gray-200 rounded animate-pulse"></span>
+        </p>
         <p class="text-xs text-gray-400 font-medium mt-0.5">Employer</p>
       </div>
       <i class="fa-solid fa-chevron-down text-gray-400 text-xs ml-1" id="nav-chevron"></i>
@@ -84,22 +71,12 @@
       <div class="px-3 py-2.5 border-b border-gray-50 mb-1">
         <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Employer Account</p>
       </div>
-      <a href="./employerDashboard.html" class="drop-item">
-        <i class="fa-solid fa-layer-group text-gray-300 w-4 text-center"></i> Overview
-      </a>
-      <a href="./postAJob.html" class="drop-item">
-        <i class="fa-regular fa-plus-square text-gray-300 w-4 text-center"></i> Post a Job
-      </a>
-      <a href="./employerJob.html" class="drop-item">
-        <i class="fa-regular fa-rectangle-list text-gray-300 w-4 text-center"></i> My Jobs
-      </a>
-      <a href="./applications.html" class="drop-item">
-        <i class="fa-regular fa-file-lines text-gray-300 w-4 text-center"></i> Applications
-      </a>
+      <a href="./employerDashboard.html" class="drop-item"><i class="fa-solid fa-layer-group text-gray-300 w-4 text-center"></i> Overview</a>
+      <a href="./postAJob.html" class="drop-item"><i class="fa-regular fa-plus-square text-gray-300 w-4 text-center"></i> Post a Job</a>
+      <a href="./employerJob.html" class="drop-item"><i class="fa-regular fa-rectangle-list text-gray-300 w-4 text-center"></i> My Jobs</a>
+      <a href="./applications.html" class="drop-item"><i class="fa-regular fa-file-lines text-gray-300 w-4 text-center"></i> Applications</a>
       <div class="border-t border-gray-50 mt-1 pt-1">
-        <a href="#" class="drop-item red">
-          <i class="fa-solid fa-right-from-bracket w-4 text-center"></i> Sign Out
-        </a>
+        <a href="#" id="signOutDropdown" class="drop-item red"><i class="fa-solid fa-right-from-bracket w-4 text-center"></i> Sign Out</a>
       </div>
     </div>
   </div>
@@ -107,26 +84,16 @@
 
 <div class="flex min-h-[calc(100vh-70px)]">
 
-  <!-- ── SIDEBAR ── -->
-  <aside class="w-[220px] shrink-0 bg-white border-r border-gray-100 flex flex-col justify-between sticky top-[70px] h-[calc(100vh-70px)] overflow-y-auto">
+  <!-- ═══════════ SIDEBAR ═══════════ -->
+  <aside id="sidebar" class="fixed lg:sticky top-[70px] z-30 w-[220px] shrink-0 bg-white border-r border-gray-100 flex flex-col justify-between h-[calc(100vh-70px)] overflow-y-auto -translate-x-full lg:translate-x-0 transition-transform duration-300">
     <div class="py-5 px-3">
       <p class="text-[10px] font-bold text-gray-300 tracking-[.12em] uppercase px-3 mb-3">Dashboard</p>
       <nav class="space-y-0.5">
-        <a href="./employerDashboard.html" class="sidebar-link">
-          <span class="icon-wrap"><i class="fa-solid fa-layer-group text-sm"></i></span> Overview
-        </a>
-        <a href="./postAJob.html" class="sidebar-link active">
-          <span class="icon-wrap"><i class="fa-regular fa-plus-square text-sm"></i></span> Post a Job
-        </a>
-        <a href="./employerJob.html" class="sidebar-link">
-          <span class="icon-wrap"><i class="fa-regular fa-rectangle-list text-sm"></i></span> My Jobs
-        </a>
-        <a href="./applications.html" class="sidebar-link">
-          <span class="icon-wrap"><i class="fa-regular fa-file-lines text-sm"></i></span> Applications
-        </a>
-        <a href="./settings.html" class="sidebar-link">
-          <span class="icon-wrap"><i class="fa-solid fa-gear text-sm"></i></span> Settings
-        </a>
+        <a href="./employerDashboard.html" class="sidebar-link"><span class="icon-wrap"><i class="fa-solid fa-layer-group text-sm"></i></span> Overview</a>
+        <a href="./postAJob.html" class="sidebar-link active"><span class="icon-wrap"><i class="fa-regular fa-plus-square text-sm"></i></span> Post a Job</a>
+        <a href="./employerJob.html" class="sidebar-link"><span class="icon-wrap"><i class="fa-regular fa-rectangle-list text-sm"></i></span> My Jobs</a>
+        <a href="./applications.html" class="sidebar-link"><span class="icon-wrap"><i class="fa-regular fa-file-lines text-sm"></i></span> Applications</a>
+        <a href="./settings.html" class="sidebar-link"><span class="icon-wrap"><i class="fa-solid fa-gear text-sm"></i></span> Settings</a>
       </nav>
     </div>
     <div class="px-3 pb-5 border-t border-gray-50 pt-4">
@@ -136,18 +103,18 @@
     </div>
   </aside>
 
-  <!-- ── MAIN ── -->
-  <main class="flex-1 p-8">
+  <!-- ═══════════ MAIN ═══════════ -->
+  <main class="flex-1 p-4 lg:p-8 min-w-0">
 
     <div class="mb-8">
       <h1 class="text-2xl font-extrabold text-[#0D1B2A]">Post a Job</h1>
       <p class="text-sm text-gray-400 font-medium mt-0.5">Fill in the details below to post a new job listing</p>
     </div>
 
-    <div class="bg-white rounded-2xl border border-gray-100 p-7">
+    <div class="bg-white rounded-2xl border border-gray-100 p-5 lg:p-7">
 
       <!-- Job Title + Job Type -->
-      <div class="grid grid-cols-2 gap-4 mb-5">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
         <div>
           <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Job Title</label>
           <input id="jobTitle" type="text" placeholder="e.g. Senior CAD/CAM Specialist" class="soft-input"/>
@@ -170,21 +137,20 @@
       </div>
 
       <!-- Description -->
-     <div class="mb-5">
+      <div class="mb-5">
         <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Job Description</label>
         <textarea id="description" rows="6" placeholder="Describe the role, responsibilities and what the candidate will be doing..." class="soft-input resize-none"></textarea>
-    </div>
+      </div>
 
       <!-- Requirements -->
-    <div class="mb-8">
+      <div class="mb-8">
         <label class="block text-sm font-semibold text-[#0D1B2A] mb-1.5">Requirements</label>
         <textarea id="requirements" rows="6" placeholder="List the skills, experience and qualifications required..." class="soft-input resize-none"></textarea>
-    </div>
+      </div>
 
       <!-- Save button -->
       <div class="flex items-center justify-end pt-6 border-t border-gray-50">
-        <button id="postBtn"
-          class="flex items-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold px-6 py-2.5 rounded-xl transition-colors text-sm">
+        <button id="postBtn" class="flex items-center gap-2 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold px-6 py-2.5 rounded-xl transition-colors text-sm">
           <i class="fa-solid fa-paper-plane text-xs"></i>
           <span id="postBtnText">Post Job</span>
         </button>
