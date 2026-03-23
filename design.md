@@ -258,6 +258,32 @@ Every test file runs `beforeAll` and `afterAll` cleanup against the test email t
 
 ## Architecture
 
+Lably follows a classic client-server architecture with a clear separation between the frontend and backend.
+
+### System Overview
+
+The **vanilla JS frontend** communicates with the **Express.js REST API** over HTTP. The API handles all business logic, authentication, and database operations.
+**PostgreSQL (Neon)** serves as the primary database, and **Supabase Storage** handles file uploads (resumes and portfolios). 
+The entire backend is deployed on **Render**, with a **GitHub Actions CI/CD pipeline** that runs tests before every deployment.
+
+### Request Flow
+
+User (Browser) → Express.js API → PostgreSQL (Neon) → Supabase Storage (file uploads)
+
+### Authentication Flow
+
+1. User logs in → API validates credentials → JWT issued
+2. JWT stored in localStorage on the client
+3. Every protected request sends JWT in the `Authorization` header
+4. API middleware validates token before reaching any controller
+
+### CI/CD Pipeline
+
+Push to main → GitHub Actions → Run integration tests against Neon test DB → Deploy to Render
+
+
+## Project Structur
+
 ### Backend File Structure
 ```
 lably-backend/
