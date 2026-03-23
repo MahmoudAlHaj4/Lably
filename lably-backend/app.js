@@ -18,6 +18,8 @@ app.use(express.json())
 const corsMiddleware  = require('./src/middleware/crosMiddleware')
 app.use(corsMiddleware )
 
+app.get('/health', (req, res) => res.send('OK'));
+
 const pendingApplicationsRoutes = require('./src/routes/pendingApplicationsRoutes')
 app.use('/api', pendingApplicationsRoutes)
 
