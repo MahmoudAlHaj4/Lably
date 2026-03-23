@@ -1,3 +1,4 @@
+authGuard(['admin'])
 const jobsTable = document.getElementById('jobsTable')
 const deleteJobBtn = document.getElementById('delete-job-btn')
 const token = localStorage.getItem('token')
