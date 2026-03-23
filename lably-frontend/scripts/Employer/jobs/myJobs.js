@@ -113,4 +113,29 @@ const loadJobs = async () => {
     }
 }
 
+const loadNav = async () => {
+    try {
+        const res  = await fetch(`${apiUrl}/api/employer/profile`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+        const json = await res.json()
+        if (!res.ok || !json.data) return
+
+        const profile = json.data
+        document.getElementById('company-name-nav').textContent = profile.company_name
+        document.getElementById('nav-initials').textContent = profile.company_name?.[0]?.toUpperCase() || 'E'
+
+        if (profile.logo_path) {
+            const url = `${CONFIG.supabaseUrl}/storage/v1/object/public/logos/${profile.logo_path}`
+            const avatar = document.getElementById('nav-avatar')
+            avatar.src = url
+            avatar.classList.remove('hidden')
+            document.getElementById('nav-initials').classList.add('hidden')
+        }
+    } catch (err) {
+        console.error('Failed to load nav:', err)
+    }
+}
+
 loadJobs()
+loadNav()
