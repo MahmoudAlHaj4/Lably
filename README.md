@@ -15,3 +15,14 @@ Lably is a specialized job board for the dental technology industry. It connects
 
 
 For full system design, database decisions, API details, and architecture notes, see [DESIGN.md](./design.md).
+
+
+## Screenshots
+
+| Landing Page | Job Seeker |
+|---|---|
+| ![Landing Page](./assets/landing.png) | ![Job Seeker](./assets/job-seeker.png) |
+
+| Employer | Admin |
+|---|---|
+| ![Employer](./assets/screenshots/employer.png) | ![Admin](./assets/screenshots/admin.png) |
