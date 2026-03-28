@@ -104,3 +104,27 @@ node server.js
 ## Live Demo
 
 🔗 [lably-three.vercel.app](https://lably-three.vercel.app/)
+
+## Admin Credentials
+
+Admin accounts are created manually. To log in as an admin, use the following credentials:
+
+| Field    | Value              |
+|----------|--------------------|
+| Email    | admin@lably.com  |
+| Password | admin123 |
+
+To create or update the admin account, run the following SQL:
+```sql
+INSERT INTO users (email, password_hash, role)
+VALUES ('admin@example.com', '<bcrypt_hashed_password>', 'admin');
+```
+
+**Note:** Never store plain-text passwords. Use bcrypt to hash the password before inserting.
+
+To generate a bcrypt hash, run the following in Node.js:
+```js
+const bcrypt = require('bcrypt');
+const hash = await bcrypt.hash('your_password', 10);
+console.log(hash);
+```
