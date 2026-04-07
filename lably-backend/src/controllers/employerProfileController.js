@@ -78,6 +78,7 @@ async function createEmployerProfile(req, res) {
         return res.status(201).json({ message: 'Profile created successfully.' })
 
     } catch (error) {
+          console.error('PROFILE ERROR:', error.message)
         return res.status(500).json({ message: 'Something went wrong. Please try again later.' })
     }
 }
